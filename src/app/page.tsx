@@ -1,5 +1,5 @@
-import Register from '../components/Register';
+import HomeRedirect from '@/components/HomeRedirect';
 
 export default function Home() {
-  return <Register />;
+  return <HomeRedirect />;
 }
