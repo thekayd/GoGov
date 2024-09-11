@@ -1,5 +1,5 @@
-import Register from '../components/Register'
+import Register from '../components/Register';
 
 export default function Home() {
-  return <Register />
+  return <Register />;
 }

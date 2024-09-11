@@ -85,9 +85,9 @@ const Register: React.FC = () => {
 
           <div className="mt-4 text-center">
             <p>
-              Have an account?{" "}
+              Already have an account?{" "}
               <Link
-                href="/signin"
+                href="/login"
                 className="text-blue-500 hover:text-blue-700"
               >
                 Sign In
