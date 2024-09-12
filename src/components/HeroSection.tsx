@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from "next/link";
 import { Button } from './ui/button';
 
 export function HeroSection() {
@@ -14,7 +15,9 @@ export function HeroSection() {
         <div className="text-center text-white">
           <h1 className="text-5xl font-bold mb-4">Welcome to the<br />South African<br />Citizen Portal</h1>
           <p className="mb-8 text-xl">Discover an unparalleled journey filled with adventure</p>
-          <Button>CREATE YOUR GO.GOV ACCOUNT</Button>
+          <Link href="/register">
+            <Button>Create your go.gov account</Button>
+          </Link>
         </div>
       </div>
     </section>

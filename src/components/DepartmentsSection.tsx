@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import Link from 'next/link';
 
 export function DepartmentsSection() {
   const departments = [
-    { name: 'HOME AFFAIRS', image: '/assets/images/Image7.png', services: ['ID APPLICATIONS', 'PASSPORTS', 'BIRTH CERTIFICATES'] },
+    { name: 'HOME AFFAIRS', image: '/assets/images/Image7.png', services: ['ID APPLICATIONS', 'PASSPORTS', 'BIRTH CERTIFICATES'], link: '/home-affairs' },
     { name: 'TRANSPORTATION', image: '/assets/images/Rectangle22.png', services: ["DRIVER'S LICENSES", 'VEHICLE REGISTRATIONS', 'ROADWORTHINESS CERTIFICATES'] },
-    { name: 'HEALTH', image: '/assets/images/Rectangle222.jpeg', services: ['Medical Aid Applications', 'Vacation Records', 'Health Grants'] },
+    { name: 'HEALTH', image: '/assets/images/Rectangle222.jpeg', services: ['Medical Aid Applications', 'Vacation Records', 'Health Grants'], link: '/health' },
     { name: 'EDUCATION', image: '/assets/images/Rectangle221.png', services: ['Scheduling Grants', 'Adult Education Programs', 'Certification Requests'] },
   ];
 
@@ -29,7 +30,13 @@ export function DepartmentsSection() {
                     <li key={i} className="text-gray-600">{service}</li>
                   ))}
                 </ul>
-                <Button className="w-full">Read More</Button>
+                {dept.link ? (
+                  <Link href={dept.link}>
+                    <Button className="w-full">Read More</Button>
+                  </Link>
+                ) : (
+                  <Button className="w-full">Read More</Button>
+                )}
               </CardContent>
             </Card>
           ))}
