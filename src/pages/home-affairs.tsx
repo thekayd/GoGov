@@ -175,9 +175,17 @@ export default function HomeAffairs() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
-                <Button className="border border-gray-300 hover:bg-gray-100">
-                  Read More
-                </Button>
+                {service.name === "Passports" ? (
+                  <Link href="/passport-info">
+                    <Button className="border border-gray-300 hover:bg-gray-100">
+                      Read More
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button className="border border-gray-300 hover:bg-gray-100">
+                    Read More
+                  </Button>
+                )}
               </div>
             ))}
           </div>
@@ -374,7 +382,8 @@ export default function HomeAffairs() {
                   <textarea
                     id="message"
                     placeholder="Type your message..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+
+     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
                 <div className="mb-4">

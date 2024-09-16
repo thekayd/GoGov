@@ -2,7 +2,7 @@
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { HeroSection } from "@/components/HeroSection";
+import { HeroSection } from "../home/(components)/HeroSection";
 import { AboutSection } from '@/components/AboutSection';
 import { DepartmentsSection } from '@/components/DepartmentsSection';
 
@@ -16,6 +16,6 @@ export default function HomePage() {
         <DepartmentsSection />
       </main>
       <Footer />
-    </div>
+    </div>  
   );
 }
