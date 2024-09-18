@@ -8,7 +8,7 @@ export function DepartmentsSection() {
     { name: 'HOME AFFAIRS', image: '/assets/images/Image7.png', services: ['ID APPLICATIONS', 'PASSPORTS', 'BIRTH CERTIFICATES'], link: '/home-affairs' },
     { name: 'TRANSPORTATION', image: '/assets/images/Rectangle22.png', services: ["DRIVER'S LICENSES", 'VEHICLE REGISTRATIONS', 'ROADWORTHINESS CERTIFICATES'], link: '/transport'},
     { name: 'HEALTH', image: '/assets/images/Rectangle222.jpeg', services: ['Medical Aid Applications', 'Vacation Records', 'Health Grants'], link: '/health' },
-    { name: 'EDUCATION', image: '/assets/images/Rectangle221.png', services: ['Scheduling Grants', 'Adult Education Programs', 'Certification Requests'] },
+    { name: 'EDUCATION', image: '/assets/images/Rectangle221.png', services: ['Scheduling Grants', 'Adult Education Programs', 'Certification Requests'], link: '/education' },
   ];
 
   return (
