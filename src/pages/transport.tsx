@@ -132,9 +132,17 @@ export default function Transport() {
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
-                <Button className="border border-gray-300 hover:bg-gray-100">
-                  Read More
-                </Button>
+                {service.name === "Driver's License" ? (
+                  <Link href="/drivers-license-application">
+                    <Button className="border border-gray-300 hover:bg-gray-100">
+                      Apply Now
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button className="border border-gray-300 hover:bg-gray-100">
+                    Read More
+                  </Button>
+                )}
               </div>
             ))}
           </div>
