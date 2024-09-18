@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ------Color variables------*/
+    --amber_500: #ffc107;
+    --amber_a400: #facd00;
+    --black_900: #000000;
+    --black_900_19: #00000019;
+    --black_900_2d: #000e1e2d;
+    --black_900_3f: #0000003f;
+    --blue_200: #aebfff;
+    --blue_400: #49aeff;
+    --blue_50: #edf7fe;
+    --blue_500: #298fff;
+    --blue_50_00: #edf7fe00;
+    --blue_50_01: #d7e2ff;
+    --blue_700: #2977be;
+    --blue_a700: #0069ff;
+    --blue_a700_01: #0f6cf8;
+    --blue_a700_14: #0069ff14;
+    --blue_a700_99: #0069ff99;
+    --blue_gray_100: #d9d9d9;
+    --blue_gray_100_01: #ccd2d7;
+    --blue_gray_400: #8e8e8e;
+    --blue_gray_50: #edf2f7;
+    --cyan_a100: #91f7f5;
+    --deep_orange_200: #ffa498;
+    --deep_orange_200_01: #ffa1a1;
+    --deep_purple_100: #cebaf8;
+    --deep_purple_50: #dfd0ff;
+    --deep_purple_a100: #9773ff;
+    --deep_purple_a100_01: #a174ff;
+    --deep_purple_a200: #9462ff;
+    --gray_100: #f5f5f5;
+    --gray_100_01: #f2f2f2;
+    --gray_200: #eeeeee;
+    --gray_200_01: #f0f0f0;
+    --gray_500: #999999;
+    --gray_500_01: #949494;
+    --gray_500_0f: #9494940f;
+
+    --gray_600: #767676;
+    --gray_600_01: #737b7d;
+    --gray_600_02: #747373;
+    --gray_600_03: #737373;
+    --gray_700: #666666;
+    --gray_700_01: #575757;
+    --gray_800: #4f4f4f;
+    --gray_800_01: #373c3d;
+    --gray_800_02: #383838;
+    --gray_900: #141414;
+    --gray_900_01: #1a1a1a;
+    --gray_900_02: #1e1e1e;
+    --gray_900_0c: #000e330c;
+    --gray_900_19: #1a1a1a19;
+    --gray_900_3f: #000e333f;
+    --gray_900_99: #1a1a1a99;
+    --gray_900_9b: #1a1a1a9b;
+    --green_800: #008f16;
+    --indigo_500: #3e51af;
+    --indigo_500_01: #3768a8;
+    --indigo_900: #0c2991;
+    --indigo_900_01: #1c2a78;
+    --indigo_900_26: #00175326;
+    --indigo_a700: #0f3cde;
+    --indigo_a700_01: #0047ff;
+    --indigo_a700_33: #0047ff33;
+    --light_blue_a700: #008bf9;
+    --light_green_a100: #d9f88c;
+    --light_green_a100_01: #b4ff97;
+    --orange_100: #f1deb3;
+    --orange_200: #d5bb81;
+    --orange_a200: #fbb034;
+    --pink_50: #fdd7e4;
+    --purple_100: #ffc1f1;
+    --purple_100_01: #f3adf3;
+    --purple_50: #fed6fb;
+    --red_300: #e77f5f;
+    --red_600: #e03c31;
+    --teal_800: #007a4d;
+    --white_a700: #ffffff;
+    --white_a700_00: #ffffff00;
+    --white_a700_7e: #ffffff7e;
+    --yellow_300: #f7f667;
+
+    --yellow_300: #f7f667;
+    /*------Shadow variables----
+*/
+    --shadow-xs: 0 1px 1px 0 #000e330c;
+    --shadow-sm: 0 4px 6px 0 #000e1e2d;
+    --shadow-md: 0 1px 2px 0 #000e333f;
+    --shadow-lg: 0 4px 4px 0 #0000003f;
+    --shadow-x1: 0 3px 2px 0 #0047ff33;
+    /*--Border radius variables------*/
+    --radius-xs: 2px;
+    --radius-sm: 5px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 10px;
+    --radius-2x1: 16px;
+    --radius-3x1: 18px;
+    --radius-4x1: 22px;
+    --radius-5x1: 30px;
+    /*------Spacing variables------*/
+    --space-xs: 0.13rem;
+    --space-sm: 0.25rem;
+    --space-md: 0.38rem;
+    --space-lg: 0.5rem;
+    --space-xl: 0.56rem;
+    --space-2x1: 0.63rem;
+    --space-3x1: 0.75rem;
+    --space-4x1: 0.88rem;
+    --space-5x1: 1rem;
+    --space-6x1: 1.13rem;
+    --space-7x1: 1.25rem;
+    --space-8x1: 1.38rem;
+    --space-9x1: 1.5rem;
+    --space-10x1: 1.56rem;
+    --space-11x1: 1.75rem;
+    --space-12x1: 2rem;
+    --space-13x1: 2.25rem;
+    --space-14x1: 2.5rem;
+    --space-15x1: 2.63rem;
+    [type="text"],
+    input:where(:not([type])),
+    [type="email"],
+    [type="url"],
+    [type="password"],
+    [type="number"],
+    [type="date"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="search"],
+    [type="tel"],
+    [type="time"],
+    [type="week"],
+    [multiple],
+    textarea,
+    select {
+      appearance: initial;
+      background-color: initial;
+      border: initial;
+      border-width: 0;
+    }
+  }
+  @layer components {
+    .container-xs {
+      @apply w-full mx-auto max-w-[81.88rem];
+    }
+  }
+}

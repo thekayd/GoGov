@@ -1,0 +1,112 @@
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/PoppinsMedium.ttf");
+    font-family: "Poppins";
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/PoppinsRegular.ttf");
+    font-family: "Poppins";
+    font-weight: 400;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/PoppinsSemiBold.ttf");
+    font-family: "Poppins";
+    font-weight: 600;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/Poppins.ttf");
+    font-family: "Poppins";
+    font-weight: 700;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/InterBold.ttf");
+    font-family: "Inter";
+    font-weight: 700;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/InterRegular.ttf");
+    font-family: "Inter";
+    font-weight: 400;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/NotoSansSemiBold.ttf");
+    font-family: "Noto Sans";
+    font-weight: 600;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/NotoSansRegular.ttf");
+    font-family: "Noto Sans";
+    font-weight: 400;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/LexendBold.ttf");
+    font-family: "Lexend";
+    font-weight: 700;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/LexendMedium.ttf");
+    font-family: "Lexend";
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/InterMedium.ttf");
+    font-family: "Inter";
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/RobotoRegular.ttf");
+    font-family: "Roboto";
+    font-weight: 400;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/RobotoMedium.ttf");
+    font-family: "Roboto";
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-display: swap;
+    font-style: normal;
+    src: url("/fonts/RobotoBold.ttf");
+    font-family: "Roboto";
+    font-weight: 700;
+  }
+  
