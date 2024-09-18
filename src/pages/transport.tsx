@@ -138,6 +138,12 @@ export default function Transport() {
                       Apply Now
                     </Button>
                   </Link>
+                ) : service.name === "Vehicle Registration" ? (
+                  <Link href="/vehicle-registration">
+                    <Button className="border border-gray-300 hover:bg-gray-100">
+                      Register Now
+                    </Button>
+                  </Link>
                 ) : (
                   <Button className="border border-gray-300 hover:bg-gray-100">
                     Read More
