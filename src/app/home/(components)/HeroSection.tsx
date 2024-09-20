@@ -23,10 +23,10 @@ export function HeroSection() {
             Citizen Portal
           </h1>
           <p className="mb-8 text-xl">
-            Discover an unparalleled journey filled with adventure
+            Discover an unparalleled journey filled with adventure. 
           </p>
           <Link href="/register">
-            <Button>Create your go.gov account</Button>
+            <Button>Create your Go.Gov account</Button>
           </Link>
         </div>
       </div>
