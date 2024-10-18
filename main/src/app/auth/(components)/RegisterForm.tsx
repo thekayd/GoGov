@@ -1,5 +1,11 @@
-"use client";
-import { Button } from "@/components/ui/button";
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
+
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -8,13 +14,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { toast } from "sonner";
-import { signup } from "../actions";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+
+import { signup } from "../actions"
 
 const provinces = [
   "Eastern Cape",
@@ -26,7 +29,7 @@ const provinces = [
   "Northern Cape",
   "North West",
   "Western Cape",
-];
+]
 
 const registerFormSchema = z.object({
   name: z.string().min(2, {
@@ -41,8 +44,8 @@ const registerFormSchema = z.object({
   password: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-});
-export type RegisterFormSchema = z.infer<typeof registerFormSchema>;
+})
+export type RegisterFormSchema = z.infer<typeof registerFormSchema>
 
 export default function RegisterForm() {
   const form = useForm<RegisterFormSchema>({
@@ -52,10 +55,20 @@ export default function RegisterForm() {
       email: "charliexample@gmail.com",
       password: "password123",
     },
-  });
+  })
 
   function onSubmit(values: RegisterFormSchema) {
-    signup(values);
+    toast.promise(signup(values), {
+      loading: "Signing up...",
+      success: (res) => {
+        console.log("Signup Response: ", res)
+        return "Successfuly Signed Up"
+      },
+      error: (err: Error) => {
+        console.log("Error: ", err.message)
+        return `Oops 🤯 ${err.message}. Please try again.`
+      },
+    })
   }
 
   return (
@@ -70,7 +83,9 @@ export default function RegisterForm() {
               <FormControl>
                 <Input placeholder="Your name" {...field} />
               </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -82,9 +97,15 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="youremail@example.com" {...field} />
+                <Input
+                  type="email"
+                  placeholder="youremail@example.com"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -103,7 +124,9 @@ export default function RegisterForm() {
                   {...field}
                 />
               </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -128,5 +151,5 @@ export default function RegisterForm() {
         </Button>
       </form>
     </Form>
-  );
+  )
 }

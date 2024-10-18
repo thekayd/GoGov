@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { toast } from "sonner";
+import { signup } from "../actions";
 
 const provinces = [
   "Eastern Cape",
@@ -30,9 +32,9 @@ const registerFormSchema = z.object({
   name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  province: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+  // province: z.string().min(2, {
+  //   message: "Username must be at least 2 characters.",
+  // }),
   email: z.string().email().min(2, {
     message: "Username must be at least 2 characters.",
   }),
@@ -40,23 +42,25 @@ const registerFormSchema = z.object({
     message: "Username must be at least 2 characters.",
   }),
 });
-type RegisterFormSchema = z.infer<typeof registerFormSchema>;
+export type RegisterFormSchema = z.infer<typeof registerFormSchema>;
 
 export default function RegisterForm() {
   const form = useForm<RegisterFormSchema>({
     resolver: zodResolver(registerFormSchema),
+    defaultValues: {
+      name: "Charles",
+      email: "charliexample@gmail.com",
+      password: "password123",
+    },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: RegisterFormSchema) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    signup(values);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
           control={form.control}
           name="name"
@@ -92,7 +96,12 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="password" type="password" {...field} />
+                <Input
+                  placeholder="password"
+                  autoComplete="current-password"
+                  type="password"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>This is your public display name.</FormDescription>
               <FormMessage />
@@ -114,7 +123,9 @@ export default function RegisterForm() {
           )}
         /> */}
 
-        <Button type="submit">Sign Up</Button>
+        <Button type="submit" className="w-full">
+          Sign Up
+        </Button>
       </form>
     </Form>
   );

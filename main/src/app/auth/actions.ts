@@ -26,7 +26,8 @@ export async function signup(values: RegisterFormSchema) {
   const response = await AuthService.signUp(values.email, values.password)
 
   if (response.err) {
-    redirect("/error")
+    const error = response.val
+    throw new Error(error.message, { cause: error.error })
   }
 
   revalidatePath("/", "layout")
