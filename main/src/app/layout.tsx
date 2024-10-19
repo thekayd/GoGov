@@ -1,5 +1,6 @@
 import "@/styles/globals.css"
 
+import { Suspense } from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import { Toaster } from "sonner"
@@ -10,7 +11,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
-interface RootLayoutProps {
+export interface RootLayoutProps {
   children: React.ReactNode
 }
 
@@ -80,7 +81,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>
