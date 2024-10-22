@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
+
+import { Button } from "@/components/ui/button"
 
 export function HeroSection() {
   return (
@@ -13,9 +14,9 @@ export function HeroSection() {
         layout="fill"
         objectFit="cover"
       />
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div className="text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">
+          <h1 className="mb-4 text-5xl font-bold">
             Welcome to the
             <br />
             South African
@@ -23,13 +24,13 @@ export function HeroSection() {
             Citizen Portal
           </h1>
           <p className="mb-8 text-xl">
-            Discover an unparalleled journey filled with adventure. 
+            Discover an unparalleled journey filled with adventure.
           </p>
-          <Link href="/register">
-            <Button>Create your Go.Gov account</Button>
-          </Link>
+          <Button>
+            <Link href="/dashboard">Access your portal now</Link>
+          </Button>
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -7,6 +7,7 @@ import { Toaster } from "sonner"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
+import QueryProvider from "@/components/query-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -75,15 +76,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
           inter.className
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-          <Toaster richColors position="top-center" />
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+            <Toaster richColors position="top-center" />
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   )
