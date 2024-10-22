@@ -7,7 +7,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <DashboardNavbar />
-      {children}
+      <div className="min-h-screen px-4 py-10">{children}</div>
       <DetailedFooter />
     </div>
   )

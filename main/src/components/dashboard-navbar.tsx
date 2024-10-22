@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import UserProfile from "./supaauth/user-profile"
 import Typography from "./ui/typography"
 
 const NavbarLinks = [
@@ -37,6 +38,7 @@ function DashboardNavbar() {
                 </Link>
               </li>
             ))}
+            <UserProfile />
           </ul>
         </nav>
       </div>

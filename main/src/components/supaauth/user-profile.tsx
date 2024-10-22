@@ -25,10 +25,13 @@ export default function UserProfile() {
   const { data } = useUser()
 
   const signout = () => {
-    startSignOut(async () => {
+    startSignOut(() => {
       const supabase = createSupabaseBrowser()
-      await supabase.auth.signOut()
-      router.push("/signin")
+      supabase.auth.signOut().then(() => {
+        router.push("/signin")
+      })
+      // await supabase.auth.signOut()
+      // router.push("/signin")
     })
   }
 

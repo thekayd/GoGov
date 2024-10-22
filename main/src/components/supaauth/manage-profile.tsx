@@ -33,13 +33,6 @@ export default function ManageProfile() {
   const [activeTab, setActiveTab] = useState("profile")
   const { data } = useUser()
 
-  // Check that the data object has properties to access as it will be {} if not authenticated
-  if (!data?.app_metadata) {
-    console.log("Not authenticated", data)
-  }
-
-  console.log("User Data: ", data)
-
   const AuthProviderIcon = data?.app_metadata
     ? authProvider[data.app_metadata.provider as IconKey].Icon
     : MdOutlineMarkEmailRead
