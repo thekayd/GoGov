@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label"
 
 export default function VehicleRegistrationForm() {
   return (
-    <main className="mx-auto mt-8">
+    <main className="mx-autpnpm add drizzle-orm postgreso mt-8">
       <div className="mb-8 flex flex-col items-center justify-center text-center">
         <h1 className="text-4xl font-bold">Vehicle Registration Form</h1>
         <p className="text-gray-600">

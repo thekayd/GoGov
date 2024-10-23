@@ -20,7 +20,9 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 
-export default function CitizenPortal() {
+import { getDriversLicenseApplications } from "./actions"
+
+export default async function CitizenPortal() {
   const availableApplications = [
     {
       title: "Passport Application",
@@ -50,6 +52,9 @@ export default function CitizenPortal() {
     },
     { title: "Tax Filing", status: "Submitted", lastUpdated: "2023-04-10" },
   ]
+
+  const res = await getDriversLicenseApplications()
+  console.log("Res: ", res)
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">

@@ -1,6 +1,7 @@
-import { HTTPException } from "hono/http-exception";
-import { StatusCode } from "hono/utils/http-status";
-import { AuthServiceError, Exception } from "./types";
+import { HTTPException } from "hono/http-exception"
+import { StatusCode } from "hono/utils/http-status"
+
+import { Exception, ServiceError } from "./types"
 
 // export const handleAPIError = (error: any, status?: StatusCode, message?: string) => {
 //   if (error instanceof Exception) {
@@ -18,19 +19,23 @@ import { AuthServiceError, Exception } from "./types";
 // };
 
 // Handle Auth errors
-export const handleAuthError = (
+export const handleServiceError = (
   error: any,
   code?: StatusCode,
   message?: string
-): AuthServiceError => {
-  if (error instanceof AuthServiceError) {
-    return error;
+): ServiceError => {
+  console.log(
+    `A Service error has occured - Message: ${message} : Code - ${code} - Error: ${error}`
+  )
+
+  if (error instanceof ServiceError) {
+    return error
   }
 
   //   If it's an Bubble up exception
   if (error instanceof Exception) {
-    return new AuthServiceError(error, message, code || 500);
+    return new ServiceError(error, message, code || 500)
   }
 
-  return new AuthServiceError(error, message, code || 500);
-};
+  return new ServiceError(error, message, code || 500)
+}

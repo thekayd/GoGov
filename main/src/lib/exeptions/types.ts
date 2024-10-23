@@ -1,28 +1,28 @@
-import { StatusCode } from "hono/utils/http-status";
+import { StatusCode } from "hono/utils/http-status"
 
 export class Exception extends Error {
-  code: StatusCode;
+  code: StatusCode
   /**
    * @param message
    * @param code
    */
   constructor(message = "Server Exception", code: StatusCode) {
-    super(message);
-    this.code = code;
+    super(message)
+    this.code = code
   }
 }
 
-export class AuthServiceError extends Error {
-  code: StatusCode;
-  error: any;
+export class ServiceError extends Error {
+  code: StatusCode
+  error: any
 
   /**
    * @param message
    * @param code
    */
   constructor(error: any, message = "AuthService Exception", code: StatusCode) {
-    super(message);
-    this.code = code;
-    this.error = error;
+    super(message)
+    this.code = code
+    this.error = error
   }
 }
