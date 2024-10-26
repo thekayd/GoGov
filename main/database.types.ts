@@ -267,6 +267,54 @@ export type Database = {
         }
         Relationships: []
       }
+      users: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          date_of_birth: string
+          email: string
+          gender: string
+          id: string
+          id_number: string
+          name: string
+          phone_number: string
+          postcode: string
+          province: string
+          surname: string
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string
+          date_of_birth: string
+          email: string
+          gender: string
+          id?: string
+          id_number: string
+          name: string
+          phone_number: string
+          postcode: string
+          province: string
+          surname: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          date_of_birth?: string
+          email?: string
+          gender?: string
+          id?: string
+          id_number?: string
+          name?: string
+          phone_number?: string
+          postcode?: string
+          province?: string
+          surname?: string
+        }
+        Relationships: []
+      }
       vaccination_applications: {
         Row: {
           address: string | null

@@ -2,29 +2,33 @@ import { DatabaseTables } from "@/types"
 import { StatusCode } from "hono/utils/http-status"
 import { Err, Ok, Result } from "ts-results"
 
+import { UserInfoForm } from "@/app/dashboard/profile/(components)/UserInfoForm"
+import { userInfoFormSchema } from "@/app/dashboard/profile/(components)/UserInfoFormContext"
+
 import { Tables } from "../../database.types"
 import { handleServiceError } from "./exeptions"
 import { ServiceError } from "./exeptions/types"
 import { createSupabaseServer } from "./supabase/server"
 
 interface DriversLicenseServiceResponse {
-  applications: Tables<"drivers_license_applications">[]
+  userInfo: UserInfoForm
 }
 
-export class DriversLicenseService {
-  static TableName: DatabaseTables = "drivers_license_applications"
+export class UserService {
+  static TableName: DatabaseTables = "users"
 
   /**
    * Crud operations for Drivers License Applications
    */
-  static async getAll(): Promise<
-    Result<DriversLicenseServiceResponse, ServiceError>
-  > {
+  static async getUsersInfo(
+    email: string
+  ): Promise<Result<DriversLicenseServiceResponse, ServiceError>> {
     const db = createSupabaseServer()
     const { data, error, status } = await db
       .from(this.TableName)
       .select()
-      .returns<Tables<"drivers_license_applications">[]>()
+      .eq("email", email)
+      .returns<UserInfoForm>()
 
     if (error || !data || data === null) {
       console.log(error)
@@ -33,17 +37,17 @@ export class DriversLicenseService {
       )
     }
 
-    return Ok({ applications: data })
+    return Ok({ userInfo: data })
   }
 
-  static async create(): Promise<
-    Result<DriversLicenseServiceResponse, ServiceError>
-  > {
+  static async create(
+    userPayload: UserInfoForm
+  ): Promise<Result<DriversLicenseServiceResponse, ServiceError>> {
     const db = createSupabaseServer()
     const { data, error, status } = await db
       .from(this.TableName)
-      .select()
-      .returns<Tables<"drivers_license_applications">[]>()
+      .insert([userPayload])
+      .returns<UserInfoForm>()
 
     if (error || !data || data === null) {
       console.log(error)
@@ -52,6 +56,6 @@ export class DriversLicenseService {
       )
     }
 
-    return Ok({ applications: data })
+    return Ok({ userInfo: data })
   }
 }

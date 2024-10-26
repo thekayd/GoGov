@@ -56,7 +56,7 @@ const formSchema = z.object({
   documents: z.string(),
 })
 
-export default function MyForm() {
+export default function DriversApplicationForm() {
   const [files, setFiles] = useState<File[] | null>(null)
 
   const dropZoneConfig = {
