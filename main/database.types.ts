@@ -225,49 +225,7 @@ export type Database = {
         }
         Relationships: []
       }
-      scheduled_appointments: {
-        Row: {
-          appointment_date: string | null
-          appointment_time: string | null
-          created_at: string | null
-          email: string
-          id: string
-          name: string | null
-          phone: string | null
-          reason: string | null
-          status: string | null
-          surname: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          appointment_date?: string | null
-          appointment_time?: string | null
-          created_at?: string | null
-          email: string
-          id?: string
-          name?: string | null
-          phone?: string | null
-          reason?: string | null
-          status?: string | null
-          surname?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          appointment_date?: string | null
-          appointment_time?: string | null
-          created_at?: string | null
-          email?: string
-          id?: string
-          name?: string | null
-          phone?: string | null
-          reason?: string | null
-          status?: string | null
-          surname?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      users: {
+      profile: {
         Row: {
           address: string
           city: string
@@ -312,6 +270,48 @@ export type Database = {
           postcode?: string
           province?: string
           surname?: string
+        }
+        Relationships: []
+      }
+      scheduled_appointments: {
+        Row: {
+          appointment_date: string | null
+          appointment_time: string | null
+          created_at: string | null
+          email: string
+          id: string
+          name: string | null
+          phone: string | null
+          reason: string | null
+          status: string | null
+          surname: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          appointment_date?: string | null
+          appointment_time?: string | null
+          created_at?: string | null
+          email: string
+          id?: string
+          name?: string | null
+          phone?: string | null
+          reason?: string | null
+          status?: string | null
+          surname?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          appointment_date?: string | null
+          appointment_time?: string | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          name?: string | null
+          phone?: string | null
+          reason?: string | null
+          status?: string | null
+          surname?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }

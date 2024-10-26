@@ -1,5 +1,10 @@
-import UserInfoForm from "./(components)/UserInfoForm"
-import { UserInfoFormProvider } from "./(components)/UserInfoFormContext"
+"use client"
+
+import { useShowProfile } from "@/hooks/useProfile"
+import useUser from "@/hooks/useUser"
+
+import ProfileForm from "./(components)/ProfileForm"
+import { ProfileFormProvider } from "./(components)/ProfileFormContext"
 
 export default function ProfilePage() {
   return (
@@ -10,10 +15,9 @@ export default function ProfilePage() {
         </h1>
 
         <section className="mb-8 w-full">
-          <UserInfoFormProvider>
-
-          <UserInfoForm />
-          </UserInfoFormProvider>
+          <ProfileFormProvider>
+            <ProfileForm />
+          </ProfileFormProvider>
         </section>
       </div>
     </div>

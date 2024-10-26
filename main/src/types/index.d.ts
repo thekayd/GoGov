@@ -19,4 +19,4 @@ export type DatabaseTables =
   | "passport_applications"
   | "scheduled_appointments"
   | "vaccination_applications"
-  | "users"
+  | "profile"

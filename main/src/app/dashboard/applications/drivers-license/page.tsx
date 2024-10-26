@@ -1,5 +1,10 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import MyForm from "@/components/application-forms/drivers-license"
+import DriversApplicationForm from "@/components/application-forms/drivers-license"
+
+import ProfileForm from "../../profile/(components)/ProfileForm"
+import { ProfileFormProvider } from "../../profile/(components)/ProfileFormContext"
 
 export default function DriversLicenseApplication() {
   return (
@@ -13,15 +18,28 @@ export default function DriversLicenseApplication() {
         </p>
       </div>
 
-      <Card className="w-full max-w-4xl">
-        <CardHeader>
-          <CardTitle>Personal Information</CardTitle>
-        </CardHeader>
+      <div className="space-y-5">
+        <Card className="w-full max-w-4xl">
+          <CardHeader>
+            <CardTitle>Application info Information</CardTitle>
+          </CardHeader>
 
-        <CardContent className="">
-          <MyForm />
-        </CardContent>
-      </Card>
+          <CardContent className="">
+            <DriversApplicationForm />
+          </CardContent>
+        </Card>
+        <Card className="w-full max-w-4xl">
+          <CardHeader>
+            <CardTitle>Personal Information</CardTitle>
+          </CardHeader>
+
+          <CardContent className="w-full">
+            <ProfileFormProvider>
+              <ProfileForm />
+            </ProfileFormProvider>
+          </CardContent>
+        </Card>
+      </div>
     </main>
   )
 }

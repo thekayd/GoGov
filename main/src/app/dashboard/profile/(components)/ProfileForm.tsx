@@ -34,42 +34,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useUserInfoForm } from "./UserInfoFormContext"
 
-const userInfoFormSchema= z.object({
-  name: z.string(),
-  surname: z.string(),
-  gender: z.string(),
-  date_of_birth: z.coerce.date(),
-  email: z.string(),
-  phone_number: z.string(),
-  id_number: z.string(),
-  address: z.string(),
-  city: z.string(),
-  province: z.string(),
-  postcode: z.string(),
-})
-export type UserInfoForm = z.infer<typeof userInfoFormSchema>
+import { useProfileForm } from "./ProfileFormContext"
 
-export default function UserInfoForm() {
-//   const form = useForm<UserInfoForm>({
-//     resolver: zodResolver(userInfoFormSchema),
-//   })
-const { form, onSubmit } = useUserInfoForm()
+export default function ProfileForm() {
+  //   const form = useForm<ProfileForm>({
+  //     resolver: zodResolver(ProfileFormSchema),
+  //   })
+  const { form, onSubmit, error, isPending } = useProfileForm()
 
-//   function onSubmit(values: UserInfoForm) {
-//     try {
-//       console.log(values)
-//       toast(
-//         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-//           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-//         </pre>
-//       )
-//     } catch (error) {
-//       console.error("Form submission error", error)
-//       toast.error("Failed to submit the form. Please try again.")
-//     }
-//   }
+  // console.log("Create Profile Error: ", error)
+  // console.log("Create Profile isPending: ", isPending)
 
   return (
     <Form {...form}>
