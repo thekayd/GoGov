@@ -8,7 +8,7 @@ import { ProfileFormProvider } from "../../profile/(components)/ProfileFormConte
 
 export default function DriversLicenseApplication() {
   return (
-    <main className="mx-auto mt-8">
+    <main className="mx-auto mt-3">
       <div className="mb-8 flex flex-col items-center justify-center text-center">
         <h1 className=" text-4xl font-bold">Driver's License Application</h1>
         <p className=" text-gray-600">
@@ -18,8 +18,8 @@ export default function DriversLicenseApplication() {
         </p>
       </div>
 
-      <div className="space-y-5">
-        <Card className="w-full max-w-4xl">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <Card className="h-fit w-full max-w-4xl">
           <CardHeader>
             <CardTitle>Application info Information</CardTitle>
           </CardHeader>
@@ -34,7 +34,7 @@ export default function DriversLicenseApplication() {
           </CardHeader>
 
           <CardContent className="w-full">
-            <ProfileFormProvider>
+            <ProfileFormProvider disabled>
               <ProfileForm />
             </ProfileFormProvider>
           </CardContent>

@@ -1,12 +1,20 @@
 "use client"
 
-import { useState } from "react"
+import { use, useState } from "react"
+import {
+  DriversLicenseModel,
+  DriversLicenseModelSchema,
+} from "@/models/DriversLicenseModel"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Calendar as CalendarIcon, Paperclip, UploadCloud } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { useCreateDriversLicense } from "@/hooks/useDriversLicense"
+import { uploadFiles } from "@/hooks/useFileUpload"
+import { useShowProfile } from "@/hooks/useProfile"
+import useUser from "@/hooks/useUser"
 import { Button } from "@/components/ui/button"
 import {
   FileInput,
@@ -31,12 +39,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const formSchema = z.object({
-  licenseType: z.string(),
-  testCentre: z.string(),
-  documents: z.string(),
-})
-
 export default function DriversApplicationForm() {
   const [files, setFiles] = useState<File[] | null>(null)
 
@@ -45,27 +47,72 @@ export default function DriversApplicationForm() {
     maxSize: 1024 * 1024 * 4,
     multiple: true,
   }
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+
+  const user = useUser()
+  const profile = useShowProfile()
+  const form = useForm<DriversLicenseModel>({
+    resolver: zodResolver(DriversLicenseModelSchema),
+    defaultValues: {
+      email: user.data?.email ?? "",
+    },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      console.log(values)
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
+  const { data, isPending, error, mutate } = useCreateDriversLicense({
+    onSuccess: () => {
+      toast.success("Drivers License Application created successfully")
+    },
+    onError: () => {
+      toast.error(
+        `Drivers License Application creating failed - ${error?.message}`
       )
-    } catch (error) {
-      console.error("Form submission error", error)
-      toast.error("Failed to submit the form. Please try again.")
+    },
+  })
+
+  const formError = form.formState.errors
+  console.log("Error: ", formError)
+
+  function onSubmit(values: DriversLicenseModel) {
+    console.log("Files: ", values)
+    // if (files === null || files.length < 2) {
+    //   form.setError("uploaded_documents", {
+    //     type: "required",
+    //     message: "Please upload at least two documents",
+    //   })
+    //   return
+    // }
+
+    // Validate Profil
+    if (!profile.data) {
+      form.setError("email", {
+        type: "validate",
+        message: "Please update your Profile/Personal information first.",
+      })
     }
+
+    toast.promise(
+      async () => {
+        // values.uploaded_documents = await uploadFiles(files!)
+        values.uploaded_documents = ["something", "something2"]
+        mutate(values)
+      },
+      {
+        loading: "Submitting...",
+        success: (res) => {
+          console.log("Response: ", res)
+          return "Successfully submitted"
+        },
+        error: (err) => {
+          console.log("Error: ", err)
+          return "Failed to submit"
+        },
+      }
+    )
   }
 
   return (
     <Form {...form}>
       <form
+        id="application-form"
         onSubmit={form.handleSubmit(onSubmit)}
         className=" max-w-3xl space-y-8"
       >
@@ -73,7 +120,7 @@ export default function DriversApplicationForm() {
           <div className="col-span-6">
             <FormField
               control={form.control}
-              name="licenseType"
+              name="license_type"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>License Type</FormLabel>
@@ -87,13 +134,10 @@ export default function DriversApplicationForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="m@example.com">
-                        m@example.com
-                      </SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">
-                        m@support.com
-                      </SelectItem>
+                      <SelectItem value="Car">Car</SelectItem>
+                      <SelectItem value="Motorcycle">Motorcycle</SelectItem>
+                      <SelectItem value="Bus">Bus</SelectItem>
+                      <SelectItem value="Truck">Truck</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormDescription>
@@ -108,7 +152,7 @@ export default function DriversApplicationForm() {
           <div className="col-span-6">
             <FormField
               control={form.control}
-              name="testCentre"
+              name="test_centre"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Test Centre</FormLabel>
@@ -122,12 +166,35 @@ export default function DriversApplicationForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="m@example.com">
-                        m@example.com
+                      <SelectItem value="Pretoria Test Centre">
+                        Pretoria Test Centre
                       </SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">
-                        m@support.com
+                      <SelectItem value="Johannesburg Test Centre">
+                        Johannesburg Test Centre
+                      </SelectItem>
+                      <SelectItem value="Sandton Test Centre">
+                        Sandton Test Centre
+                      </SelectItem>
+                      <SelectItem value="Midrand Test Centre">
+                        Midrand Test Centre
+                      </SelectItem>
+                      <SelectItem value="Centurion Test Centre">
+                        Centurion Test Centre
+                      </SelectItem>
+                      <SelectItem value="Soweto Test Centre">
+                        Soweto Test Centre
+                      </SelectItem>
+                      <SelectItem value="Kempton Park Test Centre">
+                        Kempton Park Test Centre
+                      </SelectItem>
+                      <SelectItem value="Germiston Test Centre">
+                        Germiston Test Centre
+                      </SelectItem>
+                      <SelectItem value="Benoni Test Centre">
+                        Benoni Test Centre
+                      </SelectItem>
+                      <SelectItem value="Boksburg Test Centre">
+                        Boksburg Test Centre
                       </SelectItem>
                     </SelectContent>
                   </Select>
@@ -141,7 +208,7 @@ export default function DriversApplicationForm() {
 
         <FormField
           control={form.control}
-          name="documents"
+          name="uploaded_documents"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Required Documents</FormLabel>

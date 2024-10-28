@@ -22,8 +22,11 @@ export function useShowProfile() {
 
       if (error) {
         console.log("Profile Error: ", error)
-        return Promise.reject(new Error("Oh no!"))
+        return Promise.reject(new Error(error.message))
       }
+
+      if (!data || !data[0])
+        return Promise.reject(new Error("Profile not found"))
 
       return data[0]
     },
@@ -50,7 +53,7 @@ export function useCreateProfile({
 
       if (error) {
         console.log("Profile Error: ", error)
-        return Promise.reject(new Error("Oh no!"))
+        return Promise.reject(new Error(error.message))
       }
       return data
     },

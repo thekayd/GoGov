@@ -50,7 +50,7 @@ export default function ProfileForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto w-full max-w-5xl space-y-8 py-10"
+        className="mx-auto w-full max-w-5xl space-y-8 "
       >
         {/* Full Name */}
         <div className="grid w-full grid-cols-12 gap-4">
@@ -101,6 +101,7 @@ export default function ProfileForm() {
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
+                    disabled={field.disabled}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -151,6 +152,7 @@ export default function ProfileForm() {
                         selected={field.value}
                         onSelect={field.onChange}
                         initialFocus
+                        disabled={field.disabled}
                       />
                     </PopoverContent>
                   </Popover>
@@ -256,8 +258,9 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Province</FormLabel>
                   <Select
-                    onValueChange={field.onChange}
                     defaultValue={field.value}
+                    disabled={field.disabled}
+                    onValueChange={field.onChange}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -302,7 +305,13 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={form.formState.isSubmitting || form.formState.disabled}
+        >
+          Submit
+        </Button>
       </form>
     </Form>
   )

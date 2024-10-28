@@ -25,7 +25,8 @@ const ProfileFormContext = createContext<ProfileFormContextType | undefined>(
 
 export const ProfileFormProvider: React.FC<{
   children: ReactNode
-}> = ({ children }) => {
+  disabled?: boolean
+}> = ({ children, disabled }) => {
   const {
     data: profile,
     error: profileError,
@@ -42,10 +43,12 @@ export const ProfileFormProvider: React.FC<{
   })
 
   const form = useForm<Profile>({
-    resolver: zodResolver(ProfileModelSchema),
-    // defaultValues: profile,
     values: profile,
+    disabled: profilePending || disabled,
+    resolver: zodResolver(ProfileModelSchema),
   })
+
+  if (error) console.log("Profile Error: ", error)
 
   const onSubmit = (values: Profile) => {
     mutate(values)

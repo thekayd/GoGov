@@ -87,6 +87,41 @@ export type Database = {
         }
         Relationships: []
       }
+      drivers_license: {
+        Row: {
+          created_at: string
+          email: string
+          id: number
+          license_type: string
+          test_centre: string
+          uploaded_documents: string[]
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: number
+          license_type: string
+          test_centre: string
+          uploaded_documents: string[]
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: number
+          license_type?: string
+          test_centre?: string
+          uploaded_documents?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drivers_license_email_fkey"
+            columns: ["email"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["email"]
+          },
+        ]
+      }
       drivers_license_applications: {
         Row: {
           address: string | null
