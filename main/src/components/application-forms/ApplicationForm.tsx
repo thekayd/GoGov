@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { useRouter } from "next/navigation"
+import { z, ZodSchema } from "zod"
 
 import { useShowProfile } from "@/hooks/useProfile"
 import { Button } from "@/components/ui/button"
@@ -38,11 +39,11 @@ const testCenters = [
   "Boksburg Test Centre",
 ]
 
-export interface ApplicationFormTemplate {
+export interface ApplicationFormTemplate<T> {
   title: string
   fields: {
     type: "select" | "file"
-    name: string
+    name: keyof T & string
     label: string
     placeholder?: string
     description?: string
@@ -53,7 +54,7 @@ export interface ApplicationFormTemplate {
 export default function ApplicationForm({
   template,
 }: {
-  template: ApplicationFormTemplate
+  template: ApplicationFormTemplate<any>
 }) {
   const { form, isApplicationPending, onSubmit } = useApplicationForm()
 
@@ -98,6 +99,7 @@ export default function ApplicationForm({
       )
     )
   }, [template.fields])
+
   return (
     <Form {...form}>
       <form

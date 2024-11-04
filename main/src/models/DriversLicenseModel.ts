@@ -5,7 +5,7 @@ import { ApplicationFormTemplate } from "@/components/application-forms/Applicat
 import { Database } from "../../database.types"
 import { Profile } from "./ProfileModel"
 
-const testCenters = [
+export const DepartmentCenters = [
   "Pretoria Test Centre",
   "Johannesburg Test Centre",
   "Sandton Test Centre",
@@ -55,48 +55,49 @@ export function createDriversLicenseModel(
   }
 }
 
-export const DriversLicenseFormTemplate: ApplicationFormTemplate = {
-  title: "yes",
-  fields: [
-    {
-      type: "select",
-      name: "license_category",
-      label: "License Type",
-      placeholder: "License Type",
-      options: ["Car", "Motorcycle", "Bus", "Truck"],
-      description: "Select your license type",
-    },
-    {
-      type: "select",
-      name: "test_center",
-      label: "Test Center",
-      options: testCenters,
-      placeholder: "Test Center",
-      description: "Select your test center",
-    },
-    {
-      type: "file",
-      name: "id_document",
-      label: "ID Document",
-    },
-    {
-      type: "file",
-      name: "passport_photo",
-      label: "Passport",
-    },
-    {
-      type: "file",
-      name: "proof_of_address",
-      label: "Proof of Address",
-    },
-    {
-      type: "file",
-      name: "eye_test_certificate",
-      label: "Eye Test Certificate",
-    },
-  ],
-}
+export const DriversLicenseFormTemplate: ApplicationFormTemplate<DriversLicenseForm> =
+  {
+    title: "yes",
+    fields: [
+      {
+        type: "select",
+        name: "license_category",
+        label: "License Type",
+        placeholder: "License Type",
+        options: ["Car", "Motorcycle", "Bus", "Truck"],
+        description: "Select your license type",
+      },
+      {
+        type: "select",
+        name: "test_center",
+        label: "Test Center",
+        options: DepartmentCenters,
+        placeholder: "Test Center",
+        description: "Select your test center",
+      },
+      {
+        type: "file",
+        name: "id_document",
+        label: "ID Document",
+      },
+      {
+        type: "file",
+        name: "passport_photo",
+        label: "Passport",
+      },
+      {
+        type: "file",
+        name: "proof_of_address",
+        label: "Proof of Address",
+      },
+      {
+        type: "file",
+        name: "eye_test_certificate",
+        label: "Eye Test Certificate",
+      },
+    ],
+  }
 
 export type DriversLicenseForm = z.infer<typeof DriversLicenseFormSchema>
-export type DriversLicenseModel =
+type DriversLicenseModel =
   Database["public"]["Tables"]["drivers_license_applications"]["Row"]

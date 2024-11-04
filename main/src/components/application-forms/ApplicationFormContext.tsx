@@ -4,12 +4,7 @@ import { profile } from "console"
 import React, { createContext, ReactNode, useCallback, useContext } from "react"
 import { useRouter } from "next/navigation"
 import router from "next/router"
-import {
-  createDriversLicenseModel,
-  DriversLicenseForm,
-  DriversLicenseFormSchema,
-  DriversLicenseModel,
-} from "@/models/DriversLicenseModel"
+import { DriversLicenseForm } from "@/models/DriversLicenseModel"
 import { Profile, ProfileModelSchema } from "@/models/ProfileModel"
 import { DatabaseTables } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -41,9 +36,11 @@ import { Database } from "../../../database.types"
  */
 interface ApplicationFormContextType {
   isApplicationPending: boolean
-  onSubmit: SubmitHandler<DriversLicenseForm>
+  onSubmit: SubmitHandler<z.infer<ModelFormSchema>>
   form: ReturnType<typeof useForm<any>>
 }
+
+type ModelFormSchema = ZodObject<any>
 
 const ApplicationFormContext = createContext<
   ApplicationFormContextType | undefined
@@ -52,7 +49,7 @@ const ApplicationFormContext = createContext<
 export const ApplicationFormProvider: React.FC<{
   table_name: DatabaseTables
   children: ReactNode
-  modelFormSchema: ZodObject<any>
+  modelFormSchema: ModelFormSchema
   createApplicationModel: (profile: Profile, formData: any) => any
 }> = ({ children, modelFormSchema, createApplicationModel, table_name }) => {
   const { data: profile } = useShowProfile()
@@ -88,13 +85,13 @@ export const ApplicationFormProvider: React.FC<{
 
       createApplication({
         model: applicationModel,
-        tableName: "drivers_license_applications",
+        tableName: table_name,
       })
 
       if (applicationError) {
         console.log("Submit Error: ", data)
         toast.error(
-          `Oops! Something went wrong. Please try again. - ${applicationError.message}`
+          `Oops! Something went wrong. Please try again. - ${applicationError?.message}`
         )
         return
       }
