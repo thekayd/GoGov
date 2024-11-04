@@ -1,4 +1,3 @@
-import { DriversLicenseModel } from "@/models/DriversLicenseModel"
 import { useMutation } from "@tanstack/react-query"
 
 import { env } from "@/env.mjs"
