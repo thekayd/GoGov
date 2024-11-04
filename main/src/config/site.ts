@@ -17,3 +17,21 @@ export const siteConfig: SiteConfig = {
   },
   ogImage: `${env.NEXT_PUBLIC_APP_URL}/og.jpg`,
 }
+
+export const SiteMap = {
+  Home: "/",
+  Auth: "/auth",
+  Dashboard: "/dashboard",
+  Profile: {
+    path: "/dashboard/profile",
+  },
+  Applications: {
+    children: {
+      Passport: "/dashboard/applications/passport",
+      DriversLicense: "/dashboard/applications/drivers-license",
+      Vehicle: "/dashboard/applications/vehicle",
+    },
+  },
+} as const
+
+SiteMap.Dashboard

@@ -1,7 +1,4 @@
-"use client"
-
-import { useShowProfile } from "@/hooks/useProfile"
-import useUser from "@/hooks/useUser"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 import ProfileForm from "./(components)/ProfileForm"
 import { ProfileFormProvider } from "./(components)/ProfileFormContext"
@@ -15,9 +12,17 @@ export default function ProfilePage() {
         </h1>
 
         <section className="mb-8 w-full">
-          <ProfileFormProvider>
-            <ProfileForm />
-          </ProfileFormProvider>
+          <Card className="w-full max-w-4xl">
+            <CardHeader>
+              <CardTitle>Personal Information</CardTitle>
+            </CardHeader>
+
+            <CardContent className="w-full">
+              <ProfileFormProvider>
+                <ProfileForm />
+              </ProfileFormProvider>
+            </CardContent>
+          </Card>
         </section>
       </div>
     </div>

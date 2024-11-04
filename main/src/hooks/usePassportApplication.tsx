@@ -1,6 +1,7 @@
 "use client"
 
 import { DriversLicenseModel } from "@/models/DriversLicenseModel"
+import { PassportApplicationModel } from "@/models/PassportApplicationModel"
 import { Profile } from "@/models/ProfileModel"
 import { User } from "@supabase/supabase-js"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -8,7 +9,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { env } from "@/env.mjs"
 import { createSupabaseBrowser } from "@/lib/supabase/client"
 
-export function useCreateDriversLicense({
+export function useCreatePassportApplication({
   onSuccess,
   onError,
 }: {
@@ -19,7 +20,7 @@ export function useCreateDriversLicense({
     onError: onError,
     onSuccess: onSuccess,
     mutationKey: ["profile-create"],
-    mutationFn: async (application: DriversLicenseModel) => {
+    mutationFn: async (application: PassportApplicationModel) => {
       const db = createSupabaseBrowser()
       const { data, error, status } = await db
         .from("")

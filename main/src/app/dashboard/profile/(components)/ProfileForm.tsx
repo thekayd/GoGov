@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
@@ -8,8 +9,9 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { SiteMap } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
   Form,
@@ -37,10 +39,7 @@ import {
 
 import { useProfileForm } from "./ProfileFormContext"
 
-export default function ProfileForm() {
-  //   const form = useForm<ProfileForm>({
-  //     resolver: zodResolver(ProfileFormSchema),
-  //   })
+export default function ProfileForm({ disabled }: { disabled?: boolean }) {
   const { form, onSubmit, error, isPending } = useProfileForm()
 
   // console.log("Create Profile Error: ", error)
@@ -102,6 +101,7 @@ export default function ProfileForm() {
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                     disabled={field.disabled}
+                    value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -109,8 +109,8 @@ export default function ProfileForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="male">Male</SelectItem>
-                      <SelectItem value="female">Female</SelectItem>
+                      <SelectItem value="Male">Male</SelectItem>
+                      <SelectItem value="Female">Female</SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -261,6 +261,7 @@ export default function ProfileForm() {
                     defaultValue={field.value}
                     disabled={field.disabled}
                     onValueChange={field.onChange}
+                    value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -305,13 +306,23 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={form.formState.isSubmitting || form.formState.disabled}
-        >
-          Submit
-        </Button>
+
+        {disabled ? (
+          <Link
+            className={`${buttonVariants()} w-full`}
+            href={SiteMap.Profile.path}
+          >
+            Update information
+          </Link>
+        ) : (
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={form.formState.isSubmitting || form.formState.disabled}
+          >
+            Submit
+          </Button>
+        )}
       </form>
     </Form>
   )

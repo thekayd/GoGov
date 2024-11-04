@@ -44,7 +44,7 @@ export const ProfileFormProvider: React.FC<{
 
   const form = useForm<Profile>({
     values: profile,
-    disabled: profilePending || disabled,
+    disabled: disabled,
     resolver: zodResolver(ProfileModelSchema),
   })
 
