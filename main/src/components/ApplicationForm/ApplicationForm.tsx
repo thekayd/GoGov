@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { HTMLInputTypeAttribute, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { z, ZodSchema } from "zod"
 
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select"
 
 import { Input } from "../ui/input"
+import { Textarea } from "../ui/textarea"
 import { useApplicationForm } from "./ApplicationFormContext"
 
 const testCenters = [
@@ -42,7 +43,7 @@ const testCenters = [
 export interface ApplicationFormTemplate<T> {
   title: string
   fields: {
-    type: "select" | "file"
+    type: HTMLInputTypeAttribute | "select" | "textarea"
     name: keyof T & string
     label: string
     placeholder?: string
@@ -84,12 +85,22 @@ export default function ApplicationForm({
                   </SelectContent>
                 </Select>
               )}
-
-              {type === "file" && (
+              {type === "textarea" && (
                 <FormControl>
-                  <Input type="file" {...field} />
+                  <Textarea
+                    placeholder={placeholder}
+                    className="resize-none"
+                    {...field}
+                  />
                 </FormControl>
               )}
+
+              {type !== "select" && type !== "textarea" && (
+                <FormControl>
+                  <Input type={type} placeholder={placeholder} {...field} />
+                </FormControl>
+              )}
+
 
               {description && <FormDescription>{description}</FormDescription>}
               <FormMessage />
