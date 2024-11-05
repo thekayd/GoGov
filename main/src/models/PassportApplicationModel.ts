@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { ApplicationFormTemplate } from "@/components/application-forms/ApplicationForm"
+import { ApplicationFormTemplate } from "@/components/ApplicationForm/ApplicationForm"
 
 import { Database } from "../../database.types"
 import { DepartmentCenters } from "./DriversLicenseModel"
@@ -19,7 +19,7 @@ export const PassportApplicationFormSchema = z.object({
 export function createPassportApplicationModel(
   user: Profile,
   formData: PassportApplicationForm
-): Database["public"]["Tables"]["drivers_license_applications"]["Insert"] {
+): Database["public"]["Tables"]["passport_applications"]["Insert"] {
   return {
     // User data
     name: user.name,

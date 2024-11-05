@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 
 import { createSupabaseBrowser } from "@/lib/supabase/client"
 
-import { Database } from "../../database.types"
+import { Database } from "../../../database.types"
 
 // T - Represents the return type aka the actual database Model's row (with "ROW")
 // I - Represents the input type aka the actual input values fro the model, typed as "INSERT"

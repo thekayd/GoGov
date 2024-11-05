@@ -12,10 +12,10 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z, ZodObject } from "zod"
 
-import { useCreateApplication } from "@/hooks/useApplication"
 import { useCreateProfile, useShowProfile } from "@/hooks/useProfile"
 
 import { Database } from "../../../database.types"
+import { useCreateApplication } from "./useApplication"
 
 /**
  * This component provides a context for application forms.
@@ -83,22 +83,31 @@ export const ApplicationFormProvider: React.FC<{
         values
       ) as Database["public"]["Tables"][typeof table_name]["Insert"]
 
-      createApplication({
-        model: applicationModel,
-        tableName: table_name,
-      })
-
-      if (applicationError) {
-        console.log("Submit Error: ", data)
-        toast.error(
-          `Oops! Something went wrong. Please try again. - ${applicationError?.message}`
-        )
-        return
-      }
-
-      console.log("Submit Response: ", data)
-      toast.success(
-        `Thank you! Your application is successfully submitted. Keep an eye on your email.`
+      toast.promise(
+        async () => {
+          createApplication({
+            model: applicationModel,
+            tableName: table_name,
+          })
+          if (applicationError) {
+            console.log("Submit Error: ", data)
+            toast.error(
+              `Oops! Something went wrong. Please try again. - ${applicationError?.message}`
+            )
+            return Promise.reject(applicationError?.message)
+          }
+        },
+        {
+          loading: "Submitting Application...",
+          success: (res) => {
+            console.log("Submit Response: ", data, res)
+            return `Thank you! Your application is successfully submitted. Keep an eye on your email.`
+          },
+          error: (err) => {
+            console.log("Submit Error: ", data)
+            return `Oops! Something went wrong. Please try again. - ${err}`
+          },
+        }
       )
     },
     [profile]

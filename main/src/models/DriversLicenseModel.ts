@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { ApplicationFormTemplate } from "@/components/application-forms/ApplicationForm"
+import { ApplicationFormTemplate } from "@/components/ApplicationForm/ApplicationForm"
 
 import { Database } from "../../database.types"
 import { Profile } from "./ProfileModel"

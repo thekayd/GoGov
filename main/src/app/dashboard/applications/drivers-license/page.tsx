@@ -7,8 +7,8 @@ import {
 } from "@/models/DriversLicenseModel"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import ApplicationForm from "@/components/application-forms/ApplicationForm"
-import { ApplicationFormProvider } from "@/components/application-forms/ApplicationFormContext"
+import ApplicationForm from "@/components/ApplicationForm/ApplicationForm"
+import { ApplicationFormProvider } from "@/components/ApplicationForm/ApplicationFormContext"
 
 import ProfileForm from "../../profile/(components)/ProfileForm"
 import { ProfileFormProvider } from "../../profile/(components)/ProfileFormContext"
