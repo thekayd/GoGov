@@ -14,9 +14,10 @@ export type SiteConfig = {
 }
 
 export type DatabaseTables =
-  | "drivers_license_applications"
   | "bursary_applications"
+  | "drivers_license_applications"
   | "passport_applications"
-  | "scheduled_appointments"
-  | "vaccination_applications"
   | "profile"
+  | "scheduled_appointments"
+  | "user_feedback"
+  | "vaccination_applications"
