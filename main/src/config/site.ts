@@ -30,6 +30,8 @@ export const SiteMap = {
       Passport: "/dashboard/applications/passport",
       DriversLicense: "/dashboard/applications/drivers-license",
       Vehicle: "/dashboard/applications/vehicle",
+      Feedback: "/dashboard/feedback",
+      Appointments: "/dashboard/appointments",
     },
   },
 } as const

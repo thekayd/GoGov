@@ -2,8 +2,11 @@
 
 import { HTMLInputTypeAttribute, useMemo } from "react"
 import { useRouter } from "next/navigation"
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
 import { z, ZodSchema } from "zod"
 
+import { cn } from "@/lib/utils"
 import { useShowProfile } from "@/hooks/useProfile"
 import { Button } from "@/components/ui/button"
 import {
@@ -23,22 +26,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { Calendar } from "../ui/calendar"
 import { Input } from "../ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Textarea } from "../ui/textarea"
 import { useApplicationForm } from "./ApplicationFormContext"
-
-const testCenters = [
-  "Pretoria Test Centre",
-  "Johannesburg Test Centre",
-  "Sandton Test Centre",
-  "Midrand Test Centre",
-  "Centurion Test Centre",
-  "Soweto Test Centre",
-  "Kempton Park Test Centre",
-  "Germiston Test Centre",
-  "Benoni Test Centre",
-  "Boksburg Test Centre",
-]
 
 export interface ApplicationFormTemplate<T> {
   title: string
@@ -95,12 +87,44 @@ export default function ApplicationForm({
                 </FormControl>
               )}
 
-              {type !== "select" && type !== "textarea" && (
+              {type === "date" && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      fromDate={new Date()}
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      initialFocus
+                      disabled={field.disabled}
+                    />
+                  </PopoverContent>
+                </Popover>
+              )}
+
+              {type !== "select" && type !== "textarea" && type !== "date" && (
                 <FormControl>
                   <Input type={type} placeholder={placeholder} {...field} />
                 </FormControl>
               )}
-
 
               {description && <FormDescription>{description}</FormDescription>}
               <FormMessage />
