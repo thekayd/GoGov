@@ -5,6 +5,7 @@ import {
   BursaryApplicationModel,
 } from "@/models/BursaryModel"
 import { DriversLicenseApplication } from "@/models/DriversLicenseModel"
+import { PassportApplication } from "@/models/PassportApplicationModel"
 import { ColumnDef } from "@tanstack/react-table"
 import {
   ArrowDown,
@@ -24,12 +25,14 @@ import { DataTableRowActions } from "../../../../components/DataTable/data-table
 
 export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
   {
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
     accessorKey: "institution_name",
-    header: "Institution",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Institution" />
+    ),
+    cell: ({ row }) => {
+      console.log("Insitituon: ", row.getValue("institution_name"))
+      return row.getValue("institution_name")
+    },
   },
   {
     accessorKey: "course_of_study",
@@ -48,8 +51,16 @@ export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
     header: "Tuition",
   },
   {
-    accessorKey: "surname",
-    header: "Surname",
+    accessorKey: "status",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    cell: ({ row }) => {
+      return FormatStatus(row.getValue("status"))
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   },
   {
     accessorKey: "phone_number",
@@ -57,10 +68,16 @@ export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
   },
   {
     accessorKey: "created_at",
-    header: "Applied at",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Applied at" />
+    ),
     cell: ({ row }) => {
       return FormatDate(row.getValue("created_at"))
     },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ]
 
@@ -138,6 +155,69 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
       cell: ({ row }) => <DataTableRowActions row={row} />,
     },
   ]
+
+export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
+  {
+    accessorKey: "passport_type",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Passport Type" />
+    ),
+  },
+  {
+    accessorKey: "processing_center",
+    header: "Center",
+  },
+  {
+    accessorKey: "id_document",
+    header: "Id Doc",
+    cell: ({ row }) => {
+      return VerifyDocumentIsUploaded(row.getValue("id_document"))
+    },
+  },
+  {
+    accessorKey: "proof_of_address",
+    header: "Prof. Address",
+    cell: ({ row }) => {
+      return VerifyDocumentIsUploaded(row.getValue("proof_of_address"))
+    },
+  },
+  {
+    accessorKey: "passport_photo",
+    header: "Photo",
+    cell: ({ row }) => {
+      return VerifyDocumentIsUploaded(row.getValue("passport_photo"))
+    },
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    cell: ({ row }) => {
+      return FormatStatus(row.getValue("status"))
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: "phone_number",
+    header: "Phone",
+  },
+  {
+    accessorKey: "created_at",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Applied at" />
+    ),
+    cell: ({ row }) => {
+      return FormatDate(row.getValue("created_at"))
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions row={row} />,
+  },
+]
 
 function FormatDate(value: unknown) {
   const date = new Date(value as string)

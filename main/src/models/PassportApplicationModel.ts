@@ -83,8 +83,31 @@ export const PassportApplicationFormTemplate: ApplicationFormTemplate<PassportAp
     ],
   }
 
+export const PassportApplicationSchema = z.object({
+  address: z.string().optional(),
+  city: z.string().optional(),
+  created_at: z.string(),
+  date_of_birth: z.string().optional(),
+  email: z.string().optional(),
+  gender: z.string().optional(),
+  id: z.number(),
+  id_document: z.string().optional(),
+  id_number: z.string().optional(),
+  name: z.string().optional(),
+  passport_photo: z.string().optional(),
+  passport_type: z.string().optional(),
+  phone_number: z.string().optional(),
+  postcode: z.string().optional(),
+  processing_center: z.string().optional(),
+  proof_of_address: z.string().optional(),
+  province: z.string().optional(),
+  status: z.string().optional(),
+  surname: z.string().optional(),
+})
+
 export type PassportApplicationForm = z.infer<
   typeof PassportApplicationFormSchema
 >
 export type PassportApplicationModel =
   Database["public"]["Tables"]["passport_applications"]["Row"]
+export type PassportApplication = z.infer<typeof PassportApplicationSchema>

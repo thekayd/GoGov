@@ -10,6 +10,10 @@ import {
   DriversLicenseApplication,
   DriversLicenseSchema,
 } from "@/models/DriversLicenseModel"
+import {
+  PassportApplication,
+  PassportApplicationSchema,
+} from "@/models/PassportApplicationModel"
 import { DatabaseTables } from "@/types"
 import { z, ZodObject } from "zod"
 
@@ -22,6 +26,7 @@ import ModelTable, {
 import {
   BursaryApplicationsColumns,
   DriversLicenseApplicationColumns,
+  PassportApplicationColumns,
 } from "./Columns"
 
 interface ModelRenderProps {
@@ -38,37 +43,56 @@ export function ApplicationTable({
   const { data, isPending, error } =
     useGetApplications<z.infer<typeof modelSchema>>(tableName)
 
-  const applicationTable = useMemo(() => {
-    if (!data || isPending || error) return
-    if (modelSchema === BursaryApplicationSchema)
-      return (
-        <ModelTable
-          columns={BursaryApplicationsColumns}
-          data={data as BursaryApplication[]}
-        />
-      )
-    if (modelSchema === DriversLicenseSchema)
-      return (
-        <ModelTable
-          columns={DriversLicenseApplicationColumns}
-          data={data as DriversLicenseApplication[]}
-        />
-      )
-    // if (modelSchema === BursaryApplicationSchema)
-    // return (
-    //   <ModelTable
-    //     columns={BursaryApplicationsColumns}
-    //     data={bursaryApplications as BursaryApplication[]}
-    //   />
-    // )
-  }, [data])
+  console.log("Applications: ", data)
+
+  // const applicationTable = () => {
+  //   if (!data || isPending || error) return
+  //   if (modelSchema === BursaryApplicationSchema)
+  //     return (
+  //       <ModelTable
+  //         columns={BursaryApplicationsColumns}
+  //         data={data as BursaryApplication[]}
+  //       />
+  //     )
+  //   if (modelSchema === DriversLicenseSchema)
+  //     return (
+  //       <ModelTable
+  //         columns={DriversLicenseApplicationColumns}
+  //         data={data as DriversLicenseApplication[]}
+  //       />
+  //     )
+  //   if (modelSchema === PassportApplicationSchema)
+  //     return (
+  //       <ModelTable
+  //         columns={PassportApplicationColumns}
+  //         data={data as PassportApplication[]}
+  //       />
+  //     )
+  // }
 
   return (
     <section className="mb-12 w-full">
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">{heading}</h2>
       {isPending && !error && !data && <ModelTableSkeleton />}
       {error && !isPending && !data && <ModelTableError error={error} />}
-      {applicationTable}
+      {modelSchema === BursaryApplicationSchema && data && (
+        <ModelTable
+          columns={BursaryApplicationsColumns}
+          data={data as BursaryApplication[]}
+        />
+      )}
+      {modelSchema === DriversLicenseSchema && data && (
+        <ModelTable
+          columns={DriversLicenseApplicationColumns}
+          data={data as DriversLicenseApplication[]}
+        />
+      )}
+      {modelSchema === PassportApplicationSchema && data && (
+        <ModelTable
+          columns={PassportApplicationColumns}
+          data={data as PassportApplication[]}
+        />
+      )}
     </section>
   )
 }
