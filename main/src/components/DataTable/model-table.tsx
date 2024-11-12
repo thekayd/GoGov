@@ -15,6 +15,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table"
+import { AlertTriangleIcon } from "lucide-react"
 
 import {
   Table,
@@ -25,6 +26,14 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card"
+import { Skeleton } from "../ui/skeleton"
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-tool-bar"
 
@@ -120,5 +129,29 @@ export default function ModelTable<TData, TValue>({
         <DataTablePagination table={table} />
       </div>
     </div>
+  )
+}
+
+export function ModelTableSkeleton() {
+  return (
+    <Card>
+      <Skeleton className="min-h-[400px] min-w-[320px] rounded-md" />
+    </Card>
+  )
+}
+export function ModelTableError({ error }: { error: Error }) {
+  return (
+    <Card className="flex w-full min-w-[320px] flex-col items-center justify-center px-3 py-4 text-center">
+      <AlertTriangleIcon size={60} />
+      <CardHeader>
+        <CardTitle>
+          Ooops 🤯 <br /> Something happened!
+        </CardTitle>
+        <CardDescription>
+          {error.message + "." ||
+            "Something unexpected happened. Please check the logs"}
+        </CardDescription>
+      </CardHeader>
+    </Card>
   )
 }

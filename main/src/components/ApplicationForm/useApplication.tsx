@@ -42,7 +42,7 @@ async function createApplication<T, I>({
 
   if (error) {
     console.log(`Create ${tableName} Error: `, error.message)
-    throw Promise.reject(error.message)
+    throw new Error(error.message)
   }
   return data as T
 }
@@ -64,7 +64,7 @@ async function getApplications<T>({
 
   if (error) {
     console.log(`Create ${tableName} Error: `, error.message)
-    throw Promise.reject(error.message)
+    throw new Error(error.message)
   }
   return data as T[]
 }
