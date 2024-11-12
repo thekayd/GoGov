@@ -25,13 +25,18 @@ export const SiteMap = {
   Profile: {
     path: "/dashboard/profile",
   },
+  Feedback: "/dashboard/feedback",
+  Appointments: "/dashboard/appointments",
   Applications: {
+    Index: "/dashboard/applications",
+    Passport: {
+      Index: "/applications/passport",
+      Create: "/dashboard/applications/passport",
+    },
     children: {
       Passport: "/dashboard/applications/passport",
       DriversLicense: "/dashboard/applications/drivers-license",
       Vehicle: "/dashboard/applications/vehicle",
-      Feedback: "/dashboard/feedback",
-      Appointments: "/dashboard/appointments",
     },
   },
 } as const

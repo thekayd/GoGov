@@ -98,6 +98,31 @@ export const DriversLicenseFormTemplate: ApplicationFormTemplate<DriversLicenseF
     ],
   }
 
+export const DriversLicenseSchema = z.object({
+  address: z.string().nullable(),
+  city: z.string().nullable(),
+  created_at: z.string().nullable(),
+  date_of_birth: z.string().nullable(),
+  email: z.string().nullable(),
+  eye_test_certificate: z.string().nullable(),
+  gender: z.string().nullable(),
+  id: z.string(),
+  id_document: z.string().nullable(),
+  id_number: z.string().nullable(),
+  license_category: z.string().nullable(),
+  name: z.string(),
+  passport_photo: z.string().nullable(),
+  phone_number: z.string().nullable(),
+  postcode: z.string().nullable(),
+  proof_of_address: z.string().nullable(),
+  province: z.string().nullable(),
+  status: z.string().nullable(),
+  surname: z.string().nullable(),
+  test_center: z.string().nullable(),
+  user_id: z.string().nullable(),
+})
+
 export type DriversLicenseForm = z.infer<typeof DriversLicenseFormSchema>
-type DriversLicenseModel =
+export type DriversLicenseModel =
   Database["public"]["Tables"]["drivers_license_applications"]["Row"]
+export type DriversLicenseApplication = z.infer<typeof DriversLicenseSchema>

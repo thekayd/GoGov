@@ -79,8 +79,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <QueryProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
+            forcedTheme="light"
+            defaultTheme="light"
             disableTransitionOnChange
           >
             <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>

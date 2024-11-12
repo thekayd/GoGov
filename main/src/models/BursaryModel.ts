@@ -103,4 +103,31 @@ export type BursaryApplicationForm = z.infer<
   typeof BursaryApplicationFormSchema
 >
 export type BursaryApplicationModel =
-  Database["public"]["Tables"]["passport_applications"]["Row"]
+  Database["public"]["Tables"]["bursary_applications"]["Row"]
+
+export const BursaryApplicationSchema = z.object({
+  academic_achievements: z.string().optional(),
+  address: z.string().optional(),
+  annual_tuition_fee: z.string().optional(),
+  city: z.string().optional(),
+  course_of_study: z.string().optional(),
+  created_at: z.string(),
+  date_of_birth: z.string().optional(),
+  email: z.string().optional(),
+  financial_need_statement: z.string().optional(),
+  gender: z.string().optional(),
+  id: z.number(),
+  id_number: z.string().optional(),
+  institution_name: z.string().optional(),
+  name: z.string().optional(),
+  other_funding_sources: z.string().optional(),
+  phone_number: z.string().optional(),
+  postcode: z.string().optional(),
+  province: z.string().optional(),
+  status: z.string().optional(),
+  study_year: z.string().optional(),
+  surname: z.string().optional(),
+  total_course_duration: z.string().optional(),
+  user_id: z.string().optional(),
+})
+export type BursaryApplication = z.infer<typeof BursaryApplicationSchema>

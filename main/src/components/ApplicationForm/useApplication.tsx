@@ -16,6 +16,13 @@ export function useCreateApplication<T, I>() {
   })
 }
 
+export function useGetApplications<T>(tableName: DatabaseTables) {
+  return useQuery({
+    queryKey: ["get-applications"],
+    queryFn: () => getApplications<T>({ tableName }),
+  })
+}
+
 async function createApplication<T, I>({
   model,
   tableName,
@@ -38,4 +45,26 @@ async function createApplication<T, I>({
     throw Promise.reject(error.message)
   }
   return data as T
+}
+
+async function getApplications<T>({
+  tableName,
+}: {
+  tableName: DatabaseTables
+}): Promise<T[]> {
+  const db = createSupabaseBrowser()
+
+  // const model = createDriversLicenseModel(user, application)
+  const { data, error, status } = await db
+    .from(tableName)
+    .select()
+    .returns<Database["public"]["Tables"][typeof tableName]["Row"][]>()
+
+  console.log(error)
+
+  if (error) {
+    console.log(`Create ${tableName} Error: `, error.message)
+    throw Promise.reject(error.message)
+  }
+  return data as T[]
 }
