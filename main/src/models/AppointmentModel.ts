@@ -88,6 +88,21 @@ export const AppointmentFormTemplate: ApplicationFormTemplate<AppointmentForm> =
     ],
   }
 
+export const AppointmentSchema = z.object({
+  appointment_date: z.string().optional(),
+  appointment_time: z.string().optional(),
+  created_at: z.string().optional(),
+  email: z.string(),
+  id: z.string(),
+  name: z.string().optional(),
+  phone: z.string().optional(),
+  reason: z.string().optional(),
+  status: z.string().optional(),
+  surname: z.string().optional(),
+  updated_at: z.string().optional(),
+})
+
 export type AppointmentForm = z.infer<typeof AppointmentFormSchema>
 export type AppointmentModel =
   Database["public"]["Tables"]["scheduled_appointments"]["Row"]
+export type Appointment = z.infer<typeof AppointmentSchema>

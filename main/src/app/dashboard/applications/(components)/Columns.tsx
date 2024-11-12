@@ -1,5 +1,6 @@
 "use client"
 
+import { Appointment } from "@/models/AppointmentModel"
 import {
   BursaryApplication,
   BursaryApplicationModel,
@@ -93,10 +94,6 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
     {
       accessorKey: "test_center",
       header: "Center",
-      cell: ({ row }) => {
-        const center: string = row.getValue("test_center") as string
-        return center.replace("Testing Center", "")
-      },
     },
     {
       accessorKey: "id_document",
@@ -269,6 +266,61 @@ export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] 
       cell: ({ row }) => <DataTableRowActions row={row} />,
     },
   ]
+
+export const AppointmentColumns: ColumnDef<Appointment>[] = [
+  {
+    accessorKey: "appointment_date",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Date" />
+    ),
+    cell: ({ row }) => {
+      return FormatDate(row.getValue("appointment_date"))
+    },
+  },
+  {
+    accessorKey: "appointment_time",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Time" />
+    ),
+  },
+  {
+    accessorKey: "reason",
+    header: "Reason",
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "phone",
+    header: "Phone",
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    cell: ({ row }) => {
+      return FormatStatus(row.getValue("status"))
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: "created_at",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Applied at" />
+    ),
+    cell: ({ row }) => {
+      return FormatDate(row.getValue("created_at"))
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions row={row} />,
+  },
+]
 
 function FormatDate(value: unknown) {
   const date = new Date(value as string)

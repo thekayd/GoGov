@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import { AppointmentSchema } from "@/models/AppointmentModel"
 import { BursaryApplicationSchema } from "@/models/BursaryModel"
 import { DriversLicenseSchema } from "@/models/DriversLicenseModel"
 import { PassportApplicationSchema } from "@/models/PassportApplicationModel"
@@ -66,6 +67,13 @@ export function AdminDashboardView() {
           heading="Vaccination Applications"
           tableName="vaccination_applications"
           modelSchema={VaccinationApplicationSchema}
+        />
+      )}
+      {view === "appoint-index" && (
+        <ApplicationTable
+          heading="Scheduled Appointments"
+          tableName="scheduled_appointments"
+          modelSchema={AppointmentSchema}
         />
       )}
     </section>

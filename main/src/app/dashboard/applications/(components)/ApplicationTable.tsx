@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import Link from "next/link"
+import { Appointment, AppointmentSchema } from "@/models/AppointmentModel"
 import {
   BursaryApplication,
   BursaryApplicationSchema,
@@ -28,6 +29,7 @@ import ModelTable, {
 } from "@/components/DataTable/model-table"
 
 import {
+  AppointmentColumns,
   BursaryApplicationsColumns,
   DriversLicenseApplicationColumns,
   PassportApplicationColumns,
@@ -103,6 +105,9 @@ export function ApplicationTable({
           columns={VaccinationApplicationColumns}
           data={data as VaccinationApplication[]}
         />
+      )}
+      {modelSchema === AppointmentSchema && data && (
+        <ModelTable columns={AppointmentColumns} data={data as Appointment[]} />
       )}
     </section>
   )
