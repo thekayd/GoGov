@@ -58,8 +58,30 @@ export const VaccinationApplicationFormTemplate: ApplicationFormTemplate<Vaccina
     ],
   }
 
+export const VaccinationApplicationSchema = z.object({
+  address: z.string().optional(),
+  city: z.string().optional(),
+  created_at: z.string(),
+  date_of_birth: z.string().optional(),
+  email: z.string().optional(),
+  gender: z.string().optional(),
+  id: z.number(),
+  id_number: z.string().optional(),
+  name: z.string().optional(),
+  phone_number: z.string().optional(),
+  postcode: z.string().optional(),
+  status: z.string().optional(),
+  surname: z.string().optional(),
+  user_id: z.string().optional(),
+  vaccination_center: z.string().optional(),
+  vaccine_type: z.string().optional(),
+})
+
 export type VaccinationApplicationForm = z.infer<
   typeof VaccinationApplicationFormSchema
 >
 export type VaccinationApplicationModel =
   Database["public"]["Tables"]["passport_applications"]["Row"]
+export type VaccinationApplication = z.infer<
+  typeof VaccinationApplicationSchema
+>

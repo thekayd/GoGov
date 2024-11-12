@@ -14,6 +14,10 @@ import {
   PassportApplication,
   PassportApplicationSchema,
 } from "@/models/PassportApplicationModel"
+import {
+  VaccinationApplication,
+  VaccinationApplicationSchema,
+} from "@/models/VaccinationModel"
 import { DatabaseTables } from "@/types"
 import { z, ZodObject } from "zod"
 
@@ -27,6 +31,7 @@ import {
   BursaryApplicationsColumns,
   DriversLicenseApplicationColumns,
   PassportApplicationColumns,
+  VaccinationApplicationColumns,
 } from "./Columns"
 
 interface ModelRenderProps {
@@ -91,6 +96,12 @@ export function ApplicationTable({
         <ModelTable
           columns={PassportApplicationColumns}
           data={data as PassportApplication[]}
+        />
+      )}
+      {modelSchema === VaccinationApplicationSchema && data && (
+        <ModelTable
+          columns={VaccinationApplicationColumns}
+          data={data as VaccinationApplication[]}
         />
       )}
     </section>

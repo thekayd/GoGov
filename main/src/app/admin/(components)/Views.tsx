@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { BursaryApplicationSchema } from "@/models/BursaryModel"
 import { DriversLicenseSchema } from "@/models/DriversLicenseModel"
 import { PassportApplicationSchema } from "@/models/PassportApplicationModel"
+import { VaccinationApplicationSchema } from "@/models/VaccinationModel"
 import {
   BookIcon,
   CalendarCheckIcon,
@@ -58,6 +59,13 @@ export function AdminDashboardView() {
           heading="Passport Applications"
           tableName="passport_applications"
           modelSchema={PassportApplicationSchema}
+        />
+      )}
+      {view === "app-vaccination" && (
+        <ApplicationTable
+          heading="Vaccination Applications"
+          tableName="vaccination_applications"
+          modelSchema={VaccinationApplicationSchema}
         />
       )}
     </section>

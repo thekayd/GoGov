@@ -6,6 +6,7 @@ import {
 } from "@/models/BursaryModel"
 import { DriversLicenseApplication } from "@/models/DriversLicenseModel"
 import { PassportApplication } from "@/models/PassportApplicationModel"
+import { VaccinationApplication } from "@/models/VaccinationModel"
 import { ColumnDef } from "@tanstack/react-table"
 import {
   ArrowDown,
@@ -218,6 +219,56 @@ export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
     cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ]
+
+export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] =
+  [
+    {
+      accessorKey: "vaccine_type",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Passport Type" />
+      ),
+    },
+    {
+      accessorKey: "vaccination_center",
+      header: "Center",
+    },
+    {
+      accessorKey: "id_document",
+      header: "Id Doc",
+      cell: ({ row }) => {
+        return VerifyDocumentIsUploaded(row.getValue("id_document"))
+      },
+    },
+    {
+      accessorKey: "status",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Status" />
+      ),
+      cell: ({ row }) => {
+        return FormatStatus(row.getValue("status"))
+      },
+      filterFn: (row, id, value) => {
+        return value.includes(row.getValue(id))
+      },
+    },
+    {
+      accessorKey: "phone_number",
+      header: "Phone",
+    },
+    {
+      accessorKey: "created_at",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Applied at" />
+      ),
+      cell: ({ row }) => {
+        return FormatDate(row.getValue("created_at"))
+      },
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => <DataTableRowActions row={row} />,
+    },
+  ]
 
 function FormatDate(value: unknown) {
   const date = new Date(value as string)
