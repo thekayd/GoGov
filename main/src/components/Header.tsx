@@ -33,7 +33,17 @@ export function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/applications" className="text-gray-600">
+              <Link href="/dashboard" className="text-gray-600">
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link href="/admin" className="text-gray-600">
+                Admin Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link href="/dashboard/applications" className="text-gray-600">
                 My applications
               </Link>
             </li>
@@ -43,7 +53,7 @@ export function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/appointments" className="text-gray-600">
+              <Link href="/dashboard/appointments" className="text-gray-600">
                 Appointments
               </Link>
             </li>
@@ -58,7 +68,7 @@ export function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/support" className="text-gray-600">
+              <Link href="/feedback" className="text-gray-600">
                 Support & Feedback
               </Link>
             </li>
