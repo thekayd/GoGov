@@ -23,6 +23,13 @@ export function useGetApplications<T>(tableName: DatabaseTables) {
   })
 }
 
+export function useUpdateApplication<T>() {
+  return useMutation({
+    mutationKey: ["update-application"],
+    mutationFn: updateApplication<T>,
+  })
+}
+
 async function createApplication<T, I>({
   model,
   tableName,
@@ -67,4 +74,31 @@ async function getApplications<T>({
     throw new Error(error.message)
   }
   return data as T[]
+}
+
+async function updateApplication<T>({
+  id,
+  newStatus,
+  tableName,
+}: {
+  id: string
+  newStatus: string
+  tableName: DatabaseTables
+}): Promise<T> {
+  const db = createSupabaseBrowser()
+
+  // const model = createDriversLicenseModel(user, application)
+  const { data, error, status } = await db
+    .from(tableName)
+    .update({ status: newStatus })
+    .eq("id", id)
+    .returns<Database["public"]["Tables"][typeof tableName]["Row"]>()
+
+  console.log(error)
+
+  if (error) {
+    console.log(`Create ${tableName} Error: `, error.message)
+    throw new Error(error.message)
+  }
+  return data as T
 }

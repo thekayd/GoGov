@@ -8,7 +8,6 @@ import { InitiativesSection } from "./(components)/InitiativesSection"
 import { MembersSection } from "./(components)/MembersSection"
 import { NewsSection } from "./(components)/NewsSection"
 import { TourismSection } from "./(components)/TourismSection"
-import ApplicationIndex from "./dashboard/applications/(components)/ApplicationTable"
 
 export default function HomePage() {
   return (

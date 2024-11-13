@@ -5,7 +5,10 @@ import {
   BursaryApplication,
   BursaryApplicationModel,
 } from "@/models/BursaryModel"
-import { DriversLicenseApplication } from "@/models/DriversLicenseModel"
+import {
+  DriversLicenseApplication,
+  DriversLicenseSchema,
+} from "@/models/DriversLicenseModel"
 import { PassportApplication } from "@/models/PassportApplicationModel"
 import { VaccinationApplication } from "@/models/VaccinationModel"
 import { ColumnDef } from "@tanstack/react-table"
@@ -77,14 +80,18 @@ export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
       return FormatDate(row.getValue("created_at"))
     },
   },
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
 ]
 
 export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplication>[] =
   [
+    {
+      accessorKey: "id",
+      header: "Id",
+    },
     {
       accessorKey: "license_category",
       header: ({ column }) => (
@@ -150,7 +157,13 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
     },
     {
       id: "actions",
-      cell: ({ row }) => <DataTableRowActions row={row} />,
+      cell: ({ row }) => (
+        <DataTableRowActions
+          table="drivers_license_applications"
+          schema={DriversLicenseSchema}
+          row={row}
+        />
+      ),
     },
   ]
 
@@ -211,10 +224,10 @@ export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
       return FormatDate(row.getValue("created_at"))
     },
   },
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
 ]
 
 export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] =
@@ -261,10 +274,10 @@ export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] 
         return FormatDate(row.getValue("created_at"))
       },
     },
-    {
-      id: "actions",
-      cell: ({ row }) => <DataTableRowActions row={row} />,
-    },
+    // {
+    //   id: "actions",
+    //   cell: ({ row }) => <DataTableRowActions row={row} />,
+    // },
   ]
 
 export const AppointmentColumns: ColumnDef<Appointment>[] = [
@@ -316,10 +329,10 @@ export const AppointmentColumns: ColumnDef<Appointment>[] = [
       return FormatDate(row.getValue("created_at"))
     },
   },
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
 ]
 
 function FormatDate(value: unknown) {
