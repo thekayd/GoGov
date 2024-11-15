@@ -89,7 +89,7 @@ export default function ProfileForm({ disabled }: { disabled?: boolean }) {
         </div>
 
         {/* Gender & DoB */}
-        <div className="grid grid-cols-12 gap-4">
+        <div className="grid grid-cols-1  gap-4 md:grid-cols-12">
           <div className="col-span-6">
             <FormField
               control={form.control}
