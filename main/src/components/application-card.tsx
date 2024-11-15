@@ -33,36 +33,38 @@ interface ApplicationCardProps {
     address: string
     city: string
     postcode: string
-    fullName: string
   }
   application: {
     department: string
     status: string
     createdAt: string
-    type: string
-    center: string
+    type?: string
+    center?: string
   }
 }
 
 type ApplicationStatus = "pending" | "approved" | "rejected" | "in-progress"
 
-export default function ApplicationCard() {
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+1 (555) 123-4567",
-    address: "123 Main St",
-    city: "Anytown",
-    postcode: "12345",
-    fullName: "John Michael Doe",
-  }
-  const application = {
-    department: "Transport",
-    status: "pending",
-    type: "Class C",
-    createdAt: "2023-01-01",
-    center: "Anytown DMV",
-  }
+export default function ApplicationCard({
+  application,
+  user,
+}: ApplicationCardProps) {
+  // const user = {
+  //   name: "John Doe",
+  //   email: "john.doe@example.com",
+  //   phone: "+1 (555) 123-4567",
+  //   address: "123 Main St",
+  //   city: "Anytown",
+  //   postcode: "12345",
+  //   fullName: "John Michael Doe",
+  // }
+  // const application = {
+  //   department: "Transport",
+  //   status: "pending",
+  //   type: "Class C",
+  //   createdAt: "2023-01-01",
+  //   center: "Anytown DMV",
+  // }
   const [status, setStatus] = useState<ApplicationStatus>("pending")
 
   const handleStatusChange = (newStatus: ApplicationStatus) => {
@@ -73,7 +75,7 @@ export default function ApplicationCard() {
     <Card className="mx-auto w-full max-w-5xl">
       <CardHeader className="w-full">
         <CardTitle className="text-2xl font-bold">
-          Application Details
+          {application.department} Application
         </CardTitle>
       </CardHeader>
       <CardContent className="w-full p-3">
@@ -95,16 +97,20 @@ export default function ApplicationCard() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Application Details</h3>
             <div className="space-y-2">
-              <CardField
-                label="Type"
-                value={application.type}
-                icon={FileText}
-              />
-              <CardField
-                label="Test Center"
-                value={application.center}
-                icon={FileText}
-              />
+              {application.type && (
+                <CardField
+                  label="Type"
+                  value={application.type}
+                  icon={FileText}
+                />
+              )}
+              {application.center && (
+                <CardField
+                  label="Test Center"
+                  value={application.center}
+                  icon={FileText}
+                />
+              )}
               <div className="flex items-center space-x-2">
                 {status === "approved" && (
                   <CheckCircle className="h-5 w-5 text-green-500" />

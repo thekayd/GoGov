@@ -81,7 +81,7 @@ export type VaccinationApplicationForm = z.infer<
   typeof VaccinationApplicationFormSchema
 >
 export type VaccinationApplicationModel =
-  Database["public"]["Tables"]["passport_applications"]["Row"]
+  Database["public"]["Tables"]["vaccination_applications"]["Row"]
 export type VaccinationApplication = z.infer<
   typeof VaccinationApplicationSchema
 >

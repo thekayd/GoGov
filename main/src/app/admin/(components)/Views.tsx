@@ -72,7 +72,9 @@ export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
 type ControllerView = "Admin" | "Dashboard"
 export function DashboardViewController({
   selectedView,
+  email,
 }: {
+  email?: string
   selectedView: ControllerView
 }) {
   const searchParams = useSearchParams()
@@ -114,6 +116,7 @@ export function DashboardViewController({
           heading="Scheduled Appointments"
           tableName="scheduled_appointments"
           modelSchema={AppointmentSchema}
+          email={email}
         />
       )}
     </section>
@@ -127,39 +130,44 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
         details={{
           icon: GraduationCap,
           title: "Bursaries",
-          link: view
-            ? "/admin?view=app-bursary"
-            : siteMapData.Dashboard.children.Applications.children.Bursary.path,
+          link:
+            view === "Admin"
+              ? "/admin?view=app-bursary"
+              : siteMapData.Dashboard.children.Applications.children.Bursary
+                  .path,
         }}
       />
       <DashboardNavigationCard
         details={{
           icon: CreditCardIcon,
           title: "Drivers Licenses",
-          link: view
-            ? "/admin?view=app-bursary"
-            : siteMapData.Dashboard.children.Applications.children
-                .DriversLicense.path,
+          link:
+            view === "Admin"
+              ? "/admin?view=app-bursary"
+              : siteMapData.Dashboard.children.Applications.children
+                  .DriversLicense.path,
         }}
       />
       <DashboardNavigationCard
         details={{
           icon: BookIcon,
           title: "Passport",
-          link: view
-            ? "/admin?view=app-bursary"
-            : siteMapData.Dashboard.children.Applications.children.Passport
-                .path,
+          link:
+            view === "Admin"
+              ? "/admin?view=app-bursary"
+              : siteMapData.Dashboard.children.Applications.children.Passport
+                  .path,
         }}
       />
       <DashboardNavigationCard
         details={{
           icon: SyringeIcon,
           title: "Vaccination",
-          link: view
-            ? "/admin?view=app-bursary"
-            : siteMapData.Dashboard.children.Applications.children.Vaccination
-                .path,
+          link:
+            view === "Admin"
+              ? "/admin?view=app-bursary"
+              : siteMapData.Dashboard.children.Applications.children.Vaccination
+                  .path,
         }}
       />
     </div>

@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import {
   Briefcase,
@@ -9,6 +11,7 @@ import {
 } from "lucide-react"
 import { FaPassport as Passport } from "react-icons/fa"
 
+import useUser from "@/hooks/useUser"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Card,
@@ -21,34 +24,17 @@ import {
 import { Separator } from "@/components/ui/separator"
 import Typography from "@/components/ui/typography"
 import ApplicationCard from "@/components/application-card"
+import {
+  useGetAllUserApplications,
+  useGetUserApplications,
+} from "@/components/ApplicationForm/useApplication"
 
 import {
   DashboardNavigation,
   DashboardViewController,
 } from "../admin/(components)/Views"
 
-export default async function CitizenPortal() {
-  const availableApplications = [
-    {
-      title: "Passport Application",
-      icon: Passport,
-      description: "Apply for a new passport or renew an existing one",
-      link: "/dashboard/applications/passport",
-    },
-    {
-      title: "Driver's License (Renewal)",
-      icon: Car,
-      description: "Renew your driver's license online",
-      link: "/dashboard/applications/drivers-license",
-    },
-    {
-      title: "Vehicle Registration",
-      icon: FileText,
-      description: "File your annual tax returns",
-      link: "/dashboard/applications/vehicle",
-    },
-  ]
-
+export default function CitizenPortal() {
   const openedApplications = [
     {
       title: "Passport Application",
@@ -58,8 +44,11 @@ export default async function CitizenPortal() {
     { title: "Tax Filing", status: "Submitted", lastUpdated: "2023-04-10" },
   ]
 
+  const { data: user } = useUser()
+  const { data: applications } = useGetAllUserApplications(user?.email || "")
+
   return (
-    <Card className="min-h-screen bg-gray-50  ">
+    <Card className="min-h-screen max-w-7xl bg-gray-50  ">
       <CardHeader>
         <Typography variant="h1" className=" text-gray-900">
           Citizen Portal
@@ -75,14 +64,87 @@ export default async function CitizenPortal() {
         </section>
         <Separator className="my-8" />
 
-        <DashboardViewController selectedView="Dashboard" />
+        <DashboardViewController selectedView="Dashboard" email={user?.email} />
 
         <section className="space-y-5">
           <Typography variant={"h2"}>Your Applications</Typography>
-          <div className="grid grid-cols-1 items-start justify-start gap-3 space-y-4 lg:grid-cols-2">
-            {openedApplications.map((app, index) => (
-              <ApplicationCard />
+          <div className="grid grid-cols-1 items-start justify-start gap-3 lg:grid-cols-2">
+            {applications?.bursaries.map((app, index) => (
+              <ApplicationCard
+                user={{
+                  phone: app.phone_number || "",
+                  postcode: app.postcode || "",
+                  name: app.name || "",
+                  email: app.email || "",
+                  city: app.city || "",
+                  address: app.address || "",
+                }}
+                application={{
+                  department: "Education",
+                  status: app.status || "",
+                  createdAt: app.created_at || "",
+                }}
+              />
             ))}
+            {applications?.drivers.map((app, index) => (
+              <ApplicationCard
+                user={{
+                  phone: app.phone_number || "",
+                  postcode: app.postcode || "",
+                  name: app.name || "",
+                  email: app.email || "",
+                  city: app.city || "",
+                  address: app.address || "",
+                }}
+                application={{
+                  department: "Transport",
+                  status: app.status || "",
+                  createdAt: app.created_at || "",
+                  center: app.test_center || "",
+                  type: app.license_category || "",
+                }}
+              />
+            ))}
+            {applications?.passport.map((app, index) => (
+              <ApplicationCard
+                user={{
+                  phone: app.phone_number || "",
+                  postcode: app.postcode || "",
+                  name: app.name || "",
+                  email: app.email || "",
+                  city: app.city || "",
+                  address: app.address || "",
+                }}
+                application={{
+                  department: "Home Affairs",
+                  status: app.status || "",
+                  createdAt: app.created_at || "",
+                  type: app.passport_type || "",
+                }}
+              />
+            ))}
+            {applications?.vaccination.map((app, index) => (
+              <ApplicationCard
+                user={{
+                  phone: app.phone_number || "",
+                  postcode: app.postcode || "",
+                  name: app.name || "",
+                  email: app.email || "",
+                  city: app.city || "",
+                  address: app.address || "",
+                }}
+                application={{
+                  department: "Health",
+                  status: app.status || "",
+                  createdAt: app.created_at || "",
+                  center: app.vaccination_center || "",
+                  type: app.vaccine_type || "",
+                }}
+              />
+            ))}
+            {/* {openedApplications.map((app, index) => (
+              <ApplicationCard />
+            ))} */}
           </div>
         </section>
       </CardContent>

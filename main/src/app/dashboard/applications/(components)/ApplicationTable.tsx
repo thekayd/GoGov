@@ -22,7 +22,10 @@ import {
 import { DatabaseTables } from "@/types"
 import { z, ZodObject } from "zod"
 
-import { useGetApplications } from "@/components/ApplicationForm/useApplication"
+import {
+  useGetApplications,
+  useGetUserApplications,
+} from "@/components/ApplicationForm/useApplication"
 import ModelTable, {
   ModelTableError,
   ModelTableSkeleton,
@@ -40,15 +43,18 @@ interface ModelRenderProps {
   modelSchema: ZodObject<any>
   tableName: DatabaseTables
   heading: string
+  email?: string
 }
 
 export function ApplicationTable({
   modelSchema,
   tableName,
   heading,
+  email,
 }: ModelRenderProps) {
-  const { data, isPending, error } =
-    useGetApplications<z.infer<typeof modelSchema>>(tableName)
+  const { data, isPending, error } = email
+    ? useGetUserApplications<z.infer<typeof modelSchema>>(tableName, email)
+    : useGetApplications<z.infer<typeof modelSchema>>(tableName)
 
   console.log("Applications: ", data)
 
