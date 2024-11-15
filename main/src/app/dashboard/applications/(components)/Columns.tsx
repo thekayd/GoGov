@@ -9,6 +9,7 @@ import {
   DriversLicenseApplication,
   DriversLicenseSchema,
 } from "@/models/DriversLicenseModel"
+import { FeedBack } from "@/models/FeedbackModel"
 import { PassportApplication } from "@/models/PassportApplicationModel"
 import { VaccinationApplication } from "@/models/VaccinationModel"
 import { ColumnDef } from "@tanstack/react-table"
@@ -324,6 +325,45 @@ export const AppointmentColumns: ColumnDef<Appointment>[] = [
     accessorKey: "created_at",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Applied at" />
+    ),
+    cell: ({ row }) => {
+      return FormatDate(row.getValue("created_at"))
+    },
+  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions row={row} />,
+  // },
+]
+
+export const FeedbackColumns: ColumnDef<FeedBack>[] = [
+  {
+    accessorKey: "rating",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Rating" />
+    ),
+    cell: ({ row }) => {
+      return row.getValue("rating")
+    },
+  },
+  {
+    accessorKey: "feedback",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Feedback" />
+    ),
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "phone",
+    header: "Phone",
+  },
+  {
+    accessorKey: "created_at",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created at" />
     ),
     cell: ({ row }) => {
       return FormatDate(row.getValue("created_at"))

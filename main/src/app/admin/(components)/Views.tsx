@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { AppointmentSchema } from "@/models/AppointmentModel"
 import { BursaryApplicationSchema } from "@/models/BursaryModel"
 import { DriversLicenseSchema } from "@/models/DriversLicenseModel"
+import { FeedbackSchema } from "@/models/FeedbackModel"
 import { PassportApplicationSchema } from "@/models/PassportApplicationModel"
 import { VaccinationApplicationSchema } from "@/models/VaccinationModel"
 import {
@@ -31,6 +32,7 @@ const ViewsSchema = z.enum([
   "app-passport",
   "app-vaccination",
   "appoint-index",
+  "feedback",
 ])
 
 type Views = z.infer<typeof ViewsSchema>
@@ -62,14 +64,15 @@ export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
         details={{
           icon: MessageSquareIcon,
           title: "Feedbacks",
-          link: "",
+          link: `${baseUrl}?view=feedback`,
+          active: currentView === "feedback",
         }}
       />
     </div>
   )
 }
 
-type ControllerView = "Admin" | "Dashboard"
+type ControllerView = "Admin" | "Dashboard" | "User"
 export function DashboardViewController({
   selectedView,
   email,
@@ -85,6 +88,8 @@ export function DashboardViewController({
       {view === "app-index" && <ApplicationSelectionView view={selectedView} />}
       {view === "app-bursary" && (
         <ApplicationTable
+          email={email}
+          link={email && "/dashboard/applications/bursary"}
           heading="Bursary Applications"
           tableName="bursary_applications"
           modelSchema={BursaryApplicationSchema}
@@ -92,6 +97,8 @@ export function DashboardViewController({
       )}
       {view === "app-drivers-license" && (
         <ApplicationTable
+          email={email}
+          link={email && "/dashboard/applications/drivers-license"}
           heading="Drivers License Applications"
           tableName="drivers_license_applications"
           modelSchema={DriversLicenseSchema}
@@ -99,6 +106,8 @@ export function DashboardViewController({
       )}
       {view === "app-passport" && (
         <ApplicationTable
+          email={email}
+          link={email && "/dashboard/applications/passport"}
           heading="Passport Applications"
           tableName="passport_applications"
           modelSchema={PassportApplicationSchema}
@@ -106,6 +115,8 @@ export function DashboardViewController({
       )}
       {view === "app-vaccination" && (
         <ApplicationTable
+          email={email}
+          link={email && "/dashboard/applications/vaccination"}
           heading="Vaccination Applications"
           tableName="vaccination_applications"
           modelSchema={VaccinationApplicationSchema}
@@ -113,10 +124,20 @@ export function DashboardViewController({
       )}
       {view === "appoint-index" && (
         <ApplicationTable
+          email={email}
+          link={email && "/dashboard/vaccination"}
           heading="Scheduled Appointments"
           tableName="scheduled_appointments"
           modelSchema={AppointmentSchema}
+        />
+      )}
+      {view === "feedback" && (
+        <ApplicationTable
           email={email}
+          link={email && "/dashboard/feedback"}
+          heading="Feedback"
+          tableName="user_feedback"
+          modelSchema={FeedbackSchema}
         />
       )}
     </section>
@@ -131,10 +152,12 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           icon: GraduationCap,
           title: "Bursaries",
           link:
-            view === "Admin"
-              ? "/admin?view=app-bursary"
-              : siteMapData.Dashboard.children.Applications.children.Bursary
-                  .path,
+            (view === "Admin" && "/admin?view=app-bursary") ||
+            (view === "Dashboard" &&
+              siteMapData.Dashboard.children.Applications.children.Bursary
+                .path) ||
+            (view === "User" && "/dashboard?view=app-bursary") ||
+            "",
         }}
       />
       <DashboardNavigationCard
@@ -142,10 +165,12 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           icon: CreditCardIcon,
           title: "Drivers Licenses",
           link:
-            view === "Admin"
-              ? "/admin?view=app-bursary"
-              : siteMapData.Dashboard.children.Applications.children
-                  .DriversLicense.path,
+            (view === "Admin" && "/admin?view=app-drivers-license") ||
+            (view === "Dashboard" &&
+              siteMapData.Dashboard.children.Applications.children
+                .DriversLicense.path) ||
+            (view === "User" && "/dashboard?view=app-drivers-license") ||
+            "",
         }}
       />
       <DashboardNavigationCard
@@ -153,10 +178,12 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           icon: BookIcon,
           title: "Passport",
           link:
-            view === "Admin"
-              ? "/admin?view=app-bursary"
-              : siteMapData.Dashboard.children.Applications.children.Passport
-                  .path,
+            (view === "Admin" && "/admin?view=app-passport") ||
+            (view === "Dashboard" &&
+              siteMapData.Dashboard.children.Applications.children.Passport
+                .path) ||
+            (view === "User" && "/dashboard?view=app-passport") ||
+            "",
         }}
       />
       <DashboardNavigationCard
@@ -164,10 +191,12 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           icon: SyringeIcon,
           title: "Vaccination",
           link:
-            view === "Admin"
-              ? "/admin?view=app-bursary"
-              : siteMapData.Dashboard.children.Applications.children.Vaccination
-                  .path,
+            (view === "Admin" && "/admin?view=app-vaccination") ||
+            (view === "Dashboard" &&
+              siteMapData.Dashboard.children.Applications.children.Vaccination
+                .path) ||
+            (view === "User" && "/dashboard?view=app-vaccination") ||
+            "",
         }}
       />
     </div>

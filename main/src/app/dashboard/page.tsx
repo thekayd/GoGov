@@ -64,8 +64,8 @@ export default function CitizenPortal() {
         </section>
         <Separator className="my-8" />
 
-        <DashboardViewController selectedView="Dashboard" email={user?.email} />
-
+        <DashboardViewController selectedView="User" email={user?.email} />
+        {/* 
         <section className="space-y-5">
           <Typography variant={"h2"}>Your Applications</Typography>
           <div className="grid grid-cols-1 items-start justify-start gap-3 lg:grid-cols-2">
@@ -145,8 +145,8 @@ export default function CitizenPortal() {
             {/* {openedApplications.map((app, index) => (
               <ApplicationCard />
             ))} */}
-          </div>
-        </section>
+        {/* </div> */}
+        {/* </section>  */}
       </CardContent>
     </Card>
   )

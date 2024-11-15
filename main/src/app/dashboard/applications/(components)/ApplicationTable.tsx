@@ -11,6 +11,7 @@ import {
   DriversLicenseApplication,
   DriversLicenseSchema,
 } from "@/models/DriversLicenseModel"
+import { FeedBack, FeedbackSchema } from "@/models/FeedbackModel"
 import {
   PassportApplication,
   PassportApplicationSchema,
@@ -22,6 +23,7 @@ import {
 import { DatabaseTables } from "@/types"
 import { z, ZodObject } from "zod"
 
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   useGetApplications,
   useGetUserApplications,
@@ -35,6 +37,7 @@ import {
   AppointmentColumns,
   BursaryApplicationsColumns,
   DriversLicenseApplicationColumns,
+  FeedbackColumns,
   PassportApplicationColumns,
   VaccinationApplicationColumns,
 } from "./Columns"
@@ -44,6 +47,7 @@ interface ModelRenderProps {
   tableName: DatabaseTables
   heading: string
   email?: string
+  link?: string
 }
 
 export function ApplicationTable({
@@ -51,6 +55,7 @@ export function ApplicationTable({
   tableName,
   heading,
   email,
+  link,
 }: ModelRenderProps) {
   const { data, isPending, error } = email
     ? useGetUserApplications<z.infer<typeof modelSchema>>(tableName, email)
@@ -58,34 +63,16 @@ export function ApplicationTable({
 
   console.log("Applications: ", data)
 
-  // const applicationTable = () => {
-  //   if (!data || isPending || error) return
-  //   if (modelSchema === BursaryApplicationSchema)
-  //     return (
-  //       <ModelTable
-  //         columns={BursaryApplicationsColumns}
-  //         data={data as BursaryApplication[]}
-  //       />
-  //     )
-  //   if (modelSchema === DriversLicenseSchema)
-  //     return (
-  //       <ModelTable
-  //         columns={DriversLicenseApplicationColumns}
-  //         data={data as DriversLicenseApplication[]}
-  //       />
-  //     )
-  //   if (modelSchema === PassportApplicationSchema)
-  //     return (
-  //       <ModelTable
-  //         columns={PassportApplicationColumns}
-  //         data={data as PassportApplication[]}
-  //       />
-  //     )
-  // }
-
   return (
-    <section className="mb-12 w-full">
-      <h2 className="mb-4 text-2xl font-semibold text-gray-900">{heading}</h2>
+    <section className="mb-12 w-full space-y-4">
+      <div className="flex items-center justify-between ">
+        <h2 className="mb-4 text-2xl font-semibold text-gray-900">{heading}</h2>
+        {link && (
+          <Link href={link} className={buttonVariants({ variant: "default" })}>
+            Create
+          </Link>
+        )}
+      </div>
       {isPending && !error && !data && <ModelTableSkeleton />}
       {error && !isPending && !data && <ModelTableError error={error} />}
       {modelSchema === BursaryApplicationSchema && data && (
@@ -114,6 +101,9 @@ export function ApplicationTable({
       )}
       {modelSchema === AppointmentSchema && data && (
         <ModelTable columns={AppointmentColumns} data={data as Appointment[]} />
+      )}
+      {modelSchema === FeedbackSchema && data && (
+        <ModelTable columns={FeedbackColumns} data={data as FeedBack[]} />
       )}
     </section>
   )

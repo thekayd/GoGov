@@ -44,6 +44,16 @@ export const FeedbackFormTemplate: ApplicationFormTemplate<FeedbackForm> = {
   ],
 }
 
+export const FeedbackSchema = z.object({
+  created_at: z.string().optional(),
+  email: z.string().nullable().optional(),
+  feedback: z.string().nullable().optional(),
+  id: z.string().optional(),
+  phone: z.number().nullable().optional(),
+  rating: z.number().nullable().optional(),
+})
+
 export type FeedbackForm = z.infer<typeof FeedbackFormSchema>
 export type FeedbackModel =
   Database["public"]["Tables"]["passport_applications"]["Row"]
+export type FeedBack = z.infer<typeof FeedbackSchema>
