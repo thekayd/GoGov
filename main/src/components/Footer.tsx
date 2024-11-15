@@ -1,43 +1,35 @@
 import Link from "next/link"
+import { X } from "lucide-react"
+import { PiInstagramLogoDuotone } from "react-icons/pi"
+
+import Typography from "./ui/typography"
 
 export function Footer() {
   return (
-    <footer className="bg-blue-900 py-12 text-white">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div>
-            <h3 className="mb-4 text-lg font-semibold">
-              Government of South Africa
-            </h3>
-            <p>Serving the nation with dedication and transparency.</p>
-          </div>
-          <div>
-            <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/privacy">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link href="/terms">Terms & Conditions</Link>
-              </li>
-              <li>
-                <Link href="/contact">Contact Us</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-4 text-lg font-semibold">Connect With Us</h3>
-            {/* Add social media icons here */}
+    <footer className="flex w-full flex-col items-center justify-center bg-blue-900 px-4 py-12 text-white">
+      <div className="grid w-full max-w-6xl grid-cols-1 justify-center gap-8 md:grid-cols-2">
+        <div className="space-y-2">
+          <Typography variant="h3">Government of South Africa</Typography>
+          <Typography variant="p">
+            Serving the nation with dedication and transparency.
+          </Typography>
+        </div>
+        <div className="space-y-2">
+          <Typography variant={"h3"}>Quick Links</Typography>
+          <div className="space-y-2 md:flex md:flex-col">
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms & Conditions</Link>
+            <Link href="/contact">Contact Us</Link>
           </div>
         </div>
       </div>
-      <div className="mt-8 bg-blue-800 py-4">
+      <div className="mt-8 max-w-6xl bg-blue-800 py-4">
         <div className="container mx-auto px-4">
-          <p className="text-sm text-blue-200">
+          <Typography variant={"p"}>
             Content Owned, Maintained and Updated by Government of South Africa.
             For any query, please contact concerned departments. (Technical
             Support By NIC)
-          </p>
+          </Typography>
         </div>
       </div>
     </footer>

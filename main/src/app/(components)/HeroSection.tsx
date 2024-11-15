@@ -1,34 +1,45 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import Typography from "@/components/ui/typography"
 
 export function HeroSection() {
   return (
-    <section className="relative h-[90vh]">
-      {" "}
-      {/* Changed from h-screen to h-[90vh] */}
+    <section className="relative h-[50vh] w-full">
       <Image
         src="/assets/images/ChrisLee70L1Tdai6Rmunsplash1.jpeg"
         alt="Hero"
         layout="fill"
-        objectFit="cover"
+        objectFit="cover "
+        objectPosition="center"
       />
       <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="text-center text-white">
-          <h1 className="mb-4 text-5xl font-bold">
-            Welcome to the
-            <br />
-            South African
-            <br />
-            Citizen Portal
-          </h1>
-          <p className="mb-8 text-xl">
-            Discover an unparalleled journey filled with adventure.
-          </p>
-          <Button>
-            <Link href="/dashboard">Access your portal now</Link>
-          </Button>
+        <div className="flex flex-col gap-4 px-4 text-center text-white">
+          <div className="space-y-3">
+            <Typography variant={"h1"}>Discover South Africa</Typography>
+            <Typography variant={"p"}>
+              Discover an unparalleled journey filled with adventure.
+            </Typography>
+          </div>
+          <div className="space-x-4">
+            <Link
+              href="/dashboard"
+              className={buttonVariants({ className: "" })}
+            >
+              Access Your Portal
+            </Link>
+            <Link
+              href="/dashboard"
+              className={buttonVariants({
+                className:
+                  "text-secondary-foreground hover:text-primary-foreground",
+                variant: "outline",
+              })}
+            >
+              Departments
+            </Link>
+          </div>
         </div>
       </div>
     </section>

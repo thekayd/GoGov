@@ -7,6 +7,9 @@ import { Toaster } from "sonner"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
+import { Footer } from "@/components/Footer"
+import { Header } from "@/components/Header"
+import Navbar from "@/components/Navbar"
 import QueryProvider from "@/components/query-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -83,7 +86,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
             defaultTheme="light"
             disableTransitionOnChange
           >
-            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <div className="min-h-screen  bg-gray-100 ">
+                {/* <Header /> */}
+                <Navbar />
+                {children}
+                <Footer />
+              </div>
+            </Suspense>
             <Toaster richColors position="top-center" />
           </ThemeProvider>
         </QueryProvider>

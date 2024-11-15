@@ -1,5 +1,7 @@
 import Image from "next/image"
 
+import Typography from "@/components/ui/typography"
+
 export function TourismSection() {
   const destinations = [
     { name: "Table Mountain", image: "/assets/images/tablemountain.jpg" },
@@ -12,14 +14,14 @@ export function TourismSection() {
   ]
 
   return (
-    <section className="bg-blue-800 py-16 text-white">
-      <div className="container mx-auto px-4">
-        <h2 className="mb-8 text-center text-3xl font-semibold">
+    <section className="w-full bg-blue-800 py-10 text-white">
+      <div className="container mx-auto max-w-6xl space-y-10 px-4 md:px-10">
+        <Typography variant={"h2"} className="text-center">
           South African Tourism
-        </h2>
+        </Typography>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {destinations.map((destination, index) => (
-            <div key={index} className="flex flex-col items-center">
+            <div key={index} className="flex w-full flex-col items-center">
               <div className="relative mb-4 h-64 w-64">
                 <Image
                   src={destination.image}
@@ -29,7 +31,7 @@ export function TourismSection() {
                   className="rounded-lg"
                 />
               </div>
-              <h3 className="text-xl font-semibold">{destination.name}</h3>
+              <Typography variant={"h3"}>{destination.name}</Typography>
             </div>
           ))}
         </div>

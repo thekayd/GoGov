@@ -1,17 +1,18 @@
 import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
+import Typography from "@/components/ui/typography"
 
 export function NewsSection() {
   return (
-    <section className="bg-gray-100 py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="mb-8 text-center text-3xl font-semibold">
+    <section className="bg-gray-100 ">
+      <div className="container mx-auto max-w-6xl space-y-10 px-4 md:px-10">
+        <Typography variant={"h2"} className="text-center">
           News and Events
-        </h2>
+        </Typography>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-lg bg-white p-6 shadow-md">
-            <h3 className="mb-4 text-xl font-semibold">Announcements</h3>
+            <Typography variant={"h3"}>Announcements</Typography>
             <Image
               src="/assets/images/Image1.png"
               alt="Announcements"
@@ -19,7 +20,7 @@ export function NewsSection() {
               height={200}
               className="mb-4 rounded-lg"
             />
-            <p className="mb-4 text-gray-600">
+            <Typography variant={"p"} affects={"removePMargin"} className="">
               Explore South Africa's commitment to excellence in public
               services! Get a comprehensive range of services across transport,
               healthcare, education, and home affairs. Efficient public
@@ -27,7 +28,7 @@ export function NewsSection() {
               quality education systems and streamlined home affairs processes,
               South Africa is dedicated to enhancing the quality of life for all
               its citizens.
-            </p>
+            </Typography>
             <Button variant="link">View More</Button>
           </div>
           <div className="rounded-lg bg-white p-6 shadow-md">

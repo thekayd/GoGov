@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
+import Typography from "@/components/ui/typography"
 
 export function InitiativesSection() {
   const initiatives = [
@@ -32,14 +33,17 @@ export function InitiativesSection() {
   ]
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="mb-8 text-center text-3xl font-semibold">
-          South African Government Initiatives
-        </h2>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+    <section className="">
+      <div className="container mx-auto max-w-6xl space-y-5 px-4 md:px-10">
+        <Typography variant={"h2"} affects={"removePMargin"} className="">
+          Initiatives
+        </Typography>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-3 lg:grid-cols-4">
           {initiatives.map((initiative, index) => (
-            <div key={index} className="rounded-lg bg-white p-6 shadow-md">
+            <div
+              key={index}
+              className="space-y-3 rounded-lg bg-white p-2 shadow-md"
+            >
               <div className="relative mb-4 h-40 w-full">
                 <Image
                   src={initiative.image}
@@ -49,16 +53,25 @@ export function InitiativesSection() {
                   className="rounded-lg"
                 />
               </div>
-              <h3 className="mb-2 text-xl font-semibold">{initiative.name}</h3>
-              <p className="mb-4 text-gray-600">{initiative.description}</p>
-              <Button>Read More</Button>
+              <div className="flex flex-col gap-3">
+                <Typography
+                  variant={"h3"}
+                  affects={"removePMargin"}
+                  className=""
+                >
+                  {initiative.name}
+                </Typography>
+                <Typography
+                  variant={"p"}
+                  affects={"removePMargin"}
+                  className=""
+                >
+                  {initiative.description}
+                </Typography>
+              </div>
+              <Button className="w-full">Read More</Button>
             </div>
           ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link href="/register">
-            <Button>Create your go.gov account</Button>
-          </Link>
         </div>
       </div>
     </section>

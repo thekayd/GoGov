@@ -11,18 +11,16 @@ import { TourismSection } from "./(components)/TourismSection"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Header />
-      <main>
-        <HeroSection />
+    <main className="flex w-full flex-col items-center justify-center">
+      <HeroSection />
+      <div className="flex w-full flex-col items-center justify-center gap-16 py-10 ">
         <AboutSection />
         <DepartmentsSection />
         <MembersSection />
         <TourismSection />
         <NewsSection />
         <InitiativesSection />
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </main>
   )
 }
