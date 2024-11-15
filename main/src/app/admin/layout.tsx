@@ -6,7 +6,6 @@ import { RootLayoutProps } from "../layout"
 export default function AdminLayout({ children }: RootLayoutProps) {
   return (
     <div className="flex w-full flex-col items-center justify-center">
-      <DashboardNavbar />
       <div className="min-h-screen px-4 py-10">
         <div className="min-h-screen bg-gray-50 p-8">
           <div className="mx-auto max-w-5xl space-y-14">
@@ -18,7 +17,6 @@ export default function AdminLayout({ children }: RootLayoutProps) {
           </div>
         </div>
       </div>
-      <DetailedFooter />
     </div>
   )
 }

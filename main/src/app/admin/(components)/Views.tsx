@@ -89,7 +89,10 @@ export function DashboardViewController({
       {view === "app-bursary" && (
         <ApplicationTable
           email={email}
-          link={email && "/dashboard/applications/bursary"}
+          link={
+            email &&
+            siteMapData.Dashboard.children.Applications.children.Bursary.path
+          }
           heading="Bursary Applications"
           tableName="bursary_applications"
           modelSchema={BursaryApplicationSchema}
@@ -98,7 +101,11 @@ export function DashboardViewController({
       {view === "app-drivers-license" && (
         <ApplicationTable
           email={email}
-          link={email && "/dashboard/applications/drivers-license"}
+          link={
+            email &&
+            siteMapData.Dashboard.children.Applications.children.DriversLicense
+              .path
+          }
           heading="Drivers License Applications"
           tableName="drivers_license_applications"
           modelSchema={DriversLicenseSchema}
@@ -107,7 +114,10 @@ export function DashboardViewController({
       {view === "app-passport" && (
         <ApplicationTable
           email={email}
-          link={email && "/dashboard/applications/passport"}
+          link={
+            email &&
+            siteMapData.Dashboard.children.Applications.children.Passport.path
+          }
           heading="Passport Applications"
           tableName="passport_applications"
           modelSchema={PassportApplicationSchema}
@@ -116,7 +126,11 @@ export function DashboardViewController({
       {view === "app-vaccination" && (
         <ApplicationTable
           email={email}
-          link={email && "/dashboard/applications/vaccination"}
+          link={
+            email &&
+            siteMapData.Dashboard.children.Applications.children.Vaccination
+              .path
+          }
           heading="Vaccination Applications"
           tableName="vaccination_applications"
           modelSchema={VaccinationApplicationSchema}
@@ -125,7 +139,7 @@ export function DashboardViewController({
       {view === "appoint-index" && (
         <ApplicationTable
           email={email}
-          link={email && "/dashboard/vaccination"}
+          link={email && siteMapData.Appointments.path}
           heading="Scheduled Appointments"
           tableName="scheduled_appointments"
           modelSchema={AppointmentSchema}
@@ -134,7 +148,7 @@ export function DashboardViewController({
       {view === "feedback" && (
         <ApplicationTable
           email={email}
-          link={email && "/dashboard/feedback"}
+          link={email && siteMapData.Support.path}
           heading="Feedback"
           tableName="user_feedback"
           modelSchema={FeedbackSchema}

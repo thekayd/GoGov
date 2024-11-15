@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { siteMapData } from "@/config/site"
 import { Button, buttonVariants } from "@/components/ui/button"
 import Typography from "@/components/ui/typography"
 
@@ -8,7 +9,7 @@ export function HeroSection() {
   return (
     <section className="relative h-[50vh] w-full">
       <Image
-        src="/assets/images/ChrisLee70L1Tdai6Rmunsplash1.jpeg"
+        src="/assets/cape-town-bay.jpg"
         alt="Hero"
         layout="fill"
         objectFit="cover "
@@ -24,7 +25,7 @@ export function HeroSection() {
           </div>
           <div className="space-x-4">
             <Link
-              href="/dashboard"
+              href={siteMapData.Auth.path}
               className={buttonVariants({ className: "" })}
             >
               Access Your Portal

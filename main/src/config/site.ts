@@ -98,7 +98,7 @@ export const siteMapData = {
     },
   },
   Appointments: {
-    path: "/dashboard/appointments",
+    path: "/dashboard/appointment",
     title: "Appointments",
     description: "View and manage your appointments",
   },
