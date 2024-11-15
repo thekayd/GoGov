@@ -6,6 +6,7 @@ import {
   CheckCircle,
   Clock,
   FileText,
+  LucideIcon,
   Mail,
   MapPin,
   Phone,
@@ -22,6 +23,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+import Typography from "./ui/typography"
+
 interface ApplicationCardProps {
   user: {
     name: string
@@ -33,30 +36,33 @@ interface ApplicationCardProps {
     fullName: string
   }
   application: {
-    licenseCategory: string
-    testCenter: string
+    department: string
+    status: string
+    createdAt: string
+    type: string
+    center: string
   }
 }
 
 type ApplicationStatus = "pending" | "approved" | "rejected" | "in-progress"
 
-export default function ApplicationCard(
-  { user, application }: ApplicationCardProps = {
-    user: {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      phone: "+1 (555) 123-4567",
-      address: "123 Main St",
-      city: "Anytown",
-      postcode: "12345",
-      fullName: "John Michael Doe",
-    },
-    application: {
-      licenseCategory: "Class C",
-      testCenter: "Anytown DMV",
-    },
+export default function ApplicationCard() {
+  const user = {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "+1 (555) 123-4567",
+    address: "123 Main St",
+    city: "Anytown",
+    postcode: "12345",
+    fullName: "John Michael Doe",
   }
-) {
+  const application = {
+    department: "Transport",
+    status: "pending",
+    type: "Class C",
+    createdAt: "2023-01-01",
+    center: "Anytown DMV",
+  }
   const [status, setStatus] = useState<ApplicationStatus>("pending")
 
   const handleStatusChange = (newStatus: ApplicationStatus) => {
@@ -70,54 +76,35 @@ export default function ApplicationCard(
           Application Details
         </CardTitle>
       </CardHeader>
-      <CardContent className="w-full">
+      <CardContent className="w-full p-3">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">User Information</h3>
+            <Typography variant={"p"} affects={"large"}>
+              Citizen Information
+            </Typography>
             <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <User className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Name:</span> {user.name}
-              </div>
-              <div className="flex items-center space-x-2">
-                <Mail className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Email:</span> {user.email}
-              </div>
-              <div className="flex items-center space-x-2">
-                <Phone className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Phone:</span> {user.phone}
-              </div>
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Address:</span> {user.address}
-              </div>
-              <div className="flex items-center space-x-2">
-                <Building className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">City:</span> {user.city}
-              </div>
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Postcode:</span> {user.postcode}
-              </div>
-              <div className="flex items-center space-x-2">
-                <User className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Full Name:</span> {user.fullName}
-              </div>
+              <CardField label="Name" value={user.name} />
+              <CardField label="Email" value={user.email} />
+              <CardField label="Phone" value={user.phone} />
+              <CardField label="Address" value={user.address} />
+              <CardField label="Address" value={user.address} />
+              <CardField label="City" value={user.city} />
+              <CardField label="Postcode" value={user.postcode} />
             </div>
           </div>
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Application Details</h3>
             <div className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <FileText className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">License Category:</span>{" "}
-                {application.licenseCategory}
-              </div>
-              <div className="flex items-center space-x-2">
-                <Building className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">Test Center:</span>{" "}
-                {application.testCenter}
-              </div>
+              <CardField
+                label="Type"
+                value={application.type}
+                icon={FileText}
+              />
+              <CardField
+                label="Test Center"
+                value={application.center}
+                icon={FileText}
+              />
               <div className="flex items-center space-x-2">
                 {status === "approved" && (
                   <CheckCircle className="h-5 w-5 text-green-500" />
@@ -138,11 +125,11 @@ export default function ApplicationCard(
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end space-x-2">
+      <CardFooter className="flex w-full flex-col gap-3 pt-5 md:flex-row">
         <Button
           onClick={() => handleStatusChange("approved")}
           variant={status === "approved" ? "default" : "outline"}
-          className="flex items-center space-x-1"
+          className="flex w-full items-center space-x-1"
         >
           <CheckCircle className="h-4 w-4" />
           <span>Approve</span>
@@ -150,7 +137,7 @@ export default function ApplicationCard(
         <Button
           onClick={() => handleStatusChange("rejected")}
           variant={status === "rejected" ? "default" : "outline"}
-          className="flex items-center space-x-1"
+          className="flex w-full items-center space-x-1"
         >
           <XCircle className="h-4 w-4" />
           <span>Reject</span>
@@ -158,12 +145,28 @@ export default function ApplicationCard(
         <Button
           onClick={() => handleStatusChange("in-progress")}
           variant={status === "in-progress" ? "default" : "outline"}
-          className="flex items-center space-x-1"
+          className="flex w-full items-center space-x-1"
         >
           <Clock className="h-4 w-4" />
           <span>In Progress</span>
         </Button>
       </CardFooter>
     </Card>
+  )
+}
+
+function CardField(props: { label: string; value: string; icon?: LucideIcon }) {
+  return (
+    // <div className="flex w-full flex-col items-center space-y-2">
+    <div className="flex w-full items-center justify-start gap-2">
+      {props.icon && <props.icon className="h-5 w-5 text-muted-foreground" />}
+      <Typography variant="p" className="font-medium" affects="removePMargin">
+        {props.label}:
+      </Typography>
+      <Typography affects={"removePMargin"} variant={"p"}>
+        {props.value}
+      </Typography>
+    </div>
+    // </div>
   )
 }

@@ -19,6 +19,7 @@ import {
 } from "lucide-react"
 import { z } from "zod"
 
+import { siteMapData } from "@/config/site"
 import { Card } from "@/components/ui/card"
 import Typography from "@/components/ui/typography"
 import { ApplicationTable } from "@/app/dashboard/applications/(components)/ApplicationTable"
@@ -34,13 +35,52 @@ const ViewsSchema = z.enum([
 
 type Views = z.infer<typeof ViewsSchema>
 
-export function AdminDashboardView() {
+export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
+  const searchParams = useSearchParams()
+  const { data: currentView } = ViewsSchema.safeParse(searchParams.get("view"))
+  const isActive = (view: Views) => currentView === view
+
+  return (
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+      <DashboardNavigationCard
+        details={{
+          icon: LayoutGridIcon,
+          title: "Applications",
+          link: `${baseUrl}?view=app-index`,
+          active: currentView?.split("-")[0] === "app",
+        }}
+      />
+      <DashboardNavigationCard
+        details={{
+          icon: CalendarCheckIcon,
+          title: "Appointments",
+          link: `${baseUrl}?view=appoint-index`,
+          active: currentView?.split("-")[0] === "appoint",
+        }}
+      />
+      <DashboardNavigationCard
+        details={{
+          icon: MessageSquareIcon,
+          title: "Feedbacks",
+          link: "",
+        }}
+      />
+    </div>
+  )
+}
+
+type ControllerView = "Admin" | "Dashboard"
+export function DashboardViewController({
+  selectedView,
+}: {
+  selectedView: ControllerView
+}) {
   const searchParams = useSearchParams()
   const { data: view } = ViewsSchema.safeParse(searchParams.get("view"))
 
   return (
     <section className="mb-12">
-      {view === "app-index" && <ApplicationSelection />}
+      {view === "app-index" && <ApplicationSelectionView view={selectedView} />}
       {view === "app-bursary" && (
         <ApplicationTable
           heading="Bursary Applications"
@@ -80,68 +120,46 @@ export function AdminDashboardView() {
   )
 }
 
-export function AdminDashboardNavigation() {
-  const searchParams = useSearchParams()
-  const { data: currentView } = ViewsSchema.safeParse(searchParams.get("view"))
-
-  return (
-    <div className="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
-      <DashboardNavigationCard
-        details={{
-          icon: LayoutGridIcon,
-          title: "Applications",
-          link: "/admin?view=app-index",
-          active: currentView?.split("-")[0] === "app",
-        }}
-      />
-      <DashboardNavigationCard
-        details={{
-          icon: CalendarCheckIcon,
-          title: "Appointments",
-          link: "/admin?view=appoint-index",
-          active: currentView?.split("-")[0] === "appoint",
-        }}
-      />
-      <DashboardNavigationCard
-        details={{
-          icon: MessageSquareIcon,
-          title: "Feedbacks",
-          link: "",
-        }}
-      />
-    </div>
-  )
-}
-
-export function ApplicationSelection() {
+export function ApplicationSelectionView({ view }: { view: ControllerView }) {
   return (
     <div className="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
       <DashboardNavigationCard
         details={{
           icon: GraduationCap,
           title: "Bursaries",
-          link: "/admin?view=app-bursary",
+          link: view
+            ? "/admin?view=app-bursary"
+            : siteMapData.Dashboard.children.Applications.children.Bursary.path,
         }}
       />
       <DashboardNavigationCard
         details={{
           icon: CreditCardIcon,
           title: "Drivers Licenses",
-          link: "/admin?view=app-drivers-license",
+          link: view
+            ? "/admin?view=app-bursary"
+            : siteMapData.Dashboard.children.Applications.children
+                .DriversLicense.path,
         }}
       />
       <DashboardNavigationCard
         details={{
           icon: BookIcon,
           title: "Passport",
-          link: "/admin?view=app-passport",
+          link: view
+            ? "/admin?view=app-bursary"
+            : siteMapData.Dashboard.children.Applications.children.Passport
+                .path,
         }}
       />
       <DashboardNavigationCard
         details={{
           icon: SyringeIcon,
           title: "Vaccination",
-          link: `/admin?view=app-vaccination`,
+          link: view
+            ? "/admin?view=app-bursary"
+            : siteMapData.Dashboard.children.Applications.children.Vaccination
+                .path,
         }}
       />
     </div>

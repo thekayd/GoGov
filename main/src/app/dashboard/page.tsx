@@ -19,6 +19,13 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import Typography from "@/components/ui/typography"
+import ApplicationCard from "@/components/application-card"
+
+import {
+  DashboardNavigation,
+  DashboardViewController,
+} from "../admin/(components)/Views"
 
 export default async function CitizenPortal() {
   const availableApplications = [
@@ -52,109 +59,33 @@ export default async function CitizenPortal() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="mx-auto max-w-5xl">
-        <h1 className="mb-8 text-4xl font-semibold text-gray-900">
+    <Card className="min-h-screen bg-gray-50  ">
+      <CardHeader>
+        <Typography variant="h1" className=" text-gray-900">
           Citizen Portal
-        </h1>
+        </Typography>
+      </CardHeader>
 
-        <section className="mb-12">
-          <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-            Available Applications
-          </h2>
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
-            {availableApplications.map((app, index) => (
-              <Card
-                key={index}
-                className="overflow-hidden transition-shadow hover:shadow-sm"
-              >
-                <CardHeader className="p-2">
-                  <div className="flex items-center space-x-1">
-                    <app.icon className="h-3 w-3 text-blue-500" />
-                    <CardTitle className="text-xs font-medium">
-                      {app.title}
-                    </CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-2 pt-0">
-                  <CardDescription className="line-clamp-2 text-[10px]">
-                    {app.description}
-                  </CardDescription>
-                </CardContent>
-                <CardFooter className="p-2 pt-0">
-                  <Link
-                    href={app.link}
-                    className={buttonVariants({
-                      size: "sm",
-                      variant: "outline",
-                      className:
-                        "h-6 w-full py-0 text-[10px] text-blue-500 hover:bg-blue-50 hover:text-blue-600",
-                    })}
-                  >
-                    Start
-                  </Link>
-                  {/* <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-6 w-full py-0 text-[10px] text-blue-500 hover:bg-blue-50 hover:text-blue-600"
-                  >
-                    Start
-                    <ChevronRight className="ml-1 h-2 w-2" />
-                  </Button> */}
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+      <CardContent>
+        <section className="mb-12 space-y-4">
+          <Typography variant={"h3"}>Get Started</Typography>
+          <section className="">
+            <DashboardNavigation baseUrl="/dashboard" />
+          </section>
         </section>
-
         <Separator className="my-8" />
 
-        <section>
-          <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-            Your Applications
-          </h2>
-          <div className="space-y-4">
+        <DashboardViewController selectedView="Dashboard" />
+
+        <section className="space-y-5">
+          <Typography variant={"h2"}>Your Applications</Typography>
+          <div className="grid grid-cols-1 items-start justify-start gap-3 space-y-4 lg:grid-cols-2">
             {openedApplications.map((app, index) => (
-              <Card
-                key={index}
-                className="overflow-hidden transition-shadow hover:shadow-sm"
-              >
-                <CardHeader className="p-2">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-xs font-medium">
-                      {app.title}
-                    </CardTitle>
-                    <span
-                      className={`rounded-full px-1 py-0.5 text-[10px] ${
-                        app.status === "Submitted"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}
-                    >
-                      {app.status}
-                    </span>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-2 pt-0">
-                  <p className="text-[10px] text-gray-500">
-                    Last updated: {app.lastUpdated}
-                  </p>
-                </CardContent>
-                <CardFooter className="p-2 pt-0">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-6 w-full py-0 text-[10px]"
-                  >
-                    View
-                    <ChevronRight className="ml-1 h-2 w-2" />
-                  </Button>
-                </CardFooter>
-              </Card>
+              <ApplicationCard />
             ))}
           </div>
         </section>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

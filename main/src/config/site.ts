@@ -63,6 +63,38 @@ export const siteMapData = {
         title: "Profile",
         description: "Manage your profile settings",
       },
+      Applications: {
+        path: "/dashboard/applications",
+        title: "Applications",
+        description: "Apply for various services",
+        children: {
+          Passport: {
+            path: "/dashboard/applications/passport",
+            title: "Passport Application",
+            description: "Apply for a new passport",
+          },
+          DriversLicense: {
+            path: "/dashboard/applications/drivers-license",
+            title: "Driver's License Application",
+            description: "Apply for a driver's license",
+          },
+          Vehicle: {
+            path: "/dashboard/applications/vehicle",
+            title: "Vehicle Registration Application",
+            description: "Apply for vehicle registration",
+          },
+          Bursary: {
+            path: "/dashboard/applications/bursary",
+            title: "Bursary Application",
+            description: "Apply for a bursary",
+          },
+          Vaccination: {
+            path: "/dashboard/applications/vaccination",
+            title: "Vaccination Applications",
+            description: "Apply for a Vaccination",
+          },
+        },
+      },
     },
   },
   Appointments: {
@@ -70,38 +102,7 @@ export const siteMapData = {
     title: "Appointments",
     description: "View and manage your appointments",
   },
-  Applications: {
-    path: "/dashboard/applications",
-    title: "Applications",
-    description: "Apply for various services",
-    children: {
-      Passport: {
-        path: "/dashboard/applications/passport",
-        title: "Passport Application",
-        description: "Apply for a new passport",
-      },
-      DriversLicense: {
-        path: "/dashboard/applications/drivers-license",
-        title: "Driver's License Application",
-        description: "Apply for a driver's license",
-      },
-      Vehicle: {
-        path: "/dashboard/applications/vehicle",
-        title: "Vehicle Registration Application",
-        description: "Apply for vehicle registration",
-      },
-      Bursary: {
-        path: "/dashboard/applications/bursary",
-        title: "Bursary Application",
-        description: "Apply for a bursary",
-      },
-      Vaccination: {
-        path: "/dashboard/applications/vaccination",
-        title: "Vaccination Applications",
-        description: "Apply for a Vaccination",
-      },
-    },
-  },
+
   Services: {
     path: "/services",
     title: "Services",
@@ -114,7 +115,7 @@ export const siteMapData = {
   },
   Support: {
     path: "/feedback",
-    title: "Support & Feedback",
+    title: "Feedback",
     description: "Get help or provide feedback",
   },
 } as const

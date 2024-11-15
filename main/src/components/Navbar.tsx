@@ -8,6 +8,8 @@ import { getNavbarRoutes } from "@/config/site"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
+import UserProfile from "./supaauth/user-profile"
+
 export default function Navbar() {
   return (
     <nav className="flex items-center  justify-between bg-white px-4 py-4 dark:bg-gray-800 md:px-9">
@@ -25,6 +27,7 @@ export default function Navbar() {
             {route.title}
           </Link>
         ))}
+        <UserProfile />
       </div>
       <Sheet>
         <SheetTrigger asChild>
