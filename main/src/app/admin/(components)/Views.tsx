@@ -12,6 +12,7 @@ import {
   BookIcon,
   CalendarCheckIcon,
   CreditCardIcon,
+  FileIcon,
   GraduationCap,
   LayoutGridIcon,
   LucideIcon,
@@ -33,6 +34,7 @@ const ViewsSchema = z.enum([
   "app-vaccination",
   "appoint-index",
   "feedback",
+  "reports",
 ])
 
 type Views = z.infer<typeof ViewsSchema>
@@ -68,6 +70,16 @@ export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
           active: currentView === "feedback",
         }}
       />
+      {baseUrl === "/admin" && (
+        <DashboardNavigationCard
+          details={{
+            icon: FileIcon,
+            title: "Reports",
+            link: `${baseUrl}?view=reports`,
+            active: currentView === "reports",
+          }}
+        />
+      )}
     </div>
   )
 }
@@ -152,6 +164,15 @@ export function DashboardViewController({
           heading="Feedback"
           tableName="user_feedback"
           modelSchema={FeedbackSchema}
+        />
+      )}
+      {view === "reports" && (
+        <ApplicationTable
+          email={email}
+          link={email && siteMapData.Dashboard.children.Feedback.path}
+          heading="Feedback"
+          tableName="drivers_license_applications"
+          modelSchema={DriversLicenseSchema}
         />
       )}
     </section>
