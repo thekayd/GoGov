@@ -85,6 +85,10 @@ export function ApplicationTable({
         <ModelTable
           columns={DriversLicenseApplicationColumns}
           data={data as DriversLicenseApplication[]}
+          defaultColumnVisibility={{
+            id: false,
+            phone_number: false,
+          }}
         />
       )}
       {modelSchema === PassportApplicationSchema && data && (

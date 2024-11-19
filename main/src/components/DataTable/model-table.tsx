@@ -11,6 +11,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  InitialTableState,
   SortingState,
   useReactTable,
   VisibilityState,
@@ -40,15 +41,17 @@ import { DataTableToolbar } from "./data-table-tool-bar"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  defaultColumnVisibility?: VisibilityState
 }
 
 export default function ModelTable<TData, TValue>({
   columns,
   data,
+  defaultColumnVisibility,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<VisibilityState>(defaultColumnVisibility || {})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
 
