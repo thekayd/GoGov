@@ -44,3 +44,16 @@ export async function signOut() {
   revalidatePath("/", "layout")
   redirect("/")
 }
+
+export async function loginAsAdmin(values: LoginFormScheam) {
+  const response = await AuthService.loginAsAdmin(values.email, values.password) // Authentication layer in the Auth Service
+
+  if (response.err) {
+    const error = response.val
+    throw new Error(error.message, { cause: error.error })
+    // redirect("/error")
+  }
+
+  revalidatePath("/admin", "layout")
+  redirect("/admin")
+}

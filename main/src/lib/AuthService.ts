@@ -1,3 +1,6 @@
+import { error } from "console"
+import { AdminModel } from "@/models/AdminModel"
+import { DatabaseTables } from "@/types"
 import { createClient, User } from "@supabase/supabase-js"
 import { StatusCode } from "hono/utils/http-status"
 import { Err, Ok, Result } from "ts-results"
@@ -28,6 +31,43 @@ export class AuthService {
       return Err(
         handleServiceError(error, error.status as StatusCode, error.message)
       )
+    }
+
+    return Ok({})
+  }
+
+  static async loginAsAdmin(
+    email: string,
+    password: string
+  ): Promise<Result<AuthServiceResponse, ServiceError>> {
+    const supabase = createSupabaseServer()
+
+    // Authenticate via Supabase
+    const { data: user, error: userError } =
+      await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      })
+    if (userError)
+      return Err(
+        handleServiceError(
+          userError,
+          userError.status as StatusCode,
+          userError.message
+        )
+      )
+
+    // Ensure authenticated user is an Admin in the database
+    const { data: admin, error: adminError } = await supabase
+      .from("admin_profile")
+      .select()
+      .eq("email", user.user?.email || "")
+      .returns<AdminModel>()
+
+    // Signout if they aren't
+    if (adminError) {
+      await this.signOut()
+      return Err(handleServiceError(adminError, 404, adminError.message))
     }
 
     return Ok({})

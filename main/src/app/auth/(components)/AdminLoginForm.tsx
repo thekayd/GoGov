@@ -18,20 +18,10 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { login } from "../actions"
+import { login, loginAsAdmin } from "../actions"
+import { loginFormScheam, LoginFormScheam } from "./LoginForm"
 
-// Defines the Forms structure
-export const loginFormScheam = z.object({
-  email: z.string().email().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  password: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
-export type LoginFormScheam = z.infer<typeof loginFormScheam>
-
-export default function LoginForm() {
+export default function AdminLoginForm() {
   // Using react-hook-forms for accessible and easy form validation using schemas
   const form = useForm<LoginFormScheam>({
     resolver: zodResolver(loginFormScheam),
@@ -42,11 +32,11 @@ export default function LoginForm() {
   })
 
   function onSubmit(values: LoginFormScheam) {
-    toast.promise(login(values), {
+    toast.promise(loginAsAdmin(values), {
       loading: "Logging in...",
       success: (res) => {
         console.log("Login Response: ", res)
-        return "Successfully Logged In"
+        return "Successfully Logged as Admin"
       },
       error: (err: Error) => {
         console.log("Error: ", err.message)

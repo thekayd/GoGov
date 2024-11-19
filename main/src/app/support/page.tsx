@@ -1,11 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import Gemini from "gemini-ai"
 import { Send } from "lucide-react"
 
-import { env } from "@/env.mjs"
-import { useGemini } from "@/hooks/useGemini"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"

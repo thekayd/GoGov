@@ -14,6 +14,7 @@ export type SiteConfig = {
 }
 
 export type DatabaseTables =
+  | "admin_profile"
   | "bursary_applications"
   | "drivers_license_applications"
   | "passport_applications"
