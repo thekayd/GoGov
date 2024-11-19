@@ -139,7 +139,7 @@ export function DashboardViewController({
       {view === "appoint-index" && (
         <ApplicationTable
           email={email}
-          link={email && siteMapData.Appointments.path}
+          link={email && siteMapData.Dashboard.children.Appointments.path}
           heading="Scheduled Appointments"
           tableName="scheduled_appointments"
           modelSchema={AppointmentSchema}
@@ -148,7 +148,7 @@ export function DashboardViewController({
       {view === "feedback" && (
         <ApplicationTable
           email={email}
-          link={email && siteMapData.Support.path}
+          link={email && siteMapData.Dashboard.children.Feedback.path}
           heading="Feedback"
           tableName="user_feedback"
           modelSchema={FeedbackSchema}
