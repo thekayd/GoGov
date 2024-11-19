@@ -37,8 +37,6 @@ export default function UserProfile() {
     })
   }
 
-  console.log("User: ", data)
-
   return (
     <div className="w-full">
       <Popover>
