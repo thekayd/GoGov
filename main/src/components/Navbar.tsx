@@ -20,7 +20,7 @@ export default function Navbar() {
       >
         <ZA />
       </Link>
-      <div className="hidden gap-4 md:flex">
+      <div className="hidden items-center justify-center gap-4 md:flex">
         {getNavbarRoutes().map((route) => (
           <Link
             key={route.path}

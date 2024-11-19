@@ -95,12 +95,17 @@ export const siteMapData = {
           },
         },
       },
+      Appointments: {
+        path: "/dashboard/appointment",
+        title: "Appointments",
+        description: "View and manage your appointments",
+      },
+      Feedback: {
+        path: "/feedback",
+        title: "Feedback",
+        description: "Get help or provide feedback",
+      },
     },
-  },
-  Appointments: {
-    path: "/dashboard/appointment",
-    title: "Appointments",
-    description: "View and manage your appointments",
   },
 
   Services: {
@@ -113,12 +118,7 @@ export const siteMapData = {
     title: "Payments",
     description: "Make payments for services",
   },
-  Support: {
-    path: "/feedback",
-    title: "Feedback",
-    description: "Get help or provide feedback",
-  },
-} as const
+}
 
 interface Route {
   path: string
