@@ -101,12 +101,12 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
-          <Link
+          {/* <Link
             href="/forgot-password"
             className="absolute right-0 top-0 text-xs text-blue-600 hover:text-blue-800"
           >
             Forgot password?
-          </Link>
+          </Link> */}
         </div>
 
         <Button type="submit" className="w-full">

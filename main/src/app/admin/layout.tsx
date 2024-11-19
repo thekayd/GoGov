@@ -1,13 +1,18 @@
-import DashboardNavbar from "@/components/dashboard-navbar"
-import { DetailedFooter } from "@/components/Footer"
-
+import { VerifyAdmin } from "../auth/actions"
 import { RootLayoutProps } from "../layout"
 
-export default function AdminLayout({ children }: RootLayoutProps) {
+export default async function AdminLayout({ children }: RootLayoutProps) {
+  await VerifyAdmin()
+
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="min-h-screen px-4 py-10">
         <div className="min-h-screen bg-gray-50 p-8">
+          {/* {isLoading && (
+            <div className="flex min-h-screen w-full items-center justify-center">
+              <Loader className="h-8 w-8 animate-spin" />
+            </div>
+          )} */}
           <div className="mx-auto max-w-5xl space-y-14">
             <h1 className="mb-8 text-4xl font-semibold text-gray-900">
               Admin Portal

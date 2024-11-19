@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import { US, ZA } from "country-flag-icons/react/3x2"
 import { MenuIcon, MountainIcon } from "lucide-react"

@@ -57,3 +57,15 @@ export async function loginAsAdmin(values: LoginFormScheam) {
   revalidatePath("/admin", "layout")
   redirect("/admin")
 }
+
+export async function VerifyAdmin() {
+  const response = await AuthService.getAdmin()
+  if (response.err) {
+    redirect("/auth")
+    // const error = response.val
+    // throw new Error(error.message, { cause: error.error })
+    // redirect("/error")
+  }
+
+  revalidatePath("/auth?state=admin", "layout")
+}

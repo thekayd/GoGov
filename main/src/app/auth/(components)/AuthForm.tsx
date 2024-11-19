@@ -40,15 +40,28 @@ export function AuthForm() {
         <div className="mt-4 text-center">
           <p className="mb-2 font-bold">or</p>
           <div className="flex justify-center">
-            <Link
-              className={buttonVariants({
-                variant: "secondary",
-                className: "w-full border shadow-lg",
-              })}
-              href="/auth?state=admin"
-            >
-              Sign in as Admin
-            </Link>
+            {state === "register" && (
+              <Link
+                className={buttonVariants({
+                  variant: "secondary",
+                  className: "w-full border shadow-lg",
+                })}
+                href="/auth?state=login"
+              >
+                Login
+              </Link>
+            )}
+            {state === "login" && (
+              <Link
+                className={buttonVariants({
+                  variant: "secondary",
+                  className: "w-full border shadow-lg",
+                })}
+                href="/auth?state=admin"
+              >
+                Sign in as Admin
+              </Link>
+            )}
             {/* <SocialSignIn
               provider="Google"
               className="inline-flex items-center justify-center space-x-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50"

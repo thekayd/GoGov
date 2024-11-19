@@ -1,5 +1,6 @@
 "use client"
 
+import { AdminModel } from "@/models/AdminModel"
 import { User } from "@supabase/supabase-js"
 import { useQuery } from "@tanstack/react-query"
 
@@ -16,5 +17,8 @@ export default function useUser() {
       }
       return {} as User
     },
+    refetchOnMount: "always",
+    refetchOnWindowFocus: "always",
+    retryOnMount: true,
   })
 }

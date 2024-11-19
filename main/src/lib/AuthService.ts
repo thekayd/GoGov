@@ -9,6 +9,8 @@ import { handleServiceError } from "@/lib/exeptions"
 import { ServiceError } from "@/lib/exeptions/types"
 import { createSupabaseServer } from "@/lib/supabase/server"
 
+import { Database } from "../../database.types"
+
 interface AuthServiceResponse {
   user?: User
 }
@@ -117,6 +119,29 @@ export class AuthService {
     }
     if (!data.user)
       return Err(handleServiceError(error, 400, "Un Authenticated"))
+    return Ok({ user: data.user })
+  }
+  static async getAdmin(): Promise<Result<AuthServiceResponse, ServiceError>> {
+    const supabase = createSupabaseServer()
+
+    const { data, error } = await supabase.auth.getUser()
+    if (!data.user || !data.user.email) {
+      return Err(
+        handleServiceError(error, error?.status as StatusCode, error?.message)
+      )
+    }
+
+    // Ensure user is Admin
+    const { data: admin, error: adminError } = await supabase
+      .from("admin_profile")
+      .select()
+      .eq("email", data.user.email)
+      .returns<Database["public"]["Tables"]["admin_profile"]["Row"][]>()
+
+    if (admin?.length === 0) {
+      return Err(handleServiceError(adminError, 400, adminError?.message))
+    }
+
     return Ok({ user: data.user })
   }
 }
