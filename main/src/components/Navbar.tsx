@@ -23,7 +23,7 @@ export default function Navbar() {
           <Link
             key={route.path}
             href={route.path}
-            className="text-lg font-medium underline-offset-4 hover:underline"
+            className="flex-nowrap text-lg font-medium underline-offset-4 hover:underline"
             prefetch={false}
           >
             {route.title}

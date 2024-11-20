@@ -7,10 +7,8 @@ import {
 
 export default function AdminPortal() {
   return (
-    <div className="mx-auto max-w-5xl space-y-14">
-      <section className="mb-12">
-        <DashboardNavigation baseUrl="/admin" />
-      </section>
+    <div className="mx-auto w-full max-w-5xl space-y-10">
+      <DashboardNavigation baseUrl="/admin" />
 
       <Separator className="my-8" />
 

@@ -54,6 +54,11 @@ export const siteMapData = {
     title: "Authentication",
     description: "Login or register to access your account",
   },
+  AdminPanel: {
+    path: "/admin",
+    title: "Admin Panel",
+    description: "Admin Panel",
+  },
   Dashboard: {
     path: "/dashboard",
     title: "Dashboard",

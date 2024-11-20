@@ -9,6 +9,7 @@ import { FeedbackSchema } from "@/models/FeedbackModel"
 import { PassportApplicationSchema } from "@/models/PassportApplicationModel"
 import { VaccinationApplicationSchema } from "@/models/VaccinationModel"
 import {
+  AreaChartIcon,
   BookIcon,
   CalendarCheckIcon,
   CreditCardIcon,
@@ -26,6 +27,10 @@ import { Card } from "@/components/ui/card"
 import Typography from "@/components/ui/typography"
 import { ApplicationTable } from "@/app/dashboard/applications/(components)/ApplicationTable"
 
+import DashboardNavigationCard from "./NavigationCard"
+import ReportCard from "./ReportCard"
+import ReportsView from "./ReportsView"
+
 const ViewsSchema = z.enum([
   "app-index",
   "app-bursary",
@@ -34,18 +39,21 @@ const ViewsSchema = z.enum([
   "app-vaccination",
   "appoint-index",
   "feedback",
+  "analytics",
   "reports",
 ])
 
 type Views = z.infer<typeof ViewsSchema>
 
+// FIRST ROW
+// Title & Main nav bar
 export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
   const searchParams = useSearchParams()
   const { data: currentView } = ViewsSchema.safeParse(searchParams.get("view"))
   const isActive = (view: Views) => currentView === view
 
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+    <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       <DashboardNavigationCard
         details={{
           icon: LayoutGridIcon,
@@ -71,20 +79,32 @@ export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
         }}
       />
       {baseUrl === "/admin" && (
-        <DashboardNavigationCard
-          details={{
-            icon: FileIcon,
-            title: "Reports",
-            link: `${baseUrl}?view=reports`,
-            active: currentView === "reports",
-          }}
-        />
+        <>
+          <DashboardNavigationCard
+            details={{
+              icon: AreaChartIcon,
+              title: "Analytics",
+              link: `${baseUrl}?view=analytics`,
+              active: currentView === "analytics",
+            }}
+          />
+          <DashboardNavigationCard
+            details={{
+              icon: FileIcon,
+              title: "Reports",
+              link: `${baseUrl}?view=reports`,
+              active: currentView === "reports",
+            }}
+          />
+        </>
       )}
     </div>
   )
 }
 
-type ControllerView = "Admin" | "Dashboard" | "User"
+type ControllerView = "Admin" | "Dashboard" | "User" | "Reports"
+
+// Final VIEW
 export function DashboardViewController({
   selectedView,
   email,
@@ -98,6 +118,7 @@ export function DashboardViewController({
   return (
     <section className="mb-12">
       {view === "app-index" && <ApplicationSelectionView view={selectedView} />}
+      {view === "reports" && <ReportsView />}
       {view === "app-bursary" && (
         <ApplicationTable
           email={email}
@@ -166,7 +187,7 @@ export function DashboardViewController({
           modelSchema={FeedbackSchema}
         />
       )}
-      {view === "reports" && (
+      {view === "analytics" && (
         <ApplicationTable
           email={email}
           link={email && siteMapData.Dashboard.children.Feedback.path}
@@ -179,6 +200,7 @@ export function DashboardViewController({
   )
 }
 
+// 2nd Level for selecting Table
 export function ApplicationSelectionView({ view }: { view: ControllerView }) {
   return (
     <div className="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
@@ -188,6 +210,7 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           title: "Bursaries",
           link:
             (view === "Admin" && "/admin?view=app-bursary") ||
+            (view === "Reports" && "/admin?view=reports-bursary") ||
             (view === "Dashboard" &&
               siteMapData.Dashboard.children.Applications.children.Bursary
                 .path) ||
@@ -201,6 +224,7 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           title: "Drivers Licenses",
           link:
             (view === "Admin" && "/admin?view=app-drivers-license") ||
+            (view === "Reports" && "/admin?view=reports-drivers-license") ||
             (view === "Dashboard" &&
               siteMapData.Dashboard.children.Applications.children
                 .DriversLicense.path) ||
@@ -214,6 +238,7 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           title: "Passport",
           link:
             (view === "Admin" && "/admin?view=app-passport") ||
+            (view === "Reports" && "/admin?view=reports-passport") ||
             (view === "Dashboard" &&
               siteMapData.Dashboard.children.Applications.children.Passport
                 .path) ||
@@ -227,6 +252,7 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           title: "Vaccination",
           link:
             (view === "Admin" && "/admin?view=app-vaccination") ||
+            (view === "Reports" && "/admin?view=reports-vaccination") ||
             (view === "Dashboard" &&
               siteMapData.Dashboard.children.Applications.children.Vaccination
                 .path) ||
@@ -235,29 +261,5 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
         }}
       />
     </div>
-  )
-}
-
-export function DashboardNavigationCard({
-  details,
-}: {
-  details: {
-    icon: LucideIcon
-    title: string
-    link: string
-    active?: boolean
-  }
-}) {
-  return (
-    <Link href={details.link} className="min-h-full w-full">
-      <Card
-        className={`flex h-full w-full flex-col items-center justify-center space-y-4 p-5 text-center hover:cursor-pointer hover:bg-secondary ${details.active && "border-green-500"}`}
-      >
-        <details.icon size={40} />
-        <Typography variant={"p"} affects={"large"}>
-          {details.title}
-        </Typography>
-      </Card>
-    </Link>
   )
 }
