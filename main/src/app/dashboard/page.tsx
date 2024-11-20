@@ -35,119 +35,15 @@ import {
 } from "../admin/(components)/Views"
 
 export default function CitizenPortal() {
-  const openedApplications = [
-    {
-      title: "Passport Application",
-      status: "In Progress",
-      lastUpdated: "2023-05-15",
-    },
-    { title: "Tax Filing", status: "Submitted", lastUpdated: "2023-04-10" },
-  ]
-
   const { data: user } = useUser()
-  const { data: applications } = useGetAllUserApplications(user?.email || "")
 
   return (
-    <Card className="min-h-screen max-w-7xl bg-gray-50  ">
-      <CardHeader>
-        <Typography variant="h1" className=" text-gray-900">
-          Citizen Portal
-        </Typography>
-      </CardHeader>
+    <div className="mx-auto w-full max-w-5xl space-y-10">
+      <DashboardNavigation baseUrl="/dashboard" />
 
-      <CardContent>
-        <section className="mb-12 space-y-4">
-          <Typography variant={"h3"}>Get Started</Typography>
-          <section className="">
-            <DashboardNavigation baseUrl="/dashboard" />
-          </section>
-        </section>
-        <Separator className="my-8" />
+      <Separator className="my-8" />
 
-        <DashboardViewController selectedView="User" email={user?.email} />
-        {/* 
-        <section className="space-y-5">
-          <Typography variant={"h2"}>Your Applications</Typography>
-          <div className="grid grid-cols-1 items-start justify-start gap-3 lg:grid-cols-2">
-            {applications?.bursaries.map((app, index) => (
-              <ApplicationCard
-                user={{
-                  phone: app.phone_number || "",
-                  postcode: app.postcode || "",
-                  name: app.name || "",
-                  email: app.email || "",
-                  city: app.city || "",
-                  address: app.address || "",
-                }}
-                application={{
-                  department: "Education",
-                  status: app.status || "",
-                  createdAt: app.created_at || "",
-                }}
-              />
-            ))}
-            {applications?.drivers.map((app, index) => (
-              <ApplicationCard
-                user={{
-                  phone: app.phone_number || "",
-                  postcode: app.postcode || "",
-                  name: app.name || "",
-                  email: app.email || "",
-                  city: app.city || "",
-                  address: app.address || "",
-                }}
-                application={{
-                  department: "Transport",
-                  status: app.status || "",
-                  createdAt: app.created_at || "",
-                  center: app.test_center || "",
-                  type: app.license_category || "",
-                }}
-              />
-            ))}
-            {applications?.passport.map((app, index) => (
-              <ApplicationCard
-                user={{
-                  phone: app.phone_number || "",
-                  postcode: app.postcode || "",
-                  name: app.name || "",
-                  email: app.email || "",
-                  city: app.city || "",
-                  address: app.address || "",
-                }}
-                application={{
-                  department: "Home Affairs",
-                  status: app.status || "",
-                  createdAt: app.created_at || "",
-                  type: app.passport_type || "",
-                }}
-              />
-            ))}
-            {applications?.vaccination.map((app, index) => (
-              <ApplicationCard
-                user={{
-                  phone: app.phone_number || "",
-                  postcode: app.postcode || "",
-                  name: app.name || "",
-                  email: app.email || "",
-                  city: app.city || "",
-                  address: app.address || "",
-                }}
-                application={{
-                  department: "Health",
-                  status: app.status || "",
-                  createdAt: app.created_at || "",
-                  center: app.vaccination_center || "",
-                  type: app.vaccine_type || "",
-                }}
-              />
-            ))}
-            {/* {openedApplications.map((app, index) => (
-              <ApplicationCard />
-            ))} */}
-        {/* </div> */}
-        {/* </section>  */}
-      </CardContent>
-    </Card>
+      <DashboardViewController selectedView="User" email={user?.email} />
+    </div>
   )
 }

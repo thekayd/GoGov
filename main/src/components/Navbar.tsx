@@ -39,7 +39,10 @@ export default function Navbar() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <div className="grid w-[200px] p-4">
+          <div className="flex w-[200px] flex-col items-start justify-center gap-4  p-4">
+            <div className="flex w-full items-center justify-center">
+              <UserProfile />
+            </div>
             {getNavbarRoutes().map((route) => (
               <Link
                 key={route.path}

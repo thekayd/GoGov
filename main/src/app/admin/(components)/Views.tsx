@@ -53,7 +53,7 @@ export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
   const isActive = (view: Views) => currentView === view
 
   return (
-    <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+    <div className="grid w-full grid-cols-2 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
       <DashboardNavigationCard
         details={{
           icon: LayoutGridIcon,
@@ -221,7 +221,7 @@ export function DashboardViewController({
 // 2nd Level for selecting Table
 export function ApplicationSelectionView({ view }: { view: ControllerView }) {
   return (
-    <div className="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+    <div className="grid w-full grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
       <DashboardNavigationCard
         details={{
           icon: GraduationCap,

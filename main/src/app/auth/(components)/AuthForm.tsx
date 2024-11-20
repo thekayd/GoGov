@@ -38,7 +38,7 @@ export function AuthForm() {
         {state === "admin" && <AdminLoginForm />}
 
         <div className="mt-4 text-center">
-          <p className="mb-2 font-bold">or</p>
+          {state !== "admin" && <p className="mb-2 font-bold">or</p>}
           <div className="flex justify-center">
             {state === "register" && (
               <Link

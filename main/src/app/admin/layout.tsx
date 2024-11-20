@@ -6,7 +6,7 @@ export default async function AdminLayout({ children }: RootLayoutProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
-      <div className="min-h-screen px-4 py-10">
+      <div className="min-h-screen px-3 py-10">
         {/* {isLoading && (
             <div className="flex min-h-screen w-full items-center justify-center">
               <Loader className="h-8 w-8 animate-spin" />

@@ -55,7 +55,7 @@ export default function SupportPage() {
   }
 
   return (
-    <div className="min-h-screen py-5">
+    <div className="min-h-screen p-4 py-3">
       <Card className="mx-auto w-full max-w-md">
         <CardHeader className="flex flex-row items-center gap-3 p-4">
           <Avatar>

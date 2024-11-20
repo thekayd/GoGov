@@ -113,11 +113,10 @@ export const siteMapData = {
       },
     },
   },
-
-  Services: {
-    path: "/services",
-    title: "Services",
-    description: "Explore our range of services",
+  Support: {
+    path: "/support",
+    title: "Spport",
+    description: "Advanced AI Support",
   },
   Payments: {
     path: "/payments",
