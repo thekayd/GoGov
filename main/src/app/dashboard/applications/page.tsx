@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 
 import { Separator } from "@/components/ui/separator"
-import { DashboardNavigationCard } from "@/app/admin/(components)/Views"
+import DashboardNavigationCard from "@/app/admin/(components)/NavigationCard"
 
 export default function ApplicationsPage() {
   return (

@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { AppointmentSchema } from "@/models/AppointmentModel"
 import { BursaryApplicationSchema } from "@/models/BursaryModel"
@@ -16,20 +15,16 @@ import {
   FileIcon,
   GraduationCap,
   LayoutGridIcon,
-  LucideIcon,
   MessageSquareIcon,
   SyringeIcon,
 } from "lucide-react"
 import { z } from "zod"
 
 import { siteMapData } from "@/config/site"
-import { Card } from "@/components/ui/card"
-import Typography from "@/components/ui/typography"
 import { ApplicationAnalytics } from "@/components/application-analytics"
 import { ApplicationTable } from "@/app/dashboard/applications/(components)/ApplicationTable"
 
 import DashboardNavigationCard from "./NavigationCard"
-import ReportCard from "./ReportCard"
 import ReportsView from "./ReportsView"
 
 const ViewsSchema = z.enum([
