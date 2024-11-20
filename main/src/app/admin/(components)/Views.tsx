@@ -40,7 +40,11 @@ const ViewsSchema = z.enum([
   "app-vaccination",
   "appoint-index",
   "feedback",
-  "analytics",
+  "analytics-index",
+  "analytics-bursary",
+  "analytics-drivers",
+  "analytics-passport",
+  "analytics-vaccination",
   "reports",
 ])
 
@@ -85,8 +89,8 @@ export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
             details={{
               icon: AreaChartIcon,
               title: "Analytics",
-              link: `${baseUrl}?view=analytics`,
-              active: currentView === "analytics",
+              link: `${baseUrl}?view=analytics-index`,
+              active: currentView === "analytics-index",
             }}
           />
           <DashboardNavigationCard
@@ -103,7 +107,7 @@ export function DashboardNavigation({ baseUrl }: { baseUrl: string }) {
   )
 }
 
-type ControllerView = "Admin" | "Dashboard" | "User" | "Reports"
+type ControllerView = "Admin" | "Dashboard" | "User" | "Analytics"
 
 // Final VIEW
 export function DashboardViewController({
@@ -119,6 +123,9 @@ export function DashboardViewController({
   return (
     <section className="mb-12">
       {view === "app-index" && <ApplicationSelectionView view={selectedView} />}
+      {view === "analytics-index" && (
+        <ApplicationSelectionView view={"Analytics"} />
+      )}
       {view === "reports" && <ReportsView />}
       {view === "app-bursary" && (
         <ApplicationTable
@@ -188,7 +195,30 @@ export function DashboardViewController({
           modelSchema={FeedbackSchema}
         />
       )}
-      {view === "analytics" && <ApplicationAnalytics />}
+      {view === "analytics-bursary" && (
+        <ApplicationAnalytics
+          tableName="bursary_applications"
+          title={"Bursary Applications Dashboard"}
+        />
+      )}
+      {view === "analytics-drivers" && (
+        <ApplicationAnalytics
+          tableName="drivers_license_applications"
+          title={"Drivers License Applications Dashboard"}
+        />
+      )}
+      {view === "analytics-passport" && (
+        <ApplicationAnalytics
+          tableName="passport_applications"
+          title={"Passport Applications Dashboard"}
+        />
+      )}
+      {view === "analytics-vaccination" && (
+        <ApplicationAnalytics
+          tableName="vaccination_applications"
+          title={"Vaccination Applications Dashboard"}
+        />
+      )}
     </section>
   )
 }
@@ -203,7 +233,7 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           title: "Bursaries",
           link:
             (view === "Admin" && "/admin?view=app-bursary") ||
-            (view === "Reports" && "/admin?view=reports-bursary") ||
+            (view === "Analytics" && "/admin?view=analytics-bursary") ||
             (view === "Dashboard" &&
               siteMapData.Dashboard.children.Applications.children.Bursary
                 .path) ||
@@ -217,7 +247,7 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           title: "Drivers Licenses",
           link:
             (view === "Admin" && "/admin?view=app-drivers-license") ||
-            (view === "Reports" && "/admin?view=reports-drivers-license") ||
+            (view === "Analytics" && "/admin?view=analytics-drivers") ||
             (view === "Dashboard" &&
               siteMapData.Dashboard.children.Applications.children
                 .DriversLicense.path) ||
@@ -231,7 +261,7 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           title: "Passport",
           link:
             (view === "Admin" && "/admin?view=app-passport") ||
-            (view === "Reports" && "/admin?view=reports-passport") ||
+            (view === "Analytics" && "/admin?view=analytics-passport") ||
             (view === "Dashboard" &&
               siteMapData.Dashboard.children.Applications.children.Passport
                 .path) ||
@@ -245,7 +275,7 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
           title: "Vaccination",
           link:
             (view === "Admin" && "/admin?view=app-vaccination") ||
-            (view === "Reports" && "/admin?view=reports-vaccination") ||
+            (view === "Analytics" && "/admin?view=analytics-vaccination") ||
             (view === "Dashboard" &&
               siteMapData.Dashboard.children.Applications.children.Vaccination
                 .path) ||

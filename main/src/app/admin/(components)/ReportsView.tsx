@@ -1,26 +1,18 @@
-import { BursaryApplication } from "@/models/BursaryModel"
-import { DriversLicenseApplication } from "@/models/DriversLicenseModel"
-import { FeedBack } from "@/models/FeedbackModel"
-import { PassportApplication } from "@/models/PassportApplicationModel"
-import { VaccinationApplication } from "@/models/VaccinationModel"
-
 import { useGetApplicationReport } from "@/hooks/useReport"
 
 import ReportCard, { ReportCardSkeleton } from "./ReportCard"
 
 export default function ReportsView() {
   const { data: bursaryReport, isLoading: bursaryLoading } =
-    useGetApplicationReport<BursaryApplication>("bursary_applications")
+    useGetApplicationReport("bursary_applications")
   const { data: driversReport, isLoading: driversLoading } =
-    useGetApplicationReport<DriversLicenseApplication>(
-      "drivers_license_applications"
-    )
+    useGetApplicationReport("drivers_license_applications")
   const { data: passportReport, isLoading: passportLoading } =
-    useGetApplicationReport<PassportApplication>("passport_applications")
+    useGetApplicationReport("passport_applications")
   const { data: vaccinationReport, isLoading: vaccinationLoading } =
-    useGetApplicationReport<VaccinationApplication>("vaccination_applications")
+    useGetApplicationReport("vaccination_applications")
   const { data: feedbackReport, isLoading: feedbackLoading } =
-    useGetApplicationReport<FeedBack>("user_feedback")
+    useGetApplicationReport("user_feedback")
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">

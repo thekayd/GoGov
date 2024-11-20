@@ -20,10 +20,10 @@ import { Database } from "../../database.types"
 // T - Represents the return type aka the actual database Model's row (with "ROW")
 // I - Represents the input type aka the actual input values fro the model, typed as "INSERT"
 
-export function useGetApplicationReport<T>(tableName: DatabaseTables) {
+export function useGetApplicationReport(tableName: DatabaseTables) {
   return useQuery({
     queryKey: [`get-${tableName}-application-report`],
-    queryFn: () => getApplicationReport<T>({ tableName }),
+    queryFn: () => getApplicationReport({ tableName }),
   })
 }
 export function useGetApplicationMonthlyData(tableName: DatabaseTables) {
@@ -39,7 +39,7 @@ export function useGetApplicationStatusData(tableName: DatabaseTables) {
   })
 }
 
-async function getApplicationReport<T>({
+async function getApplicationReport({
   tableName,
 }: {
   tableName: DatabaseTables

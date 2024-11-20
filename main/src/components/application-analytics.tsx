@@ -1,6 +1,7 @@
 "use client"
 
 import { DriversLicenseApplication } from "@/models/DriversLicenseModel"
+import { DatabaseTables } from "@/types"
 import {
   Bar,
   BarChart,
@@ -53,21 +54,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const COLORS = ["#10B981", "#EF4444", "#F59E0B"]
 
-export function ApplicationAnalytics() {
-  const { data: monthlyData } = useGetApplicationMonthlyData(
-    "drivers_license_applications"
-  )
-  const { data: statusData } = useGetApplicationStatusData(
-    "drivers_license_applications"
-  )
+export function ApplicationAnalytics({
+  title,
+  tableName,
+}: {
+  title: string
+  tableName: DatabaseTables
+}) {
+  const { data: monthlyData } = useGetApplicationMonthlyData(tableName)
+  const { data: statusData } = useGetApplicationStatusData(tableName)
   console.log("Monthly Data: ", monthlyData)
   console.log("Status Data: ", statusData)
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="mb-6 text-3xl font-bold">
-        Application Analytics Dashboard
-      </h1>
+      <h1 className="mb-6 text-3xl font-bold">{title}</h1>
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
