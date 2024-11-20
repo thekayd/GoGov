@@ -3,7 +3,12 @@
 import { BursaryApplicationModel } from "@/models/BursaryModel"
 import { DriversLicenseModel } from "@/models/DriversLicenseModel"
 import { PassportApplicationModel } from "@/models/PassportApplicationModel"
-import { Report } from "@/models/ReportModel"
+import {
+  MonthlyData,
+  MonthlyDataSchema,
+  Report,
+  StatusData,
+} from "@/models/ReportModel"
 import { VaccinationApplicationModel } from "@/models/VaccinationModel"
 import { DatabaseTables } from "@/types"
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -19,6 +24,18 @@ export function useGetApplicationReport<T>(tableName: DatabaseTables) {
   return useQuery({
     queryKey: [`get-${tableName}-application-report`],
     queryFn: () => getApplicationReport<T>({ tableName }),
+  })
+}
+export function useGetApplicationMonthlyData(tableName: DatabaseTables) {
+  return useQuery({
+    queryKey: [`get-${tableName}-application-monthly-data`],
+    queryFn: () => getApplicationMonthlyData(tableName),
+  })
+}
+export function useGetApplicationStatusData(tableName: DatabaseTables) {
+  return useQuery({
+    queryKey: [`get-${tableName}-application-status-data`],
+    queryFn: () => getApplicationStatusData(tableName),
   })
 }
 
@@ -58,58 +75,88 @@ async function getApplicationReport<T>({
   }
 }
 
-async function getAllUserApplications<T>({
-  email,
-}: {
-  email: string
-}): Promise<{
-  bursaries: BursaryApplicationModel[]
-  drivers: DriversLicenseModel[]
-  passport: PassportApplicationModel[]
-  vaccination: VaccinationApplicationModel[]
-}> {
-  const db = createSupabaseBrowser()
+const tableNameToFunctionName: Record<DatabaseTables, string> = {
+  drivers_license_applications: "get_drivers_monthly_data",
+  bursary_applications: "get_bursary_monthly_data",
+  passport_applications: "get_passport_monthly_data",
+  vaccination_applications: "get_vaccination_monthly_data",
+  admin_profile: "",
+  profile: "",
+  scheduled_appointments: "",
+  user_feedback: "",
+  // Add more mappings as needed
+}
 
-  // Fetch Bursaries
-  const { data: bursaries, error: bursariesError } = await db
-    .from("bursary_applications")
-    .select()
-    .eq("email", email)
-    .returns<Database["public"]["Tables"]["bursary_applications"]["Row"][]>()
-  const { data: drivers, error: driversError } = await db
-    .from("drivers_license_applications")
-    .select()
-    .eq("email", email)
-    .returns<
-      Database["public"]["Tables"]["drivers_license_applications"]["Row"][]
-    >()
-  const { data: passport, error: passportError } = await db
-    .from("passport_applications")
-    .select()
-    .eq("email", email)
-    .returns<Database["public"]["Tables"]["passport_applications"]["Row"][]>()
-  const { data: vaccination, error: vaccinationError } = await db
-    .from("vaccination_applications")
-    .select()
-    .eq("email", email)
-    .returns<
-      Database["public"]["Tables"]["vaccination_applications"]["Row"][]
-    >()
-
-  if (driversError || bursariesError || passportError || vaccinationError) {
-    const message =
-      driversError?.message ||
-      bursariesError?.message ||
-      passportError?.message ||
-      vaccinationError?.message
-    console.log(`Create ${"bursary_applications"} Error: `, message)
-    throw new Error(message)
+async function getApplicationMonthlyData(
+  tableName: DatabaseTables
+): Promise<MonthlyData[]> {
+  const functionName = tableNameToFunctionName[tableName]
+  if (!functionName) {
+    throw new Error(`Unsupported table name: ${tableName}`)
   }
 
-  return {
-    bursaries: bursaries,
-    drivers: drivers,
-    passport: passport,
-    vaccination: vaccination,
+  const db = createSupabaseBrowser()
+  const { data: rawData, error } = await db.rpc(functionName)
+  if (error) {
+    console.log("Monthly Data Function Error: ", error)
+    throw new Error(error.message)
+  }
+
+  let monthlyData: MonthlyData[] = []
+  try {
+    rawData.forEach((item: any) => {
+      const {
+        success,
+        data,
+        error: parsingError,
+      } = MonthlyDataSchema.safeParse(item)
+      if (!success) {
+        console.log("Monthly Data Parsing Error: ", parsingError)
+        throw new Error(parsingError.message)
+      }
+      monthlyData.push(data)
+    })
+  } catch (error: any) {
+    console.log("Monthly Data Parsing Error: ", error)
+    throw new Error(error?.message || "An error occurred while parsing data")
+  }
+  return monthlyData
+}
+
+async function getApplicationStatusData(
+  tableName: DatabaseTables
+): Promise<StatusData[]> {
+  const db = createSupabaseBrowser()
+
+  try {
+    const data = await db
+      .from(tableName)
+      .select("status")
+      .then((result) => {
+        const statusData = result.data?.map((row) => ({
+          name: row.status,
+          value: 1,
+        }))
+        console.log("Fetched status data: ", statusData)
+        if (!statusData) throw new Error("Failed to fetch status data")
+        return statusData.reduce(
+          (acc: { name: string; value: number }[], current) => {
+            const existingStatus = acc.find(
+              (status) => status.name === current.name
+            )
+            if (existingStatus) {
+              existingStatus.value += current.value
+            } else {
+              acc.push(current)
+            }
+            return acc
+          },
+          []
+        )
+      })
+    return data
+  } catch (error: any) {
+    console.log("Application Status Data Error: ", error)
+    throw new Error(error.message)
   }
 }

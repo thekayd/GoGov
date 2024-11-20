@@ -25,6 +25,7 @@ import { z } from "zod"
 import { siteMapData } from "@/config/site"
 import { Card } from "@/components/ui/card"
 import Typography from "@/components/ui/typography"
+import { ApplicationAnalytics } from "@/components/application-analytics"
 import { ApplicationTable } from "@/app/dashboard/applications/(components)/ApplicationTable"
 
 import DashboardNavigationCard from "./NavigationCard"
@@ -187,15 +188,7 @@ export function DashboardViewController({
           modelSchema={FeedbackSchema}
         />
       )}
-      {view === "analytics" && (
-        <ApplicationTable
-          email={email}
-          link={email && siteMapData.Dashboard.children.Feedback.path}
-          heading="Feedback"
-          tableName="drivers_license_applications"
-          modelSchema={DriversLicenseSchema}
-        />
-      )}
+      {view === "analytics" && <ApplicationAnalytics />}
     </section>
   )
 }
