@@ -1,17 +1,24 @@
 "use client"
 
-import { Appointment } from "@/models/AppointmentModel"
+import { Appointment, AppointmentSchema } from "@/models/AppointmentModel"
 import {
   BursaryApplication,
   BursaryApplicationModel,
+  BursaryApplicationSchema,
 } from "@/models/BursaryModel"
 import {
   DriversLicenseApplication,
   DriversLicenseSchema,
 } from "@/models/DriversLicenseModel"
-import { FeedBack } from "@/models/FeedbackModel"
-import { PassportApplication } from "@/models/PassportApplicationModel"
-import { VaccinationApplication } from "@/models/VaccinationModel"
+import { FeedBack, FeedbackSchema } from "@/models/FeedbackModel"
+import {
+  PassportApplication,
+  PassportApplicationSchema,
+} from "@/models/PassportApplicationModel"
+import {
+  VaccinationApplication,
+  VaccinationApplicationSchema,
+} from "@/models/VaccinationModel"
 import { ColumnDef } from "@tanstack/react-table"
 import {
   ArrowDown,
@@ -35,26 +42,92 @@ export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Institution" />
     ),
-    cell: ({ row }) => {
-      console.log("Insitituon: ", row.getValue("institution_name"))
-      return row.getValue("institution_name")
-    },
   },
   {
     accessorKey: "course_of_study",
-    header: "Course",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Course of Study" />
+    ),
   },
   {
     accessorKey: "total_course_duration",
-    header: "Duration",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Course Duration (Years)" />
+    ),
   },
   {
     accessorKey: "study_year",
-    header: "Enroll Year",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Year of Study" />
+    ),
   },
   {
     accessorKey: "annual_tuition_fee",
-    header: "Tuition",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Annual Tuition Fee" />
+    ),
+  },
+  {
+    accessorKey: "academic_achievements",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Academic Achievements" />
+    ),
+  },
+  {
+    accessorKey: "financial_need_statement",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Financial Need Statement" />
+    ),
+  },
+  {
+    accessorKey: "other_funding_sources",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Other Funding Sources" />
+    ),
+  },
+  // User Data
+  {
+    accessorKey: "name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
+  },
+  {
+    accessorKey: "surname",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Surname" />
+    ),
+  },
+  {
+    accessorKey: "gender",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gender" />
+    ),
+  },
+  {
+    accessorKey: "city",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="City" />
+    ),
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Email" />
+    ),
+  },
+  {
+    accessorKey: "date_of_birth",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="DoB" />
+    ),
+    cell: ({ row }) => {
+      return FormatDate(row.getValue("created_at"))
+    },
+  },
+  {
+    accessorKey: "phone_number",
+    header: "Phone",
   },
   {
     accessorKey: "status",
@@ -68,10 +141,7 @@ export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
       return value.includes(row.getValue(id))
     },
   },
-  {
-    accessorKey: "phone_number",
-    header: "Phone",
-  },
+
   {
     accessorKey: "created_at",
     header: ({ column }) => (
@@ -81,10 +151,17 @@ export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
       return FormatDate(row.getValue("created_at"))
     },
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <DataTableRowActions row={row} />,
-  // },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => (
+      <DataTableRowActions
+        table="bursary_applications"
+        schema={BursaryApplicationSchema}
+        row={row}
+      />
+    ),
+  },
 ]
 
 export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplication>[] =
@@ -131,6 +208,50 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
         return VerifyDocumentIsUploaded(row.getValue("passport_photo"))
       },
     },
+    // User Data
+    {
+      accessorKey: "name",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Name" />
+      ),
+    },
+    {
+      accessorKey: "surname",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Surname" />
+      ),
+    },
+    {
+      accessorKey: "gender",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Gender" />
+      ),
+    },
+    {
+      accessorKey: "city",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="City" />
+      ),
+    },
+    {
+      accessorKey: "email",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Email" />
+      ),
+    },
+    {
+      accessorKey: "date_of_birth",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="DoB" />
+      ),
+      cell: ({ row }) => {
+        return FormatDate(row.getValue("created_at"))
+      },
+    },
+    {
+      accessorKey: "phone_number",
+      header: "Phone",
+    },
     {
       accessorKey: "status",
       header: ({ column }) => (
@@ -144,10 +265,6 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
       },
     },
     {
-      accessorKey: "phone_number",
-      header: "Phone",
-    },
-    {
       accessorKey: "created_at",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Applied at" />
@@ -158,6 +275,7 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
     },
     {
       id: "actions",
+      header: "Actions",
       cell: ({ row }) => (
         <DataTableRowActions
           table="drivers_license_applications"
@@ -200,6 +318,50 @@ export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
       return VerifyDocumentIsUploaded(row.getValue("passport_photo"))
     },
   },
+  // User Data
+  {
+    accessorKey: "name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
+  },
+  {
+    accessorKey: "surname",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Surname" />
+    ),
+  },
+  {
+    accessorKey: "gender",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gender" />
+    ),
+  },
+  {
+    accessorKey: "city",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="City" />
+    ),
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Email" />
+    ),
+  },
+  {
+    accessorKey: "date_of_birth",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="DoB" />
+    ),
+    cell: ({ row }) => {
+      return FormatDate(row.getValue("created_at"))
+    },
+  },
+  {
+    accessorKey: "phone_number",
+    header: "Phone",
+  },
   {
     accessorKey: "status",
     header: ({ column }) => (
@@ -213,10 +375,6 @@ export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
     },
   },
   {
-    accessorKey: "phone_number",
-    header: "Phone",
-  },
-  {
     accessorKey: "created_at",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Applied at" />
@@ -225,10 +383,17 @@ export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
       return FormatDate(row.getValue("created_at"))
     },
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <DataTableRowActions row={row} />,
-  // },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => (
+      <DataTableRowActions
+        table="passport_applications"
+        schema={PassportApplicationSchema}
+        row={row}
+      />
+    ),
+  },
 ]
 
 export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] =
@@ -243,12 +408,49 @@ export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] 
       accessorKey: "vaccination_center",
       header: "Center",
     },
+    // User Data
     {
-      accessorKey: "id_document",
-      header: "Id Doc",
+      accessorKey: "name",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Name" />
+      ),
+    },
+    {
+      accessorKey: "surname",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Surname" />
+      ),
+    },
+    {
+      accessorKey: "gender",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Gender" />
+      ),
+    },
+    {
+      accessorKey: "city",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="City" />
+      ),
+    },
+    {
+      accessorKey: "email",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Email" />
+      ),
+    },
+    {
+      accessorKey: "date_of_birth",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="DoB" />
+      ),
       cell: ({ row }) => {
-        return VerifyDocumentIsUploaded(row.getValue("id_document"))
+        return FormatDate(row.getValue("created_at"))
       },
+    },
+    {
+      accessorKey: "phone_number",
+      header: "Phone",
     },
     {
       accessorKey: "status",
@@ -263,10 +465,6 @@ export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] 
       },
     },
     {
-      accessorKey: "phone_number",
-      header: "Phone",
-    },
-    {
       accessorKey: "created_at",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Applied at" />
@@ -275,10 +473,17 @@ export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] 
         return FormatDate(row.getValue("created_at"))
       },
     },
-    // {
-    //   id: "actions",
-    //   cell: ({ row }) => <DataTableRowActions row={row} />,
-    // },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => (
+        <DataTableRowActions
+          table="vaccination_applications"
+          schema={VaccinationApplicationSchema}
+          row={row}
+        />
+      ),
+    },
   ]
 
 export const AppointmentColumns: ColumnDef<Appointment>[] = [
@@ -300,6 +505,18 @@ export const AppointmentColumns: ColumnDef<Appointment>[] = [
   {
     accessorKey: "reason",
     header: "Reason",
+  },
+  {
+    accessorKey: "name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
+  },
+  {
+    accessorKey: "surname",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Surname" />
+    ),
   },
   {
     accessorKey: "email",
@@ -330,10 +547,17 @@ export const AppointmentColumns: ColumnDef<Appointment>[] = [
       return FormatDate(row.getValue("created_at"))
     },
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <DataTableRowActions row={row} />,
-  // },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => (
+      <DataTableRowActions
+        schema={AppointmentSchema}
+        table="scheduled_appointments"
+        row={row}
+      />
+    ),
+  },
 ]
 
 export const FeedbackColumns: ColumnDef<FeedBack>[] = [
@@ -369,10 +593,17 @@ export const FeedbackColumns: ColumnDef<FeedBack>[] = [
       return FormatDate(row.getValue("created_at"))
     },
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => <DataTableRowActions row={row} />,
-  // },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => (
+      <DataTableRowActions
+        schema={FeedbackSchema}
+        table="user_feedback"
+        row={row}
+      />
+    ),
+  },
 ]
 
 function FormatDate(value: unknown) {

@@ -61,6 +61,9 @@ export function DataTableRowActions<TData>({
     if (!application) return
     toast.promise(
       async () => {
+        if (!application?.app?.id) {
+          throw new Error("Application ID is missing")
+        }
         mutate({
           id: application.app.id.toString(),
           newStatus: newStatus,
@@ -71,7 +74,7 @@ export function DataTableRowActions<TData>({
         loading: "Updating application's status",
         success: (res) => {
           console.log("Response: ", res)
-          router.refresh()
+          location.reload()
           return "Status successfully updated!"
         },
         error: (error: Error) => {
@@ -94,27 +97,27 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>View Citizen</DropdownMenuItem>
-        <DropdownMenuItem>View Full Details</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup
-              value={application?.app.status || "Send For Validation"}
+        {/* <DropdownMenuItem>View Citizen</DropdownMenuItem>
+        <DropdownMenuItem>View Full Details</DropdownMenuItem> */}
+        {/* <DropdownMenuSeparator /> */}
+        {/* <DropdownMenuSub> */}
+        {/* <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger> */}
+        {/* <DropdownMenuSubContent> */}
+        <DropdownMenuRadioGroup
+          value={application?.app.status || "Send For Validation"}
+        >
+          {statuses.map((label) => (
+            <DropdownMenuRadioItem
+              key={label.value}
+              value={label.value}
+              onClick={() => handleStatusChange(label.value)}
             >
-              {statuses.map((label) => (
-                <DropdownMenuRadioItem
-                  key={label.value}
-                  value={label.value}
-                  onClick={() => handleStatusChange(label.value)}
-                >
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
+              {label.label}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+        {/* </DropdownMenuSubContent>
+        </DropdownMenuSub> */}
         {/* <DropdownMenuSeparator /> */}
         {/* <DropdownMenuItem>
           Delete
@@ -130,14 +133,16 @@ type availbleApplications =
   | DriversLicenseApplication
   | PassportApplication
   | VaccinationApplication
-function ValidateApplication(application: any):
-  | {
-      app: availbleApplications
-      tableName: DatabaseTables
-    }
-  | undefined {
+interface ValidateApplicationResponse {
+  app: availbleApplications
+  tableName: DatabaseTables
+}
+function ValidateApplication(
+  application: any
+): ValidateApplicationResponse | undefined {
   const { data: bursaryApplication, error: bursaryError } =
     BursaryApplicationSchema.safeParse(application)
+  console.log("Bursary Schema Error: ", bursaryError)
   if (!bursaryError) {
     return {
       app: bursaryApplication,
@@ -146,6 +151,7 @@ function ValidateApplication(application: any):
   }
   const { data: driversApplication, error: driversError } =
     DriversLicenseSchema.safeParse(application)
+  console.log("Drivers Schema Error: ", driversError)
   if (!driversError) {
     return {
       app: driversApplication,

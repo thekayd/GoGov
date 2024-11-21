@@ -64,7 +64,7 @@ export function ApplicationTable({
   console.log("Applications: ", data)
 
   return (
-    <section className="mb-12 w-full space-y-4">
+    <section className="mb-12   space-y-4">
       <div className="flex items-center justify-between ">
         <h2 className="mb-4 text-2xl font-semibold text-gray-900">{heading}</h2>
         {link && (
@@ -79,6 +79,20 @@ export function ApplicationTable({
         <ModelTable
           columns={BursaryApplicationsColumns}
           data={data as BursaryApplication[]}
+          defaultColumnVisibility={{
+            id: false,
+            financial_need_statement: false,
+            academic_achievements: false,
+            other_funding_sources: false,
+            name: false,
+            surname: false,
+            address: false,
+            gender: false,
+            city: false,
+            email: false,
+            date_of_birth: false,
+            phone_number: false,
+          }}
         />
       )}
       {modelSchema === DriversLicenseSchema && data && (
@@ -87,6 +101,13 @@ export function ApplicationTable({
           data={data as DriversLicenseApplication[]}
           defaultColumnVisibility={{
             id: false,
+            name: false,
+            surname: false,
+            address: false,
+            gender: false,
+            city: false,
+            email: false,
+            date_of_birth: false,
             phone_number: false,
           }}
         />
@@ -95,16 +116,52 @@ export function ApplicationTable({
         <ModelTable
           columns={PassportApplicationColumns}
           data={data as PassportApplication[]}
+          defaultColumnVisibility={{
+            id: false,
+            name: false,
+            surname: false,
+            address: false,
+            gender: false,
+            city: false,
+            email: false,
+            date_of_birth: false,
+            phone_number: false,
+          }}
         />
       )}
       {modelSchema === VaccinationApplicationSchema && data && (
         <ModelTable
           columns={VaccinationApplicationColumns}
           data={data as VaccinationApplication[]}
+          defaultColumnVisibility={{
+            id: false,
+            name: false,
+            surname: false,
+            address: false,
+            gender: false,
+            city: false,
+            email: false,
+            date_of_birth: false,
+            phone_number: false,
+          }}
         />
       )}
       {modelSchema === AppointmentSchema && data && (
-        <ModelTable columns={AppointmentColumns} data={data as Appointment[]} />
+        <ModelTable
+          columns={AppointmentColumns}
+          data={data as Appointment[]}
+          defaultColumnVisibility={{
+            id: false,
+            name: false,
+            surname: false,
+            address: false,
+            gender: false,
+            city: false,
+            email: false,
+            date_of_birth: false,
+            phone: false,
+          }}
+        />
       )}
       {modelSchema === FeedbackSchema && data && (
         <ModelTable columns={FeedbackColumns} data={data as FeedBack[]} />
