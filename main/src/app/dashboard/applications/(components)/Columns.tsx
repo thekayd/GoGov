@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Appointment, AppointmentSchema } from "@/models/AppointmentModel"
 import {
   BursaryApplication,
@@ -28,6 +29,7 @@ import {
   CheckIcon,
   Circle,
   CircleOff,
+  DownloadCloudIcon,
   HelpCircle,
   Timer,
   XCircleIcon,
@@ -178,7 +180,9 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
     },
     {
       accessorKey: "test_center",
-      header: "Center",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Test Center" />
+      ),
     },
     {
       accessorKey: "id_document",
@@ -613,10 +617,11 @@ function FormatDate(value: unknown) {
 function VerifyDocumentIsUploaded(document: unknown) {
   return (
     <div className="flex items-center justify-center">
-      {document === null ? (
-        <XCircleIcon className="text-destructive" />
-      ) : (
-        <CheckIcon className="text-green-400" />
+      {document === null && <XCircleIcon className="hover text-destructive" />}
+      {typeof document === "string" && (
+        <Link href={document}>
+          <DownloadCloudIcon className="text-green-400" />
+        </Link>
       )}
     </div>
   )

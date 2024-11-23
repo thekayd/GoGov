@@ -40,7 +40,7 @@ async function uploadToStorage({
   const { data, error } = await supabase.storage
     .from(env.NEXT_PUBLIC_BUCKET_NAME)
     .upload(
-      `public/${tableName}/${user.user.id}/${fieldName.toLowerCase()}-${file.name}.png`,
+      `${tableName}/${user.user.id}/${fieldName.toLowerCase()}-${file.name}`,
       file,
       {
         cacheControl: "3600",
@@ -52,5 +52,9 @@ async function uploadToStorage({
     throw new Error(error.message)
   }
 
-  return data.fullPath
+  const { data: fileUrl } = await supabase.storage
+    .from(env.NEXT_PUBLIC_BUCKET_NAME)
+    .getPublicUrl(data.path, { download: true })
+
+  return fileUrl.publicUrl
 }

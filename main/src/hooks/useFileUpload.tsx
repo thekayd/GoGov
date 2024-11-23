@@ -19,6 +19,7 @@ export function useUploadFile({
 
       const user = await db.auth.getUser()
       console.log("Current User: ", user.data.user?.email)
+      // Upload File to Storage
       const { data, error } = await db.storage
         .from(env.NEXT_PUBLIC_BUCKET_NAME)
         .upload(`${"hello"}/${file.name}`, file, {
@@ -30,6 +31,18 @@ export function useUploadFile({
         console.log("Profile Error: ", error)
         return Promise.reject(new Error(error.message))
       }
+
+      // Get File Download URL
+      const { data: fileUrl, error: fileUrlError } = await db.storage
+        .from("avatars")
+        .download("folder/avatar1.png", {
+          transform: {
+            width: 100,
+            height: 100,
+            quality: 80,
+          },
+        })
+
       return data
     },
   })
