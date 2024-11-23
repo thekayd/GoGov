@@ -112,6 +112,11 @@ export const siteMapData = {
         title: "Feedback",
         description: "Get help or provide feedback",
       },
+      Payment: {
+        path: "/dashboard/payment",
+        title: "Payments",
+        description: "Make payments for services",
+      },
     },
   },
   Support: {
@@ -119,7 +124,7 @@ export const siteMapData = {
     title: "Spport",
     description: "Advanced AI Support",
   },
-  Payments: {
+  StripePayment: {
     path: "https://paystack.com/pay",
     title: "Payments",
     description: "Make payments for services",

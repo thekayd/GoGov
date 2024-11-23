@@ -23,6 +23,7 @@ import { MoreHorizontal } from "lucide-react"
 import { toast } from "sonner"
 import { z, ZodSchema } from "zod"
 
+import { siteMapData } from "@/config/site"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -97,8 +98,7 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        {/* <DropdownMenuItem>View Citizen</DropdownMenuItem>
-        <DropdownMenuItem>View Full Details</DropdownMenuItem> */}
+        {/* <DropdownMenuItem>View Full Details</DropdownMenuItem> */}
         {/* <DropdownMenuSeparator /> */}
         {/* <DropdownMenuSub> */}
         {/* <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger> */}
@@ -116,6 +116,15 @@ export function DataTableRowActions<TData>({
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
+        <DropdownMenuItem
+          onClick={() =>
+            router.push(
+              `${siteMapData.Dashboard.children.Payment.path}?table=${application?.tableName}&application=${application?.app.id}`
+            )
+          }
+        >
+          Pay Now
+        </DropdownMenuItem>
         {/* </DropdownMenuSubContent>
         </DropdownMenuSub> */}
         {/* <DropdownMenuSeparator /> */}

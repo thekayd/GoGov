@@ -3,6 +3,7 @@
 import { ReactNode, use, useState } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import { BursaryApplicationModel } from "@/models/BursaryModel"
 import {
   DriversLicenseApplication,
   DriversLicenseModel,
@@ -24,6 +25,8 @@ import {
 } from "@/components/ui/card"
 import Typography from "@/components/ui/typography"
 import { useGetUserApplication } from "@/components/ApplicationForm/useApplication"
+
+import { BursaryFields, DriversLicenseFields } from "./PaymentCardFields"
 
 interface props {
   submitted?: boolean
@@ -90,11 +93,7 @@ export function PaymentConfirmationContent({
     data: application,
     isLoading,
     error,
-  } = useGetUserApplication<DriversLicenseModel>(
-    tableName,
-    email,
-    applicationId
-  )
+  } = useGetUserApplication(tableName, email, applicationId)
   console.log("Fetched Application: ", application)
 
   const copyToClipboard = () => {
@@ -156,7 +155,12 @@ export function PaymentConfirmationContent({
                 </p>
               </p>
               {/* Make a compoene that redners the correct fields based on the Table Name */}
-              {application && (
+              {tableName === "bursary_applications" && application && (
+                <BursaryFields
+                  application={application[0] as BursaryApplicationModel}
+                />
+              )}
+              {tableName === "drivers_license_applications" && application && (
                 <DriversLicenseFields
                   application={application[0] as DriversLicenseModel}
                 />
@@ -189,33 +193,13 @@ export function PaymentConfirmationContent({
       <CardFooter>
         {application && !isLoading && !error && (
           <Link
-            href={`${siteMapData.Payments.path}/${tableName}`}
+            href={`${siteMapData.StripePayment.path}/${tableName}`}
             className={buttonVariants({ size: "lg", className: "w-full" })}
           >
             Pay R{amount?.toLocaleString()}
           </Link>
         )}
       </CardFooter>
-    </>
-  )
-}
-
-export function DriversLicenseFields({
-  application,
-}: {
-  application?: DriversLicenseModel
-}) {
-  return (
-    <>
-      <p>
-        <strong>Type:</strong> {application?.license_category}
-      </p>
-      <p>
-        <strong>Center:</strong> {application?.test_center}
-      </p>
-      <p>
-        <strong>Submitted At:</strong> {application?.created_at}
-      </p>
     </>
   )
 }
