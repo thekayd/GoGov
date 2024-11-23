@@ -16,6 +16,7 @@ import { useCreateProfile, useShowProfile } from "@/hooks/useProfile"
 
 import { Database } from "../../../database.types"
 import { useCreateApplication } from "./useApplication"
+import { useUploadFile } from "./useSupaStorage"
 
 /**
  * This component provides a context for application forms.
@@ -38,6 +39,7 @@ interface ApplicationFormContextType {
   isApplicationPending: boolean
   onSubmit: SubmitHandler<z.infer<ModelFormSchema>>
   form: ReturnType<typeof useForm<any>>
+  handleFileUpload: (fieldName: string, file: File) => void
 }
 
 type ModelFormSchema = ZodObject<any>
@@ -67,6 +69,13 @@ export const ApplicationFormProvider: React.FC<{
     Database["public"]["Tables"][typeof table_name]["Row"],
     Database["public"]["Tables"][typeof table_name]["Insert"]
   >()
+  const {
+    mutate: uploadFile,
+    error: uploadError,
+    data: uploadedFile,
+  } = useUploadFile()
+
+  console.log("Form: ", form.getValues())
 
   const onSubmit = useCallback(
     (values: z.infer<typeof modelFormSchema>) => {
@@ -113,12 +122,47 @@ export const ApplicationFormProvider: React.FC<{
     [profile]
   )
 
+  const handleFileUpload = useCallback(
+    (fieldName: string, file: File) => {
+      toast.promise(
+        async () => {
+          uploadFile({
+            file: file,
+            fieldName: fieldName,
+            tableName: table_name,
+          })
+          if (uploadError) {
+            console.log("Uploading Error: ", uploadError)
+            toast.error(
+              `Oops! Something went wrong when Uploading your File. Please try again. - ${uploadError?.message}`
+            )
+            return Promise.reject(uploadError?.message)
+          }
+        },
+        {
+          loading: "Uploading file...",
+          success: (res) => {
+            form.setValue(fieldName, uploadedFile)
+            console.log("Upload Response: ", uploadedFile, res)
+            return `Your file is successfully uploaded.`
+          },
+          error: (err) => {
+            console.log("Submit Error: ", uploadError)
+            return `Oops! Something went wrong. Please try again.`
+          },
+        }
+      )
+    },
+    [uploadedFile, form, uploadError]
+  )
+
   return (
     <ApplicationFormContext.Provider
       value={{
         form,
         onSubmit,
         isApplicationPending,
+        handleFileUpload,
       }}
     >
       {children}

@@ -1,14 +1,10 @@
 "use client"
 
 import { HTMLInputTypeAttribute, useMemo } from "react"
-import { useRouter } from "next/navigation"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
-import { z, ZodSchema } from "zod"
 
 import { cn } from "@/lib/utils"
-import { useShowProfile } from "@/hooks/useProfile"
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -26,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { Button } from "../ui/button"
 import { Calendar } from "../ui/calendar"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
@@ -49,7 +46,8 @@ export default function ApplicationForm({
 }: {
   template: ApplicationFormTemplate<any>
 }) {
-  const { form, isApplicationPending, onSubmit } = useApplicationForm()
+  const { form, isApplicationPending, handleFileUpload, onSubmit } =
+    useApplicationForm()
 
   const renderFields = useMemo(() => {
     return template.fields.map(
@@ -120,11 +118,29 @@ export default function ApplicationForm({
                 </Popover>
               )}
 
-              {type !== "select" && type !== "textarea" && type !== "date" && (
+              {type === "file" && (
                 <FormControl>
-                  <Input type={type} placeholder={placeholder} {...field} />
+                  <Input
+                    name={name}
+                    type={type}
+                    onChange={(e) => {
+                      if (e.target.files) {
+                        const file = e.target.files[0]
+                        handleFileUpload(name, file)
+                      }
+                    }}
+                  />
                 </FormControl>
               )}
+
+              {type !== "select" &&
+                type !== "textarea" &&
+                type !== "date" &&
+                type !== "file" && (
+                  <FormControl>
+                    <Input type={type} placeholder={placeholder} {...field} />
+                  </FormControl>
+                )}
 
               {description && <FormDescription>{description}</FormDescription>}
               <FormMessage />
@@ -142,9 +158,6 @@ export default function ApplicationForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className=" max-w-3xl space-y-8"
       >
-        {/* <div className="grid grid-cols-12 gap-4"> */}
-        {/* <div className="col-span-6"> */}
-
         {renderFields}
 
         <Button className="w-full" type="submit">

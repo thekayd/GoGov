@@ -24,10 +24,10 @@ export const DriversLicenseFormSchema = z.object({
   license_category: z.string(),
 
   // Files
-  id_document: z.string().optional(),
-  proof_of_address: z.string().optional(),
-  eye_test_certificate: z.string().optional(),
-  passport_photo: z.string().optional(),
+  id_document: z.string(),
+  proof_of_address: z.string(),
+  eye_test_certificate: z.string(),
+  passport_photo: z.string(),
 })
 
 export function createDriversLicenseModel(
