@@ -42,11 +42,20 @@ export function useGetAllUserApplications<T>(email: string) {
     queryFn: () => getAllUserApplications<T>({ email }),
   })
 }
-
 export function useUpdateApplication<T>() {
   return useMutation({
     mutationKey: ["update-application"],
     mutationFn: updateApplication<T>,
+  })
+}
+export function useGetUserApplication<T>(
+  tableName: DatabaseTables,
+  email: string,
+  applicationId: string
+) {
+  return useQuery({
+    queryKey: [`get-application`],
+    queryFn: () => getUserApplication<T>({ tableName, email, applicationId }),
   })
 }
 
@@ -202,4 +211,33 @@ async function getAllUserApplications<T>({
     passport: passport,
     vaccination: vaccination,
   }
+}
+
+async function getUserApplication<T>({
+  email,
+  tableName,
+  applicationId,
+}: {
+  email: string
+  applicationId: string
+  tableName: DatabaseTables
+}) {
+  const db = createSupabaseBrowser()
+
+  // const model = createDriversLicenseModel(user, application)
+  const { data, error, status } = await db
+    .from(tableName)
+    .select()
+    .eq("id", applicationId)
+    .eq("email", email)
+    .returns<Database["public"]["Tables"][typeof tableName]["Row"][]>()
+
+  console.log(error)
+
+  if (error) {
+    console.log(`Create ${tableName} Error: `, error.message)
+    throw new Error(error.message)
+  }
+  if (data.length === 0) throw new Error("404")
+  return data as T[]
 }

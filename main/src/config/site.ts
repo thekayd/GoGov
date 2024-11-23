@@ -1,5 +1,6 @@
 import path from "path"
-import { SiteConfig } from "@/types"
+import { DatabaseTables, SiteConfig } from "@/types"
+import { z } from "zod"
 
 import { env } from "@/env.mjs"
 
@@ -56,7 +57,7 @@ export const siteMapData = {
   },
   AdminPanel: {
     path: "/admin",
-    title: "Admin Panel",
+    title: "Admin ",
     description: "Admin Panel",
   },
   Dashboard: {
@@ -119,7 +120,7 @@ export const siteMapData = {
     description: "Advanced AI Support",
   },
   Payments: {
-    path: "/payments",
+    path: "https://paystack.com/pay",
     title: "Payments",
     description: "Make payments for services",
   },
@@ -147,3 +148,14 @@ export const getNavbarRoutes = (): Route[] => {
 
   return routes
 }
+
+export const DatabaseTablesSchema = z.nativeEnum({
+  admin_profile: "admin_profile",
+  bursary_applications: "bursary_applications",
+  drivers_license_applications: "drivers_license_applications",
+  passport_applications: "passport_applications",
+  profile: "profile",
+  scheduled_appointments: "scheduled_appointments",
+  user_feedback: "user_feedback",
+  vaccination_applications: "vaccination_applications",
+})

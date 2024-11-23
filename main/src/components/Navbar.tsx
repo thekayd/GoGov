@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 import UserProfile from "./supaauth/user-profile"
+import Typography from "./ui/typography"
 
 export default function Navbar() {
   return (
@@ -19,16 +20,18 @@ export default function Navbar() {
         <ZA />
       </Link>
       <div className="hidden items-center justify-center gap-4 md:flex">
-        {getNavbarRoutes().map((route) => (
-          <Link
-            key={route.path}
-            href={route.path}
-            className="flex-nowrap text-lg font-medium underline-offset-4 hover:underline"
-            prefetch={false}
-          >
-            {route.title}
-          </Link>
-        ))}
+        <div className="flex items-center justify-center gap-5">
+          {getNavbarRoutes().map((route) => (
+            <Link
+              key={route.path}
+              href={route.path}
+              className="w-full underline-offset-4 hover:underline"
+              prefetch={false}
+            >
+              <Typography variant="p">{route.title}</Typography>
+            </Link>
+          ))}
+        </div>
         <UserProfile />
       </div>
       <Sheet>

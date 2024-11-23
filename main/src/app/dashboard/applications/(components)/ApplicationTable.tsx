@@ -23,6 +23,7 @@ import {
 import { DatabaseTables } from "@/types"
 import { z, ZodObject } from "zod"
 
+import useWindowSize from "@/hooks/useWindowSize"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   useGetApplications,
@@ -63,8 +64,18 @@ export function ApplicationTable({
 
   console.log("Applications: ", data)
 
+  const { width, height } = useWindowSize()
+
+  if (width < 768) {
+    return (
+      <div className="text-center">
+        <p>Please view on a laptop or tablet for the best experience.</p>
+      </div>
+    )
+  }
+
   return (
-    <section className="mb-12   space-y-4">
+    <section className="mb-12  space-y-4">
       <div className="flex items-center justify-between ">
         <h2 className="mb-4 text-2xl font-semibold text-gray-900">{heading}</h2>
         {link && (
