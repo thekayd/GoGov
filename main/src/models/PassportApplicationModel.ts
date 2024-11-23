@@ -10,9 +10,9 @@ export const PassportApplicationFormSchema = z.object({
   // Fields
   processing_center: z.string(),
   passport_type: z.string(),
-  id_document: z.string().optional(),
-  proof_of_address: z.string().optional(),
-  passport_photo: z.string().optional(),
+  id_document: z.string(),
+  proof_of_address: z.string(),
+  passport_photo: z.string(),
 })
 
 // Create & Ensure DB payload is valid

@@ -13,10 +13,11 @@ import { toast } from "sonner"
 import { z, ZodObject } from "zod"
 
 import { useCreateProfile, useShowProfile } from "@/hooks/useProfile"
+import { getViewFromTableName } from "@/app/admin/(components)/Views"
 
 import { Database } from "../../../database.types"
 import { useCreateApplication } from "./useApplication"
-import { useUploadFile } from "./useSupaStorage"
+import { uploadToStorage, useUploadFile } from "./useSupaStorage"
 
 /**
  * This component provides a context for application forms.
@@ -40,6 +41,7 @@ interface ApplicationFormContextType {
   onSubmit: SubmitHandler<z.infer<ModelFormSchema>>
   form: ReturnType<typeof useForm<any>>
   handleFileUpload: (fieldName: string, file: File) => void
+  tableName: DatabaseTables
 }
 
 type ModelFormSchema = ZodObject<any>
@@ -69,12 +71,8 @@ export const ApplicationFormProvider: React.FC<{
     Database["public"]["Tables"][typeof table_name]["Row"],
     Database["public"]["Tables"][typeof table_name]["Insert"]
   >()
-  const {
-    mutate: uploadFile,
-    error: uploadError,
-    data: uploadedFile,
-  } = useUploadFile()
 
+  // console.log("UploadedFile: ", uploadedFile)
   console.log("Form: ", form.getValues())
 
   const onSubmit = useCallback(
@@ -110,6 +108,7 @@ export const ApplicationFormProvider: React.FC<{
           loading: "Submitting Application...",
           success: (res) => {
             console.log("Submit Response: ", data, res)
+            router.push(`/dashboard?view=${getViewFromTableName(table_name)}`)
             return `Thank you! Your application is successfully submitted. Keep an eye on your email.`
           },
           error: (err) => {
@@ -125,35 +124,26 @@ export const ApplicationFormProvider: React.FC<{
   const handleFileUpload = useCallback(
     (fieldName: string, file: File) => {
       toast.promise(
-        async () => {
-          uploadFile({
-            file: file,
-            fieldName: fieldName,
-            tableName: table_name,
-          })
-          if (uploadError) {
-            console.log("Uploading Error: ", uploadError)
-            toast.error(
-              `Oops! Something went wrong when Uploading your File. Please try again. - ${uploadError?.message}`
-            )
-            return Promise.reject(uploadError?.message)
-          }
-        },
+        uploadToStorage({
+          file: file,
+          fieldName: fieldName,
+          tableName: table_name,
+        }),
         {
           loading: "Uploading file...",
           success: (res) => {
-            form.setValue(fieldName, uploadedFile)
-            console.log("Upload Response: ", uploadedFile, res)
+            console.log("Upload Response: ", res)
+            form.setValue(fieldName, res)
             return `Your file is successfully uploaded.`
           },
           error: (err) => {
-            console.log("Submit Error: ", uploadError)
+            console.log("Submit Error: ", err)
             return `Oops! Something went wrong. Please try again.`
           },
         }
       )
     },
-    [uploadedFile, form, uploadError]
+    [form]
   )
 
   return (
@@ -163,6 +153,7 @@ export const ApplicationFormProvider: React.FC<{
         onSubmit,
         isApplicationPending,
         handleFileUpload,
+        tableName: table_name,
       }}
     >
       {children}

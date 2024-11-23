@@ -1,11 +1,6 @@
 "use client"
 
 import {
-  createDriversLicenseModel,
-  DriversLicenseFormSchema,
-  DriversLicenseFormTemplate,
-} from "@/models/DriversLicenseModel"
-import {
   createPassportApplicationModel,
   PassportApplicationFormSchema,
   PassportApplicationFormTemplate,
@@ -21,7 +16,7 @@ import { ProfileFormProvider } from "../../profile/(components)/ProfileFormConte
 export default function PassportApplicationPage() {
   return (
     <main className="mx-auto mt-3">
-      <div className="mb-8 flex flex-col items-center justify-center text-center">
+      <div className="mb-8 mt-10 flex flex-col items-center justify-center text-center">
         <h1 className=" text-4xl font-bold">Passport Applications</h1>
         <p className=" text-gray-600">
           Apply for your South African passport online.

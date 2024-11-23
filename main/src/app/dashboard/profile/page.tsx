@@ -6,7 +6,7 @@ import { ProfileFormProvider } from "./(components)/ProfileFormContext"
 
 export default function ProfilePage() {
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center gap-10 p-5">
+    <div className="mt-10 flex min-h-screen w-full flex-col items-center justify-center gap-10 p-5">
       <Typography variant={"h1"} className="text-center ">
         Your Profile and Information
       </Typography>

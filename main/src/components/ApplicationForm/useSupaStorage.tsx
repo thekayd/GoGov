@@ -12,24 +12,26 @@ import { createSupabaseBrowser } from "@/lib/supabase/client"
 
 import { Database } from "../../../database.types"
 
+interface UploadFileProps {
+  file: File
+  fieldName: string
+  tableName: DatabaseTables
+}
+
 // T - Represents the return type aka the actual database Model's row (with "ROW")
 // I - Represents the input type aka the actual input values fro the model, typed as "INSERT"
 export function useUploadFile() {
   return useMutation({
     mutationKey: ["file-upload"],
-    mutationFn: uploadToStorage,
+    mutationFn: (values: UploadFileProps) => uploadToStorage(values),
   })
 }
 
-async function uploadToStorage({
+export async function uploadToStorage({
   file,
   fieldName,
   tableName,
-}: {
-  file: File
-  fieldName: string
-  tableName: DatabaseTables
-}): Promise<string> {
+}: UploadFileProps): Promise<string> {
   const supabase = createSupabaseBrowser()
 
   const { data: user, error: userError } = await supabase.auth.getUser()
@@ -43,18 +45,18 @@ async function uploadToStorage({
       `${tableName}/${user.user.id}/${fieldName.toLowerCase()}-${file.name}`,
       file,
       {
-        cacheControl: "3600",
         upsert: true,
       }
     )
   if (error) {
     console.log(`Upload File Error ${tableName} Error: `, error.message)
-    throw new Error(error.message)
+    return Promise.reject(Error(error.name))
   }
 
   const { data: fileUrl } = await supabase.storage
     .from(env.NEXT_PUBLIC_BUCKET_NAME)
     .getPublicUrl(data.path, { download: true })
 
+  // return data.path
   return fileUrl.publicUrl
 }

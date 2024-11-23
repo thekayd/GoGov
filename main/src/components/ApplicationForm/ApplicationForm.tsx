@@ -3,6 +3,7 @@
 import { HTMLInputTypeAttribute, useMemo } from "react"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
+import { toast } from "sonner"
 
 import { cn } from "@/lib/utils"
 import {
@@ -28,6 +29,7 @@ import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Textarea } from "../ui/textarea"
 import { useApplicationForm } from "./ApplicationFormContext"
+import { useUploadFile } from "./useSupaStorage"
 
 export interface ApplicationFormTemplate<T> {
   title: string
@@ -142,7 +144,11 @@ export default function ApplicationForm({
                   </FormControl>
                 )}
 
-              {description && <FormDescription>{description}</FormDescription>}
+              <FormDescription>
+                {description && type != "file" && description}
+                {type == "file" &&
+                  "Ensure file's name does not include any special characters."}
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

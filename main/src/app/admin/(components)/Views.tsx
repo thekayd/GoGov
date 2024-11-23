@@ -281,3 +281,22 @@ export function ApplicationSelectionView({ view }: { view: ControllerView }) {
     </div>
   )
 }
+
+export function getViewFromTableName(tableName: string): Views | undefined {
+  switch (tableName) {
+    case "bursary_applications":
+      return "app-bursary"
+    case "drivers_license_applications":
+      return "app-drivers-license"
+    case "passport_applications":
+      return "app-passport"
+    case "vaccination_applications":
+      return "app-vaccination"
+    case "scheduled_appointments":
+      return "appoint-index"
+    case "user_feedback":
+      return "feedback"
+    default:
+      return undefined
+  }
+}

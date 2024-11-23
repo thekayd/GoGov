@@ -13,7 +13,7 @@ import { ApplicationFormProvider } from "@/components/ApplicationForm/Applicatio
 export default function AppointmentPage() {
   return (
     <main className="mx-auto mt-3">
-      <div className="mb-8 flex flex-col items-center justify-center text-center">
+      <div className="mb-8 mt-10 flex flex-col items-center justify-center text-center">
         <h1 className=" text-4xl font-bold">Appointment Applications</h1>
         <p className=" text-gray-600">
           Apply for your Appointment online.

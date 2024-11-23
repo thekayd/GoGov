@@ -292,6 +292,12 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
 
 export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
   {
+    accessorKey: "id",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Id" />
+    ),
+  },
+  {
     accessorKey: "passport_type",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Passport Type" />
