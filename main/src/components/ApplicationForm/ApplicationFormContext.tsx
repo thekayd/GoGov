@@ -1,7 +1,13 @@
 "use client"
 
 import { profile } from "console"
-import React, { createContext, ReactNode, useCallback, useContext } from "react"
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+} from "react"
 import { useRouter } from "next/navigation"
 import router from "next/router"
 import { DriversLicenseForm } from "@/models/DriversLicenseModel"
@@ -12,6 +18,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z, ZodObject } from "zod"
 
+import { siteMapData } from "@/config/site"
 import { useCreateProfile, useShowProfile } from "@/hooks/useProfile"
 import { getViewFromTableName } from "@/app/admin/(components)/Views"
 
@@ -58,22 +65,31 @@ export const ApplicationFormProvider: React.FC<{
 }> = ({ children, modelFormSchema, createApplicationModel, table_name }) => {
   const { data: profile } = useShowProfile()
   const router = useRouter()
-  const form = useForm<z.infer<typeof modelFormSchema>>({
-    resolver: zodResolver(modelFormSchema),
-  })
-
   const {
     data,
     isPending: isApplicationPending,
     error: applicationError,
-    mutate: createApplication,
+    mutateAsync: createApplication,
   } = useCreateApplication<
     Database["public"]["Tables"][typeof table_name]["Row"],
     Database["public"]["Tables"][typeof table_name]["Insert"]
   >()
+  const form = useForm<z.infer<typeof modelFormSchema>>({
+    resolver: zodResolver(modelFormSchema),
+    disabled: isApplicationPending,
+  })
 
   // console.log("UploadedFile: ", uploadedFile)
   console.log("Form: ", form.getValues())
+
+  useEffect(() => {
+    if (data && !isApplicationPending && !applicationError) {
+      router.push(
+        siteMapData.Dashboard.children.Payment.path +
+          `?table=${table_name}&application=${data?.id}`
+      )
+    }
+  }, [data, isApplicationPending, applicationError])
 
   const onSubmit = useCallback(
     (values: z.infer<typeof modelFormSchema>) => {
@@ -91,24 +107,16 @@ export const ApplicationFormProvider: React.FC<{
       ) as Database["public"]["Tables"][typeof table_name]["Insert"]
 
       toast.promise(
-        async () => {
-          createApplication({
-            model: applicationModel,
-            tableName: table_name,
-          })
-          if (applicationError) {
-            console.log("Submit Error: ", data)
-            toast.error(
-              `Oops! Something went wrong. Please try again. - ${applicationError?.message}`
-            )
-            return Promise.reject(applicationError?.message)
-          }
-        },
+        createApplication({
+          model: applicationModel,
+          tableName: table_name,
+        }),
         {
           loading: "Submitting Application...",
-          success: (res) => {
-            console.log("Submit Response: ", data, res)
-            router.push(`/dashboard?view=${getViewFromTableName(table_name)}`)
+          success: () => {
+            console.log("Submit Response: ", data)
+            form.reset()
+            // router.push(`/dashboard?view=${getViewFromTableName(table_name)}`)
             return `Thank you! Your application is successfully submitted. Keep an eye on your email.`
           },
           error: (err) => {
@@ -118,7 +126,7 @@ export const ApplicationFormProvider: React.FC<{
         }
       )
     },
-    [profile]
+    [profile, data]
   )
 
   const handleFileUpload = useCallback(

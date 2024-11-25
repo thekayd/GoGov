@@ -10,13 +10,15 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { createSupabaseBrowser } from "@/lib/supabase/client"
 
 import { Database } from "../../../database.types"
+import ModelTable from "../DataTable/model-table"
 
 // T - Represents the return type aka the actual database Model's row (with "ROW")
 // I - Represents the input type aka the actual input values fro the model, typed as "INSERT"
 export function useCreateApplication<T, I>() {
   return useMutation({
     mutationKey: ["create-application"],
-    mutationFn: createApplication<T, I>,
+    mutationFn: async (params: { model: I; tableName: DatabaseTables }) =>
+      await createApplication<T, I>(params),
   })
 }
 
@@ -59,7 +61,7 @@ export function useGetUserApplication<T>(
   })
 }
 
-async function createApplication<T, I>({
+export async function createApplication<T, I>({
   model,
   tableName,
 }: {
@@ -71,16 +73,20 @@ async function createApplication<T, I>({
   // const model = createDriversLicenseModel(user, application)
   const { data, error, status } = await db
     .from(tableName)
-    .insert(model)
-    .returns<Database["public"]["Tables"][typeof tableName]["Row"]>()
+    .upsert(model)
+    .select()
+    .returns<Database["public"]["Tables"][typeof tableName]["Row"][]>()
 
-  console.log(error)
+  console.log(data)
 
   if (error) {
-    console.log(`Create ${tableName} Error: `, error.message)
-    throw new Error(error.message)
+    console.error(`Create ${tableName} Error: `, error.message)
+    // throw new Error(error.message)
+    return Promise.reject(error.message)
   }
-  return data as T
+
+  if (data.length === 0) return Promise.reject("404")
+  return data[0] as T
 }
 
 async function getApplications<T>({

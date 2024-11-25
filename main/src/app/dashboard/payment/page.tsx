@@ -8,6 +8,8 @@ import {
   DriversLicenseApplication,
   DriversLicenseModel,
 } from "@/models/DriversLicenseModel"
+import { PassportApplicationModel } from "@/models/PassportApplicationModel"
+import { VaccinationApplicationModel } from "@/models/VaccinationModel"
 import { type DatabaseTables } from "@/types"
 import { toast } from "sonner"
 
@@ -26,7 +28,12 @@ import {
 import Typography from "@/components/ui/typography"
 import { useGetUserApplication } from "@/components/ApplicationForm/useApplication"
 
-import { BursaryFields, DriversLicenseFields } from "./PaymentCardFields"
+import {
+  BursaryFields,
+  DriversLicenseFields,
+  PassportFields,
+  VaccinationFields,
+} from "./PaymentCardFields"
 
 interface props {
   submitted?: boolean
@@ -41,7 +48,8 @@ export default function PaymentPage({ submitted }: props) {
   const { data: tableName, success } =
     DatabaseTablesSchema.safeParse(rawTableName)
   console.log("Search Params: ", tableName, applicationId)
-  if (!success || !applicationId) return <BadRequestView />
+  if (!success || !applicationId || applicationId === "undefined")
+    return <BadRequestView />
 
   // Authenticate User - Verified by Middleware
   const { data: user, isLoading } = useUser()
@@ -108,7 +116,23 @@ export function PaymentConfirmationContent({
     <>
       <CardContent className="space-y-6">
         <div className="flex w-full flex-col items-start justify-center gap-4">
-          <Typography variant="h3">Drivers License Application</Typography>
+          <Typography variant="h3">
+            {(() => {
+              switch (tableName) {
+                case "bursary_applications":
+                  return "Bursary"
+                case "drivers_license_applications":
+                  return "Drivers License"
+                case "passport_applications":
+                  return "Passport"
+                case "vaccination_applications":
+                  return "Vaccination"
+                default:
+                  return undefined // Handle default case
+              }
+            })()}{" "}
+            Application
+          </Typography>
           <div className="flex w-full items-center justify-between rounded-lg bg-muted p-4">
             <div>
               <p className="text-sm font-medium">Application ID</p>
@@ -145,7 +169,7 @@ export function PaymentConfirmationContent({
                       case "drivers_license_applications":
                         return "Transport"
                       case "passport_applications":
-                        return "Passport"
+                        return "Home Affairs"
                       case "vaccination_applications":
                         return "Health"
                       default:
@@ -163,6 +187,16 @@ export function PaymentConfirmationContent({
               {tableName === "drivers_license_applications" && application && (
                 <DriversLicenseFields
                   application={application[0] as DriversLicenseModel}
+                />
+              )}
+              {tableName === "passport_applications" && application && (
+                <PassportFields
+                  application={application[0] as PassportApplicationModel}
+                />
+              )}
+              {tableName === "vaccination_applications" && application && (
+                <VaccinationFields
+                  application={application[0] as VaccinationApplicationModel}
                 />
               )}
 

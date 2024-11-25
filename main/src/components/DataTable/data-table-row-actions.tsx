@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
   BursaryApplication,
@@ -31,11 +32,6 @@ import {
   DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -55,7 +51,8 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const rowData = row.original
   const router = useRouter()
-  const application = ValidateApplication(rowData)
+  const application = ValidateApplication(rowData, table)
+  console.log("Tables: ", table)
   const { mutate } = useUpdateApplication<z.infer<typeof schema>>()
 
   function handleStatusChange(newStatus: string) {
@@ -116,14 +113,12 @@ export function DataTableRowActions<TData>({
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
-        <DropdownMenuItem
-          onClick={() =>
-            router.push(
-              `${siteMapData.Dashboard.children.Payment.path}?table=${application?.tableName}&application=${application?.app.id}`
-            )
-          }
-        >
-          Pay Now
+        <DropdownMenuItem>
+          <Link
+            href={`${siteMapData.Dashboard.children.Payment.path}?table=${table}&application=${application?.app.id}`}
+          >
+            Pay Now
+          </Link>
         </DropdownMenuItem>
         {/* </DropdownMenuSubContent>
         </DropdownMenuSub> */}
@@ -147,41 +142,64 @@ interface ValidateApplicationResponse {
   tableName: DatabaseTables
 }
 function ValidateApplication(
-  application: any
+  application: any,
+  table: DatabaseTables
 ): ValidateApplicationResponse | undefined {
-  const { data: bursaryApplication, error: bursaryError } =
-    BursaryApplicationSchema.safeParse(application)
-  console.log("Bursary Schema Error: ", bursaryError)
-  if (!bursaryError) {
-    return {
-      app: bursaryApplication,
-      tableName: "bursary_applications",
+  if (table == "bursary_applications") {
+    const {
+      data: bursaryApplication,
+      error: bursaryError,
+      success,
+    } = BursaryApplicationSchema.safeParse(application)
+    if (success) {
+      console.log("Bursary ", bursaryApplication)
+      return {
+        app: bursaryApplication,
+        tableName: "bursary_applications",
+      }
     }
   }
-  const { data: driversApplication, error: driversError } =
-    DriversLicenseSchema.safeParse(application)
-  console.log("Drivers Schema Error: ", driversError)
-  if (!driversError) {
-    return {
-      app: driversApplication,
-      tableName: "drivers_license_applications",
+  if (table === "drivers_license_applications") {
+    const {
+      data: driversApplication,
+      error: driversError,
+      success,
+    } = DriversLicenseSchema.safeParse(application)
+    if (success) {
+      console.log("Drivers ", driversApplication)
+      return {
+        app: driversApplication,
+        tableName: "drivers_license_applications",
+      }
     }
   }
-  console.log("Drivers Schema Error: ", driversError)
-  const { data: passportApplication, error: passportError } =
-    PassportApplicationSchema.safeParse(application)
-  if (!passportError) {
-    return {
-      app: passportApplication,
-      tableName: "passport_applications",
+  if (table === "passport_applications") {
+    const {
+      data: passportApplication,
+      error: passportError,
+      success,
+    } = PassportApplicationSchema.safeParse(application)
+    console.log("Passport: ", passportError)
+    if (success) {
+      console.log("Passport ", passportApplication)
+      return {
+        app: passportApplication,
+        tableName: "passport_applications",
+      }
     }
   }
-  const { data: vaccinationApplication, error: vaccinationError } =
-    VaccinationApplicationSchema.safeParse(application)
-  if (!vaccinationError) {
-    return {
-      app: vaccinationApplication,
-      tableName: "vaccination_applications",
+  if (table === "vaccination_applications") {
+    const {
+      data: vaccinationApplication,
+      error: vaccinationError,
+      success,
+    } = VaccinationApplicationSchema.safeParse(application)
+    if (success) {
+      console.log("Vaccination: ", vaccinationApplication)
+      return {
+        app: vaccinationApplication,
+        tableName: "vaccination_applications",
+      }
     }
   }
 }

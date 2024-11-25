@@ -1,5 +1,7 @@
 import { BursaryApplicationModel } from "@/models/BursaryModel"
 import { DriversLicenseModel } from "@/models/DriversLicenseModel"
+import { PassportApplicationModel } from "@/models/PassportApplicationModel"
+import { VaccinationApplicationModel } from "@/models/VaccinationModel"
 
 export function BursaryFields({
   application,
@@ -41,6 +43,46 @@ export function DriversLicenseFields({
       </p>
       <p>
         <strong>Center:</strong> {application?.test_center}
+      </p>
+      <p>
+        <strong>Submitted At:</strong>{" "}
+        {new Date(application?.created_at || "").toLocaleDateString()}
+      </p>
+    </>
+  )
+}
+export function PassportFields({
+  application,
+}: {
+  application?: PassportApplicationModel
+}) {
+  return (
+    <>
+      <p>
+        <strong>Type:</strong> {application?.passport_type}
+      </p>
+      <p>
+        <strong>Center:</strong> {application?.processing_center}
+      </p>
+      <p>
+        <strong>Submitted At:</strong>{" "}
+        {new Date(application?.created_at || "").toLocaleDateString()}
+      </p>
+    </>
+  )
+}
+export function VaccinationFields({
+  application,
+}: {
+  application?: VaccinationApplicationModel
+}) {
+  return (
+    <>
+      <p>
+        <strong>Type:</strong> {application?.vaccine_type}
+      </p>
+      <p>
+        <strong>Center:</strong> {application?.vaccination_center}
       </p>
       <p>
         <strong>Submitted At:</strong>{" "}

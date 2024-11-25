@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { Appointment, AppointmentSchema } from "@/models/AppointmentModel"
 import {
   BursaryApplication,
@@ -58,6 +59,14 @@ export function ApplicationTable({
   email,
   link,
 }: ModelRenderProps) {
+  const searchParams = useSearchParams()
+  const state = searchParams.get("state")
+  const id = searchParams.get("application")
+  if (state === "success") {
+    console.log("State: ", state)
+    console.log("Navigate to page")
+  }
+
   const { data, isPending, error } = email
     ? useGetUserApplications<z.infer<typeof modelSchema>>(tableName, email)
     : useGetApplications<z.infer<typeof modelSchema>>(tableName)

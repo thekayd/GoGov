@@ -22,12 +22,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { PaymentConfirmationContent } from "@/app/dashboard/payment/page"
 
 import { Button } from "../ui/button"
 import { Calendar } from "../ui/calendar"
 import { Input } from "../ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Textarea } from "../ui/textarea"
+import Typography from "../ui/typography"
 import { useApplicationForm } from "./ApplicationFormContext"
 import { useUploadFile } from "./useSupaStorage"
 
@@ -53,8 +55,9 @@ export default function ApplicationForm({
 
   const renderFields = useMemo(() => {
     return template.fields.map(
-      ({ label, name, type, description, options, placeholder }) => (
+      ({ label, name, type, description, options, placeholder }, index) => (
         <FormField
+          key={index}
           control={form.control}
           name={name}
           render={({ field }) => (
@@ -64,6 +67,7 @@ export default function ApplicationForm({
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled={isApplicationPending}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -131,6 +135,7 @@ export default function ApplicationForm({
                         handleFileUpload(name, file)
                       }
                     }}
+                    disabled={isApplicationPending}
                   />
                 </FormControl>
               )}
