@@ -22,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { PaymentConfirmationContent } from "@/app/dashboard/payment/page"
 
 import { Button } from "../ui/button"
 import { Calendar } from "../ui/calendar"

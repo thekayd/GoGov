@@ -86,7 +86,7 @@ export const ApplicationFormProvider: React.FC<{
     if (data && !isApplicationPending && !applicationError) {
       router.push(
         siteMapData.Dashboard.children.Payment.path +
-          `?table=${table_name}&application=${data?.id}`
+          `?table=${table_name}&application=${data?.id}&submitted=true`
       )
     }
   }, [data, isApplicationPending, applicationError])
