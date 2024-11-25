@@ -67,7 +67,7 @@ export function ApplicationAnalytics({
   console.log("Status Data: ", statusData)
 
   return (
-    <div className="container mx-auto p-4">
+    <div className=" mx-auto w-full p-4">
       <h1 className="mb-6 text-3xl font-bold">{title}</h1>
 
       <Tabs defaultValue="overview" className="space-y-4">
@@ -76,7 +76,7 @@ export function ApplicationAnalytics({
           <TabsTrigger value="trends">Trends</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-4">
+        <TabsContent value="overview" className="w-full space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
             <Card>
               <CardHeader>
@@ -112,7 +112,7 @@ export function ApplicationAnalytics({
                 <CardTitle>Application Status</CardTitle>
                 <CardDescription>Current status distribution</CardDescription>
               </CardHeader>
-              <CardContent className="h-[300px]">
+              <CardContent className="h-[300px] p-0 pr-2">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -145,7 +145,7 @@ export function ApplicationAnalytics({
                 <CardTitle>Approval Rate</CardTitle>
                 <CardDescription>Monthly approval rate trend</CardDescription>
               </CardHeader>
-              <CardContent className="h-[300px]">
+              <CardContent className="h-[300px] p-0 pr-2">
                 <ChartContainer
                   config={{
                     rate: {
