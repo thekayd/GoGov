@@ -34,6 +34,7 @@ import ModelTable, {
   ModelTableError,
   ModelTableSkeleton,
 } from "@/components/DataTable/model-table"
+import { MobileFriendlyView } from "@/components/mobile-friendly-view"
 
 import {
   AppointmentColumns,
@@ -61,7 +62,6 @@ export function ApplicationTable({
 }: ModelRenderProps) {
   const searchParams = useSearchParams()
   const state = searchParams.get("state")
-  const id = searchParams.get("application")
   if (state === "success") {
     console.log("State: ", state)
     console.log("Navigate to page")
@@ -77,8 +77,8 @@ export function ApplicationTable({
 
   if (width < 768) {
     return (
-      <div className="text-center">
-        <p>Please view on a laptop or tablet for the best experience.</p>
+      <div className="container mx-auto p-4">
+        <MobileFriendlyView />
       </div>
     )
   }
