@@ -22,8 +22,8 @@ export default function Navbar() {
         <Image
           src={"/sa-guy.png"}
           alt="gogov-logo"
-          width={30}
-          height={30}
+          width={35}
+          height={35}
           // objectFit="cover "
           // objectPosition="center"
         />
@@ -37,7 +37,9 @@ export default function Navbar() {
               className="w-full underline-offset-4 hover:underline"
               prefetch={false}
             >
-              <Typography variant="p">{route.title}</Typography>
+              <Typography variant="p" className="text-nowrap">
+                {route.title}
+              </Typography>
             </Link>
           ))}
         </div>

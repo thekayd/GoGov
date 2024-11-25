@@ -119,9 +119,29 @@ export const siteMapData = {
       },
     },
   },
+  Education: {
+    path: "/education",
+    title: "Education",
+    description: "Department of Education",
+  },
+  Health: {
+    path: "/health",
+    title: "Health",
+    description: "Department of Health",
+  },
+  HomeAffairs: {
+    path: "/home-affairs",
+    title: "Home Affairs",
+    description: "Department of Home Affairs",
+  },
+  Transport: {
+    path: "/transport",
+    title: "Transport",
+    description: "Department of Transport",
+  },
   Support: {
     path: "/support",
-    title: "Spport",
+    title: "Support",
     description: "Advanced AI Support",
   },
   StripePayment: {
