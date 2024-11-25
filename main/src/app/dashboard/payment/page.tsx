@@ -2,7 +2,7 @@
 
 import { ReactNode, use, useState } from "react"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { BursaryApplicationModel } from "@/models/BursaryModel"
 import {
   DriversLicenseApplication,
@@ -41,6 +41,7 @@ interface props {
 
 export default function PaymentPage({ submitted }: props) {
   // Get the Search Params to compuse the Payment Request
+  const router = useRouter()
   const searchParams = useSearchParams()
   const rawTableName = searchParams.get("table")
   const applicationId = searchParams.get("application")
@@ -48,31 +49,38 @@ export default function PaymentPage({ submitted }: props) {
   const { data: tableName, success } =
     DatabaseTablesSchema.safeParse(rawTableName)
   console.log("Search Params: ", tableName, applicationId)
-  if (!success || !applicationId || applicationId === "undefined")
-    return <BadRequestView />
+  const isNotValid = !success || !applicationId || applicationId === "undefined"
 
   // Authenticate User - Verified by Middleware
   const { data: user, isLoading } = useUser()
 
+  if (!user?.email && !isLoading) router.push(siteMapData.Auth.path)
+
   return (
     <div className="container mx-auto p-4">
       <Card className="mx-auto w-full max-w-2xl">
-        <CardHeader>
-          <CardTitle>
-            {submitted && "Application Submitted Successfully"}
-            {!submitted && "Complete your Application's Payment"}
-          </CardTitle>
-          <CardDescription>
-            Please complete your payment to finalize your application
-          </CardDescription>
-        </CardHeader>
-        {!user?.email && !isLoading && <BadRequestView />}
-        {user?.email && !isLoading && (
-          <PaymentConfirmationContent
-            tableName={tableName as DatabaseTables}
-            applicationId={applicationId}
-            email={user.email}
-          />
+        {isNotValid && (
+          <CardContent className="space-y-6">
+            <BadRequestView />
+          </CardContent>
+        )}
+        {user?.email && !isNotValid && !isLoading && (
+          <>
+            <CardHeader>
+              <CardTitle>
+                {submitted && "Application Submitted Successfully"}
+                {!submitted && "Complete your Application's Payment"}
+              </CardTitle>
+              <CardDescription>
+                Please complete your payment to finalize your application
+              </CardDescription>
+            </CardHeader>
+            <PaymentConfirmationContent
+              tableName={tableName as DatabaseTables}
+              applicationId={applicationId}
+              email={user.email}
+            />
+          </>
         )}
       </Card>
     </div>
@@ -239,10 +247,29 @@ export function PaymentConfirmationContent({
 }
 
 function BadRequestView() {
+  const router = useRouter()
   return (
-    <div>
-      <Typography variant="h1">Invalid Request is being made</Typography>
-      <Typography variant="p">Please go back</Typography>
+    <div className="mt-5 flex w-full flex-col items-center justify-center gap-5 text-center">
+      <Typography variant="h1">
+        Ooops 🤯 <br />
+        Seems like a bad request
+      </Typography>
+      <Typography variant="p">
+        A bad request was made for this payment confirmation. Please use your
+        Dashboard to make requests.
+      </Typography>
+
+      <div className="flex w-full items-center justify-center gap-4">
+        <Button variant={"secondary"} onClick={() => router.back()}>
+          Go back
+        </Button>
+        <Link
+          href={siteMapData.Dashboard.path}
+          className={buttonVariants({ variant: "default" })}
+        >
+          Dashboard
+        </Link>
+      </div>
     </div>
   )
 }

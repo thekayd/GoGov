@@ -117,7 +117,7 @@ export const ApplicationFormProvider: React.FC<{
             console.log("Submit Response: ", data)
             form.reset()
             // router.push(`/dashboard?view=${getViewFromTableName(table_name)}`)
-            return `Thank you! Your application is successfully submitted. Keep an eye on your email.`
+            return `Thank you! Your application is successfully submitted. Please wait to be redirected to the Payment Page.`
           },
           error: (err) => {
             console.log("Submit Error: ", data)
