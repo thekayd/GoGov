@@ -16,7 +16,7 @@ export function DepartmentsSection() {
     },
     {
       name: "TRANSPORTATION",
-      image: "/assets/images/Rectangle22.png",
+      image: "/transport-logo.jpg",
       services: [
         "DRIVER'S LICENSES",
         "VEHICLE REGISTRATIONS",
@@ -27,7 +27,7 @@ export function DepartmentsSection() {
     },
     {
       name: "HEALTH",
-      image: "/assets/images/Rectangle222.jpeg",
+      image: "/health-logo.jpg",
       services: [
         "Medical Aid Applications",
         "Vacation Records",
@@ -38,7 +38,7 @@ export function DepartmentsSection() {
     },
     {
       name: "EDUCATION",
-      image: "/assets/images/Rectangle221.png",
+      image: "/education-logo.jpg",
       services: [
         "Scheduling Grants",
         "Adult Education Programs",
@@ -62,8 +62,10 @@ export function DepartmentsSection() {
                   <Image
                     src={dept.image}
                     alt={dept.name}
-                    fill
-                    className="rounded-t-lg object-cover"
+                    layout="fill"
+                    objectFit="contain"
+                    objectPosition="center"
+                    className="rounded-t-lg "
                   />
                 </div>
                 <CardTitle className="font-bold text-black">
