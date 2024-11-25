@@ -1,13 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { siteMapData } from "@/config/site"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { HeroSection } from "@/app/(components)/HeroSection"
 
 export default function Education() {
@@ -27,7 +28,7 @@ export default function Education() {
             <h2 className="mb-8 text-3xl font-semibold text-[#1C2B78]">
               About the Department of Education
             </h2>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div className="rounded-lg bg-white p-6 shadow">
                 <h3 className="mb-4 text-xl font-semibold text-[#008BF9]">
                   Overview
@@ -77,18 +78,21 @@ export default function Education() {
                   description:
                     "Register your child for school or apply for school admission.",
                   image: "/assets/images/Image121.png",
+                  link: siteMapData.Dashboard.path,
                 },
                 {
                   name: "Exam Information",
                   description:
                     "Access exam timetables, results, and certification services.",
                   image: "/assets/images/Image121.png",
+                  link: siteMapData.Dashboard.path,
                 },
                 {
                   name: "Bursaries and Financial Aid",
                   description:
                     "Apply for educational bursaries and financial assistance programs.",
                   image: "/assets/images/Image121.png",
+                  link: siteMapData.Dashboard.path,
                 },
               ].map((service, index) => (
                 <div key={index} className="rounded-lg bg-white p-6 shadow-md">
@@ -103,9 +107,14 @@ export default function Education() {
                   </div>
                   <h3 className="mb-2 text-xl font-semibold">{service.name}</h3>
                   <p className="mb-4 text-gray-600">{service.description}</p>
-                  <Button className="border border-gray-300 hover:bg-gray-100">
-                    Read More
-                  </Button>
+                  <Link
+                    href={service.link}
+                    className={buttonVariants({
+                      className: "border border-gray-300 hover:bg-gray-100",
+                    })}
+                  >
+                    Get started
+                  </Link>
                 </div>
               ))}
             </div>
