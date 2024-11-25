@@ -1,4 +1,5 @@
 import Typography from "@/components/ui/typography"
+import { SupportBubble } from "@/components/SupportBubble"
 
 import { RootLayoutProps } from "../layout"
 
@@ -15,9 +16,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </div>
           )} */}
         <div className="mx-auto max-w-5xl space-y-4">
-          <Typography variant={"h1"}>Citizen Dashboard</Typography>
+          {/* <Typography variant={"h1"}>Citizen Dashboard</Typography> */}
 
           {children}
+          <SupportBubble />
         </div>
       </div>
     </div>

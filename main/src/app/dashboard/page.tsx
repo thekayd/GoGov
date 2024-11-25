@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import {
   Briefcase,
@@ -22,12 +23,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import Typography from "@/components/ui/typography"
-import ApplicationCard from "@/components/application-card"
-import {
-  useGetAllUserApplications,
-  useGetUserApplications,
-} from "@/components/ApplicationForm/useApplication"
+import WelcomeBanner from "@/components/WelcomeBanner"
 
 import {
   DashboardNavigation,
@@ -39,6 +35,8 @@ export default function CitizenPortal() {
 
   return (
     <div className="mx-auto w-full max-w-5xl space-y-10">
+      <WelcomeBanner />
+
       <DashboardNavigation baseUrl="/dashboard" />
 
       <Separator className="my-8" />

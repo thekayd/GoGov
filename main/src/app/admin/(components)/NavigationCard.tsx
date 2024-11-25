@@ -15,7 +15,7 @@ export default function DashboardNavigationCard({
   }
 }) {
   return (
-    <Link href={details.link} className="min-h-full w-full">
+    <Link href={details.link} className="min-h-full w-full lg:min-w-48 ">
       <Card
         className={`flex h-full w-full flex-col items-center justify-center space-y-4 p-5 text-center hover:cursor-pointer hover:bg-secondary ${details.active && "border-green-500"}`}
       >

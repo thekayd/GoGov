@@ -75,7 +75,7 @@ export function ApplicationTable({
 
   const { width, height } = useWindowSize()
 
-  if (width < 768) {
+  if (width < 1024) {
     return (
       <div className="container mx-auto p-4">
         <MobileFriendlyView />
