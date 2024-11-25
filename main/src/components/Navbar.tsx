@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { US, ZA } from "country-flag-icons/react/3x2"
 import { MenuIcon, MountainIcon } from "lucide-react"
@@ -17,7 +18,15 @@ export default function Navbar() {
         className="flex w-8 items-center gap-2"
         prefetch={false}
       >
-        <ZA />
+        {/* <ZA /> */}
+        <Image
+          src={"/sa-guy.png"}
+          alt="gogov-logo"
+          width={30}
+          height={30}
+          // objectFit="cover "
+          // objectPosition="center"
+        />
       </Link>
       <div className="hidden items-center justify-center gap-4 md:flex">
         <div className="flex items-center justify-center gap-5">

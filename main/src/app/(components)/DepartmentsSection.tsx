@@ -49,7 +49,7 @@ export function DepartmentsSection() {
   ]
 
   return (
-    <section className="w-full bg-blue-800 py-10 text-white  ">
+    <section className="w-full bg-blue-800 py-10 text-white" id="departments">
       <div className="container mx-auto w-full max-w-6xl space-y-10">
         <Typography variant={"h2"} className="text-center">
           South African Departments

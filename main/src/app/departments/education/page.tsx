@@ -8,66 +8,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
+import { HeroSection } from "@/app/(components)/HeroSection"
 
 export default function Education() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto flex items-center justify-between px-4 py-4">
-          <div className="flex items-center">
-            <Image
-              src="/assets/images/Download111.jpeg"
-              alt="Logo"
-              width={64}
-              height={45}
-              className="mr-4"
-            />
-            <span className="text-sm font-medium text-[#1C2B78]">
-              Government of South Africa
-            </span>
-          </div>
-          <nav>
-            <ul className="flex space-x-6">
-              <li>
-                <Link href="/" className="text-sm font-medium text-[#008BF9]">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-sm font-medium text-gray-600">
-                  My applications
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-sm font-medium text-gray-600">
-                  Service Directory
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-sm font-medium text-gray-600">
-                  Appointments
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-sm font-medium text-gray-600">
-                  Downloads
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-sm font-medium text-gray-600">
-                  Payments
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-sm font-medium text-gray-600">
-                  Support & Feedback
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+      <HeroSection
+        imageUrl="/assets/health-department.webp"
+        title="Department of Health"
+        subheading={"Discover an unparalleled journey filled with adventure."}
+      />
 
       {/* Hero Section */}
       <section className="relative bg-[#3868A9] py-24 text-white">
