@@ -172,7 +172,7 @@ export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
     header: "",
     cell: ({ row }) => (
       <DataTableRowPayAction
-        table="drivers_license_applications"
+        table="bursary_applications"
         schema={DriversLicenseSchema}
         row={row}
       />
@@ -434,7 +434,7 @@ export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
     header: "",
     cell: ({ row }) => (
       <DataTableRowPayAction
-        table="drivers_license_applications"
+        table="passport_applications"
         schema={DriversLicenseSchema}
         row={row}
       />
@@ -535,7 +535,7 @@ export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] 
       header: "",
       cell: ({ row }) => (
         <DataTableRowPayAction
-          table="drivers_license_applications"
+          table="vaccination_applications"
           schema={DriversLicenseSchema}
           row={row}
         />
