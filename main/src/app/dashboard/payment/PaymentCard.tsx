@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { useRouter } from "next/dist/client/components/navigation"
+import Link from "next/link"
 import { BursaryApplicationModel } from "@/models/BursaryModel"
 import { DriversLicenseModel } from "@/models/DriversLicenseModel"
 import { PassportApplicationModel } from "@/models/PassportApplicationModel"
 import { VaccinationApplicationModel } from "@/models/VaccinationModel"
 import { DatabaseTables } from "@/types"
-import { Link } from "lucide-react"
 import { toast } from "sonner"
 
 import { siteMapData } from "@/config/site"
