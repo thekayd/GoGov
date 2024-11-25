@@ -25,7 +25,7 @@ import { toast } from "sonner"
 import { z, ZodSchema } from "zod"
 
 import { siteMapData } from "@/config/site"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -95,11 +95,6 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        {/* <DropdownMenuItem>View Full Details</DropdownMenuItem> */}
-        {/* <DropdownMenuSeparator /> */}
-        {/* <DropdownMenuSub> */}
-        {/* <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger> */}
-        {/* <DropdownMenuSubContent> */}
         <DropdownMenuRadioGroup
           value={application?.app.status || "Send For Validation"}
         >
@@ -113,22 +108,27 @@ export function DataTableRowActions<TData>({
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
-        <DropdownMenuItem>
-          <Link
-            href={`${siteMapData.Dashboard.children.Payment.path}?table=${table}&application=${application?.app.id}`}
-          >
-            Pay Now
-          </Link>
-        </DropdownMenuItem>
-        {/* </DropdownMenuSubContent>
-        </DropdownMenuSub> */}
-        {/* <DropdownMenuSeparator /> */}
-        {/* <DropdownMenuItem>
-          Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+export function DataTableRowPayAction<TData>({
+  row,
+  table,
+  schema,
+}: DataTableRowActionsProps<TData>) {
+  const rowData = row.original
+  const application = ValidateApplication(rowData, table)
+  // console.log("Tables: ", table)
+
+  return (
+    <Link
+      className={buttonVariants({})}
+      href={`${siteMapData.Dashboard.children.Payment.path}?table=${table}&application=${application?.app.id}`}
+    >
+      Pay Now
+    </Link>
   )
 }
 

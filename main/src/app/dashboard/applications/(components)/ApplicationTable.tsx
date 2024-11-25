@@ -112,6 +112,8 @@ export function ApplicationTable({
             email: false,
             date_of_birth: false,
             phone_number: false,
+            actions: !email,
+            payaction: !!email,
           }}
         />
       )}
@@ -129,6 +131,8 @@ export function ApplicationTable({
             email: false,
             date_of_birth: false,
             phone_number: false,
+            actions: !email,
+            payaction: !!email,
           }}
         />
       )}
@@ -146,6 +150,8 @@ export function ApplicationTable({
             email: false,
             date_of_birth: false,
             phone_number: false,
+            actions: !email,
+            payaction: !!email,
           }}
         />
       )}
@@ -163,6 +169,8 @@ export function ApplicationTable({
             email: false,
             date_of_birth: false,
             phone_number: false,
+            actions: !email,
+            payaction: !!email,
           }}
         />
       )}

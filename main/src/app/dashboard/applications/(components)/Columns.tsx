@@ -36,7 +36,10 @@ import {
 } from "lucide-react"
 
 import { DataTableColumnHeader } from "../../../../components/DataTable/data-table-column-header"
-import { DataTableRowActions } from "../../../../components/DataTable/data-table-row-actions"
+import {
+  DataTableRowActions,
+  DataTableRowPayAction,
+} from "../../../../components/DataTable/data-table-row-actions"
 
 export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
   {
@@ -160,6 +163,17 @@ export const BursaryApplicationsColumns: ColumnDef<BursaryApplication>[] = [
       <DataTableRowActions
         table="bursary_applications"
         schema={BursaryApplicationSchema}
+        row={row}
+      />
+    ),
+  },
+  {
+    id: "payaction",
+    header: "",
+    cell: ({ row }) => (
+      <DataTableRowPayAction
+        table="drivers_license_applications"
+        schema={DriversLicenseSchema}
         row={row}
       />
     ),
@@ -288,6 +302,17 @@ export const DriversLicenseApplicationColumns: ColumnDef<DriversLicenseApplicati
         />
       ),
     },
+    {
+      id: "payaction",
+      header: "",
+      cell: ({ row }) => (
+        <DataTableRowPayAction
+          table="drivers_license_applications"
+          schema={DriversLicenseSchema}
+          row={row}
+        />
+      ),
+    },
   ]
 
 export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
@@ -404,6 +429,17 @@ export const PassportApplicationColumns: ColumnDef<PassportApplication>[] = [
       />
     ),
   },
+  {
+    id: "payaction",
+    header: "",
+    cell: ({ row }) => (
+      <DataTableRowPayAction
+        table="drivers_license_applications"
+        schema={DriversLicenseSchema}
+        row={row}
+      />
+    ),
+  },
 ]
 
 export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] =
@@ -490,6 +526,17 @@ export const VaccinationApplicationColumns: ColumnDef<VaccinationApplication>[] 
         <DataTableRowActions
           table="vaccination_applications"
           schema={VaccinationApplicationSchema}
+          row={row}
+        />
+      ),
+    },
+    {
+      id: "payaction",
+      header: "",
+      cell: ({ row }) => (
+        <DataTableRowPayAction
+          table="drivers_license_applications"
+          schema={DriversLicenseSchema}
           row={row}
         />
       ),

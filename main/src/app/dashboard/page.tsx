@@ -34,7 +34,7 @@ export default function CitizenPortal() {
   const { data: user } = useUser()
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-10">
+    <div className="mx-auto w-full max-w-5xl space-y-10 pb-10">
       <WelcomeBanner />
 
       <DashboardNavigation baseUrl="/dashboard" />
