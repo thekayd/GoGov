@@ -12,7 +12,7 @@ export function DepartmentsSection() {
       name: "HOME AFFAIRS",
       image: "/assets/images/Image7.png",
       services: ["ID APPLICATIONS", "PASSPORTS", "BIRTH CERTIFICATES"],
-      link: siteMapData.Dashboard.children.Applications.children.Passport.path,
+      link: siteMapData.HomeAffairs.path,
     },
     {
       name: "TRANSPORTATION",
@@ -22,8 +22,7 @@ export function DepartmentsSection() {
         "VEHICLE REGISTRATIONS",
         "ROADWORTHINESS CERTIFICATES",
       ],
-      link: siteMapData.Dashboard.children.Applications.children.DriversLicense
-        .path,
+      link: siteMapData.Transport.path,
     },
     {
       name: "HEALTH",
@@ -33,8 +32,7 @@ export function DepartmentsSection() {
         "Vacation Records",
         "Health Grants",
       ],
-      link: siteMapData.Dashboard.children.Applications.children.Vaccination
-        .path,
+      link: siteMapData.Health.path,
     },
     {
       name: "EDUCATION",
@@ -44,7 +42,7 @@ export function DepartmentsSection() {
         "Adult Education Programs",
         "Certification Requests",
       ],
-      link: siteMapData.Dashboard.children.Applications.children.Bursary.path,
+      link: siteMapData.Education.path,
     },
   ]
 
